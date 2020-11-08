@@ -2,7 +2,7 @@ import React from "react";
 import "../mycss/Header.css";
 import logo from "../logo2.png";
 import SearchIcon from "@material-ui/icons/Search";
-import { Input } from "@material-ui/core";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 
 function Header() {
     return (
@@ -10,10 +10,12 @@ function Header() {
             <img className="header__logo" src={logo} alt="logo" />
             <div className="header__search">
                 {/* category button */}
-                <input className="header__searchInput" type="text" />
-                <button className="header__searchButton">
-                    <SearchIcon className="header__searchIcon" />
-                </button>
+                <input
+                    className="header__searchInput"
+                    type="text"
+                    placeholder="Search"
+                />
+                <SearchIcon className="header__searchIcon" />
             </div>
             <div className="header__nav">
                 <div className="header__option">
@@ -27,6 +29,12 @@ function Header() {
                 <div className="header__option">
                     <span className="header__optionLineOne">Your</span>
                     <span className="header__optionLineTwo">Prime</span>
+                </div>
+                <div className="header__basket">
+                    <ShoppingBasketIcon />
+                    <span className="header__optionLineTwo header__basketCount">
+                        0
+                    </span>
                 </div>
             </div>
         </div>
