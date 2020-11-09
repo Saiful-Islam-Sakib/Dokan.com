@@ -12,6 +12,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 function Copyright() {
     return (
@@ -45,10 +49,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
 }));
 
 export default function SignUp() {
     const classes = useStyles();
+    const [gender, setGender] = React.useState("");
+
+    const handleChange = (event) => {
+        setGender(event.target.value);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -60,7 +72,7 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -70,6 +82,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="firstName"
+                                type="text"
                                 label="First Name"
                                 autoFocus
                             />
@@ -82,7 +95,66 @@ export default function SignUp() {
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
+                                type="text"
                                 autoComplete="lname"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="age"
+                                label="Age"
+                                name="age"
+                                type="number"
+                                autoComplete="age"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <FormControl
+                                variant="outlined"
+                                fullWidth
+                                className={classes.formControl}
+                            >
+                                <InputLabel id="genderLabel">Gender</InputLabel>
+                                <Select
+                                    labelId="genderLabel"
+                                    id="gendrid"
+                                    value={gender}
+                                    onChange={handleChange}
+                                    label="Gender"
+                                    name="gender"
+                                >
+                                    <MenuItem value={"male"}>Male</MenuItem>
+                                    <MenuItem value={"female"}>Female</MenuItem>
+                                    <MenuItem value={"Other"}>Others</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="birthday"
+                                label="Birthday"
+                                name="birthday"
+                                type="date"
+                                defaultValue="1900-12-31"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="phoneNumber"
+                                label="Phone Number"
+                                name="phoneNumber"
+                                type="number"
+                                autoComplete="phoneNumber"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -93,6 +165,7 @@ export default function SignUp() {
                                 id="email"
                                 label="Email Address"
                                 name="email"
+                                type="email"
                                 autoComplete="email"
                             />
                         </Grid>
@@ -109,14 +182,15 @@ export default function SignUp() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        value="allowExtraEmails"
-                                        color="primary"
-                                    />
-                                }
-                                label="I want to receive inspiration, marketing promotions and updates via email."
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="retype-password"
+                                label="Retype-Password"
+                                type="password"
+                                id="retypepassword"
+                                autoComplete="retype-password"
                             />
                         </Grid>
                     </Grid>
