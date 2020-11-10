@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./Components/Header";
+import Header from "./Components/Header2";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 
@@ -14,12 +14,12 @@ function App() {
                     <Route exact path="/signIn">
                         <SignIn></SignIn>
                     </Route>
-                    <Route path="/signUp">
+                    <Route exact path="/signUp">
                         <SignUp></SignUp>
                     </Route>
                 </Switch>
                 {/* body */}
-                <h1> hello </h1>
+                <h1> body</h1>
                 {/* footer */}
             </div>
         </Router>
