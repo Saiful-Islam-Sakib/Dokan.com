@@ -88,9 +88,19 @@ const useStyles = makeStyles((theme) => ({
         variant: "inherit",
     },
 }));
+const secondHeaderStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        backgroundColor: "gray",
+    },
+}));
 
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
+    const secondHeaderClass = secondHeaderStyles();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -185,7 +195,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" className={classes.headerBackground}>
+            <AppBar position="fixed" className={classes.headerBackground}>
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -261,6 +271,29 @@ export default function PrimarySearchAppBar() {
                         </IconButton>
                     </div>
                 </Toolbar>
+                <Typography className={secondHeaderClass.root}>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginRight: "16px" }}
+                    >
+                        Home
+                    </Link>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginRight: "16px" }}
+                    >
+                        About
+                    </Link>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginRight: "16px" }}
+                    >
+                        Contacts
+                    </Link>
+                </Typography>
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
