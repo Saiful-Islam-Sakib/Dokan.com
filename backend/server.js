@@ -2,6 +2,7 @@ const express = require('express');
 const parser = require('body-parser');
 
 const customerRoutes = require('./routes/customer-routes'); 
+const orderRoutes = require('./routes/order-routes');
 
 const app = express();
 /*
@@ -16,5 +17,7 @@ app.use('/',(req , res , next) => {
 });
 */
 app.use('/dokan.com/customer',customerRoutes);
+
+app.use('/dokan.com/customer',orderRoutes);
 
 app.listen(5000);

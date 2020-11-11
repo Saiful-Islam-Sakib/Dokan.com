@@ -4,7 +4,7 @@ const router = express.Router();
 
 const dummy_user = [
     {
-        id : 'cus01',
+        c_id : 'cus01',
         name : 'Emon',
         email : 'customer@gmail.com',
         phone : '01715566777',
@@ -12,7 +12,8 @@ const dummy_user = [
         birthday : '10-07-1993',
         city : 'Dhaka',
         area : 'Uttara',
-        address : '38/3 road no-16 sector 4'
+        address : '38/3 road no-16 sector 4',
+        orders: ['1','2']
     }
 ];
 
@@ -20,7 +21,7 @@ router.get('/:cid',(req,res,next) =>{
     //console.log('Customer route get request');
     const cus_id = req.params.cid;
     const cus_info = dummy_user.find(a =>{
-        return a.id == cus_id;
+        return a.c_id == cus_id;
     });
     res.json({cus_info});
 });
