@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
+const httpError = require('../models/http-errors');
+
 const dummy_user = [
     {
         c_id : 'cus01',
@@ -18,15 +20,12 @@ const dummy_user = [
 ];
 
 router.get('/:cid',(req,res,next) =>{
-    //console.log('Customer route get request');
     const cus_id = req.params.cid;
     const cus_info = dummy_user.find(a =>{
         return a.c_id == cus_id;
     });
     if (!cus_info){
-        const error = new Error('Could not find Customer.');
-        error.code = 404;
-        throw error;
+        throw new httpError('Could not find Customer.',404);
     }
     res.json({cus_info});
 });

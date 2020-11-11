@@ -20,9 +20,7 @@ router.get('/cus01/:oid',(req,res,next) =>{
     });
 
     if(!order_info){
-        const error = new Error('Order not found');
-        error.code = 404;
-        throw error;
+        throw new httpError('Order not found',404);
     }
     res.json({order_info});
 });
