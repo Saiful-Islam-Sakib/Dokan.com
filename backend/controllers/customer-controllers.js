@@ -27,5 +27,15 @@ const getcusinfobyid = (req,res,next) =>{
     res.json({cus_info});
 };
 
+const createcustomer = (req,res,next) => {
+    const {c_id,name,email,phone,gender,birthday,city,area,place,address,orders} = req.body;
+    const createdUser = {
+        c_id,name,email,phone,gender,birthday,city,area,place,address,orders
+    };
+    dummy_user.push(createdUser);
+    res.status(201).json({user : createdUser});
+};
+
 
 exports.getcusinfobyid = getcusinfobyid;
+exports.createcustomer = createcustomer;

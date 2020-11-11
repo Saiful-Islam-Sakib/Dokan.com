@@ -7,6 +7,8 @@ const productRoutes = require('./routes/products-routes');
 const sellerRoutes = require('./routes/seller-routes');
 
 const app = express();
+
+app.use(parser.json());
 /*
 app.use(parser.urlencoded({extended : false}));
 

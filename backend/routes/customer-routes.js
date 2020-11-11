@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/:cid', customerController.getcusinfobyid);
 
+router.post('/', customerController.createcustomer);
+
 module.exports = router;
