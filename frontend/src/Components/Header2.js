@@ -293,8 +293,6 @@ export default function PrimarySearchAppBar() {
                     >
                         Contacts
                     </Link>
-                </Typography>
-                <Typography className={secondHeaderClass.root}>
                     <Link
                         href="/"
                         className={classes.logoLink}

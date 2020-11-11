@@ -14,27 +14,27 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const tutorialSteps = [
     {
-        label: "Banner 1",
+        label: "Add Banner 1",
         imgPath:
             "https://bowiebearsnews.com/wp-content/uploads/2019/09/Screenshot-2019-09-17-14.41.59-e1568752961622-900x452.png",
     },
     {
-        label: "Banner 2",
+        label: "Add Banner 2",
         imgPath:
             "https://image.freepik.com/free-vector/furniture-sale-banners-with-discount_23-2148701995.jpg",
     },
     {
-        label: "Bali, Indonesia",
+        label: "Add Banner 3",
         imgPath:
             "https://image.freepik.com/free-vector/black-friday-sale-shopping-cart-banner-with-text-space_1017-28049.jpg",
     },
     {
-        label: "NeONBRAND Digital Marketing, Las Vegas, United States",
+        label: "Add Banner 4",
         imgPath:
             "https://image.freepik.com/free-vector/buy-now-button-template-design-business-banner-shopping-cart-trolley-signs-user-interface-element_183303-15.jpg",
     },
     {
-        label: "Goč, Serbia",
+        label: "Add Banner 5",
         imgPath:
             "https://image.freepik.com/free-vector/black-friday-sale-stylish-banner-with-text-space_1017-28050.jpg",
     },
@@ -83,9 +83,6 @@ function SwipeableTextMobileStepper() {
     return (
         <Container maxWidth="md">
             <div className={classes.root}>
-                <Paper square elevation={0} className={classes.header}>
-                    <Typography>{tutorialSteps[activeStep].label}</Typography>
-                </Paper>
                 <AutoPlaySwipeableViews
                     axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                     index={activeStep}
