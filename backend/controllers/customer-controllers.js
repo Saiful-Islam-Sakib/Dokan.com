@@ -2,7 +2,7 @@ const httpError = require('../models/http-errors');
 
 const dummy_user = [
     {
-        c_id : 'cus01',
+        c_id : 'cus1',
         name : 'Emon',
         email : 'customer@gmail.com',
         phone : '01715566777',
@@ -10,7 +10,8 @@ const dummy_user = [
         birthday : '10-07-1993',
         city : 'Dhaka',
         area : 'Uttara',
-        address : '38/3 road no-16 sector 4',
+        place : 'sector 4',
+        address : '38/3 road no-16',
         orders: ['1','2']
     }
 ];

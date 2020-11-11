@@ -8,7 +8,8 @@ const dummy_product = [
         price : '48',
         category : 'consumer_food',
         sub_category: 'flour',
-        tag : ['ata','moyda','flour']
+        tag : ['ata','moyda','flour'],
+        s_id : 'sell1'
     }
 ];
 
