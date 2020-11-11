@@ -15,6 +15,6 @@ app.use('/',(req , res , next) => {
     res.send('<form action="/user" method="POST"><input type="text" name="username"><button type="submit">Create user</button></form>');
 });
 */
-app.use(customerRoutes);
+app.use('/dokan.com/customer',customerRoutes);
 
 app.listen(5000);
