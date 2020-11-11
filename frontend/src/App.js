@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./Components/Header2";
+import Header from "./Components/Header";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Footer from "./Components/Footer";
