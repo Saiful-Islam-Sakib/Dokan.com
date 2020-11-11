@@ -23,6 +23,11 @@ router.get('/:cid',(req,res,next) =>{
     const cus_info = dummy_user.find(a =>{
         return a.c_id == cus_id;
     });
+    if (!cus_info){
+        const error = new Error('Could not find Customer.');
+        error.code = 404;
+        throw error;
+    }
     res.json({cus_info});
 });
 

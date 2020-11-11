@@ -18,6 +18,12 @@ router.get('/cus01/:oid',(req,res,next) =>{
     const order_info = dummy_user.find(a =>{
         return a.o_id == order_id;
     });
+
+    if(!order_info){
+        const error = new Error('Order not found');
+        error.code = 404;
+        throw error;
+    }
     res.json({order_info});
 });
 
