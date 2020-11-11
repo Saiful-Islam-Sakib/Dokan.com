@@ -91,9 +91,9 @@ const useStyles = makeStyles((theme) => ({
 const secondHeaderStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
-        flexWrap: "wrap",
         justifyContent: "center",
         backgroundColor: "gray",
+        flexFlow: "row wrap",
     },
 }));
 
@@ -275,23 +275,46 @@ export default function PrimarySearchAppBar() {
                     <Link
                         href="/"
                         className={classes.logoLink}
-                        style={{ marginRight: "16px" }}
+                        style={{ marginLeft: "16px" }}
                     >
                         Home
                     </Link>
                     <Link
                         href="/"
                         className={classes.logoLink}
-                        style={{ marginRight: "16px" }}
+                        style={{ marginLeft: "16px" }}
                     >
                         About
                     </Link>
                     <Link
                         href="/"
                         className={classes.logoLink}
-                        style={{ marginRight: "16px" }}
+                        style={{ marginLeft: "16px" }}
                     >
                         Contacts
+                    </Link>
+                </Typography>
+                <Typography className={secondHeaderClass.root}>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginLeft: "16px" }}
+                    >
+                        Top_Seller
+                    </Link>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginLeft: "16px" }}
+                    >
+                        Top_Deals
+                    </Link>
+                    <Link
+                        href="/"
+                        className={classes.logoLink}
+                        style={{ marginLeft: "16px" }}
+                    >
+                        Top_Products
                     </Link>
                 </Typography>
             </AppBar>
