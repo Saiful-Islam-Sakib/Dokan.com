@@ -23,7 +23,7 @@ export default function OutlinedCard() {
     return (
         <div style={{ marginBottom: 50 }}>
             <Typography variant="h5" gutterBottom component="p">
-                Top Products
+                Top Deals
             </Typography>
             <Card>
                 <Card className={classes.root} variant="outlined">

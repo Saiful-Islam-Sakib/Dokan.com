@@ -317,6 +317,7 @@ export default function PrimarySearchAppBar() {
                     </Link>
                 </Typography>
             </AppBar>
+            <div style={{ marginBottom: 120 }}></div>
             {renderMobileMenu}
             {renderMenu}
         </div>
