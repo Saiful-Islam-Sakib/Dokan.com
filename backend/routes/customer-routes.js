@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/:cid', customerController.getcusinfobyid);
 
-router.post('/', customerController.createcustomer);
+router.post('/signup', customerController.createcustomer);
+
+router.patch('/:cid/edit', customerController.updatecustomer);
 
 module.exports = router;
