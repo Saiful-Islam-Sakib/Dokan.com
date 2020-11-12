@@ -12,6 +12,15 @@ let dummy_order = [
     }
 ];
 
+const createNewOrder = (req,res,next) =>{
+    const cus_id = req.body.cid;
+    const {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered} = req.body;
+
+    const createdorder = {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered};
+    dummy_order.push(createdorder);
+    res.status(201).json({msg : 'Your Order has been placed'});
+};
+
 const getOrderbyid = (req,res,next) =>{
     const order_id = req.params.oid;
     const order_info = dummy_order.find(a =>{
@@ -36,3 +45,4 @@ const orderConfirmation = (req,res,next) => {
 
 exports.getOrderbyid = getOrderbyid;
 exports.orderConfirmation = orderConfirmation;
+exports.createNewOrder = createNewOrder;
