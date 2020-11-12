@@ -46,7 +46,7 @@ const orderConfirmation = (req,res,next) => {
 const deleteOrder = (req,res,next) => {
     const order_id = req.body.oid;
     const ordCon = dummy_order.find(p => p.id === order_id);
-    console.log(ordCon);
+    //console.log(ordCon);
     if(ordCon.order_confirmation == 'false'){
         dummy_order = dummy_order.filter(p => p.id !== order_id);
         return res.status(200).json({msg : 'Order Cancelled'});
@@ -54,7 +54,18 @@ const deleteOrder = (req,res,next) => {
     res.status(401).json({msg : 'Sorry your order has been confirmed'});
 };
 
+const orderDelivered = (req,res,next) => {
+    const { order_delivered } = req.body;
+    const order_id = req.body.oid;
+    const updateOrderDel = dummy_order.find(p => p.id === order_id);
+    const orderIndex = dummy_order.findIndex(p => p.id === order_id);
+    updateOrderDel.order_delivered = order_delivered;
+    dummy_order[orderIndex] = updateOrderDel;
+    res.status(201).json({msg : 'Your order was delivered'});
+};
+
 exports.getOrderbyid = getOrderbyid;
 exports.orderConfirmation = orderConfirmation;
 exports.createNewOrder = createNewOrder;
 exports.deleteOrder = deleteOrder;
+exports.orderDelivered = orderDelivered;
