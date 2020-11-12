@@ -1,20 +1,20 @@
 const httpError = require('../models/http-errors');
 
-const dummy_user = [
+let dummy_order = [
     {
         o_id : '1',
-        products : ['p1','p2','p3','p4'],
-        quantity : ['1','2','1','1'],
+        product : 'p1',
+	    quantity : '2',
         total_amount : '1000',
         c_id : 'cus01',
-        order_confirmation: 'true',
+        order_confirmation: 'false',
         order_delivered: 'false'
     }
 ];
 
 const getOrderbyid = (req,res,next) =>{
     const order_id = req.params.oid;
-    const order_info = dummy_user.find(a =>{
+    const order_info = dummy_order.find(a =>{
         return a.o_id == order_id;
     });
 
@@ -24,4 +24,15 @@ const getOrderbyid = (req,res,next) =>{
     res.json({order_info});
 };
 
+const orderConfirmation = (req,res,next) => {
+    const { order_confirmation } = req.body;
+    const order_id = req.body.oid;
+    const updateOrderConf = dummy_order.find(p => p.id === order_id);
+    const orderIndex = dummy_order.findIndex(p => p.id === order_id);
+    updateOrderConf.order_confirmation = order_confirmation;
+    dummy_order[orderIndex] = updateOrderConf;
+    res.status(201).json({msg : 'Your order has been confirmed'});
+};
+
 exports.getOrderbyid = getOrderbyid;
+exports.orderConfirmation = orderConfirmation;

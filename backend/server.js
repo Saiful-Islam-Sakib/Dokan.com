@@ -24,7 +24,9 @@ app.use('/',(req , res , next) => {
 */
 app.use('/dokan.com/customer',customerRoutes);
 
-app.use('/dokan.com/customer',orderRoutes);
+app.use('/dokan.com/order/customer',orderRoutes);
+
+app.use('/dokan.com/order/seller',orderRoutes);
 
 app.use('/dokan.com/products',productRoutes);
 
