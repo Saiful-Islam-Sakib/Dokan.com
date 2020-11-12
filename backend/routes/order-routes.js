@@ -9,4 +9,6 @@ router.patch('/sell1/orderConf/:oid', orderControllers.orderConfirmation);
 
 router.post('/:cid/newOrder',orderControllers.createNewOrder);
 
+router.delete('/:oid',orderControllers.deleteOrder);
+
 module.exports = router;
