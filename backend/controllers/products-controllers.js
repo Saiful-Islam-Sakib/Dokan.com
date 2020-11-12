@@ -1,6 +1,6 @@
 const httpError = require('../models/http-errors');
 
-const dummy_product = [
+let dummy_product = [
     {
         p_id : 'p1',
         name : 'ACI Pure Premium Maida 1 kg',
@@ -24,4 +24,21 @@ const getproductbyid = (req,res,next) =>{
     res.json({prod_info});
 };
 
+const createproduct = (req,res,next) => {
+    const {p_id, name,brand,price,category,sub_category,tag,s_id } = req.body;
+    const createdprod = {
+        p_id, name,brand,price,category,sub_category,tag,s_id
+    };
+    dummy_product.push(createdprod);
+    res.status(201).json({msg : 'New Product added'});
+};
+
+const deleteproduct = (req,res,nest) => {
+    const del_prod = req.body.pid;
+    dummy_product = dummy_product.filter(p => p.id !== del_prod);
+    res.status(200).json({msg : 'Product Deleted'});
+};
+
 exports.getproductbyid = getproductbyid;
+exports.createproduct = createproduct;
+exports.deleteproduct = deleteproduct;
