@@ -22,15 +22,15 @@ const createNewOrder = (req,res,next) =>{
 };
 
 const getOrderbyid = (req,res,next) =>{
-    const order_id = req.params.oid;
-    const order_info = dummy_order.find(a =>{
-        return a.o_id == order_id;
+    const cus_id = req.params.cid;
+    const orders = dummy_order.filter(a =>{
+        return a.c_id == cus_id;
     });
 
-    if(!order_info){
+    if(!orders || orders === 0){
         throw new httpError('Order not found',404);
     }
-    res.json({order_info});
+    res.json({orders});
 };
 
 const orderConfirmation = (req,res,next) => {
