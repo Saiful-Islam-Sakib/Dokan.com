@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend of dokan.com thesis final project",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
