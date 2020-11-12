@@ -24,7 +24,7 @@ function Copyright() {
             {"2020 - "}
             {new Date().getFullYear()}
             {", "}
-            <Link color="inherit" href="#">
+            <Link color="inherit" href="/">
                 dokan.com
             </Link>
         </Typography>
