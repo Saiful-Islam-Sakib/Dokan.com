@@ -1,6 +1,6 @@
 const httpError = require('../models/http-errors');
 
-const dummy_customer = [
+let dummy_customer = [
     {
         c_id : 'cus1',
         f_name : 'Emon',
@@ -34,7 +34,7 @@ const createcustomer = (req,res,next) => {
     const createdUser = {
         c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,orders
     };
-    dummy_user.push(createdUser);
+    dummy_customer.push(createdUser);
     res.status(201).json({user : createdUser});
 };
 
@@ -56,7 +56,9 @@ const updatecustomer = (req,res,next) =>{
 };
 
 const deletecustomer = (req,res,next) =>{
-
+    const cus_id = req.body.cid;
+    dummy_customer = dummy_customer.filter( p => p.id !== cus_id);
+    res.status(200).json({msg : 'Customer Deleted'});
 };
 
 
