@@ -6,6 +6,8 @@ const orderRoutes = require('./routes/order-routes');
 const productRoutes = require('./routes/products-routes');
 const sellerRoutes = require('./routes/seller-routes');
 
+const httpError = require('./models/http-errors');
+
 const app = express();
 
 app.use(parser.json());
@@ -22,11 +24,18 @@ app.use('/',(req , res , next) => {
 */
 app.use('/dokan.com/customer',customerRoutes);
 
-app.use('/dokan.com/customer',orderRoutes);
+app.use('/dokan.com/order/customer',orderRoutes);
+
+app.use('/dokan.com/order/seller',orderRoutes);
 
 app.use('/dokan.com/products',productRoutes);
 
 app.use('/dokan.com/seller',sellerRoutes);
+
+app.use((req,res,next) =>{
+    const error = new httpError('Could not find this directory',404);
+    throw error;
+});
 
 app.use((error , req , res , next ) => {
     if (res.headerSent){
