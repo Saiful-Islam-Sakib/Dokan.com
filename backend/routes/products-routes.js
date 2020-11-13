@@ -10,6 +10,8 @@ router.post('/sell1/newProduct', productControllers.createproduct); // This feat
 
 router.delete('/sell1/deleteProd/:pid',productControllers.deleteproduct); // This feature should be used by a seller
 
-router.get('/search/:pname',productControllers.productSearch);
+//router.get('/search/:pname',productControllers.productSearch);
+
+router.get('/search/:pcat',productControllers.prodSearchWithCategory);
 
 module.exports = router;

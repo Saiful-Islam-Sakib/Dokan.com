@@ -1,5 +1,6 @@
 const express = require('express');
 const parser = require('body-parser');
+const customerData = require('./database');
 
 const customerRoutes = require('./routes/customer-routes'); 
 const orderRoutes = require('./routes/order-routes');
@@ -31,6 +32,8 @@ app.use('/dokan.com/order/seller',orderRoutes);
 app.use('/dokan.com/products',productRoutes);
 
 app.use('/dokan.com/seller',sellerRoutes);
+
+app.post('/dokan.com/newCustomer', customerData.createCustomer);
 
 app.use((req,res,next) =>{
     const error = new httpError('Could not find this directory',404);
