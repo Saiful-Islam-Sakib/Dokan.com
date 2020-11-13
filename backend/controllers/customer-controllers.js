@@ -65,7 +65,6 @@ const deletecustomer = (req,res,next) =>{
 const customerLogin = (req,res,next) => {
     const {email , phone , password} = req.body;
     const validCustomer = dummy_customer.find(p => (p.email === email || p.phone === phone ));
-    console.log(validCustomer);
     if(!validCustomer || validCustomer.password !== password){
         throw new httpError('Could not identify Customer',401);
     }

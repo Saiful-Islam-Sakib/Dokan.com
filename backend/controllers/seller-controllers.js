@@ -12,6 +12,7 @@ const dummy_seller = [
         v_area : 'Motijheel',
         v_address : '153 Motijheel C/A, Dhaka-1000',
         nid : '6004589963',
+        password : '123456',
         b_acc: 'Shohag Ahmed', 
         b_acc_no: '18798432578938',
         bank : 'dutch bangla',
@@ -34,5 +35,25 @@ const getsellerinfobyid = (req,res,next) =>{
     res.json({seller_info});
 };
 
+const sellerLogin = (req,res,next) =>{
+   const {email,phone,password} = req.body;
+   const validSeller = dummy_seller.find(p => (p.email === email || p.phone === phone ));
+    if(!validSeller || validSeller.password !== password){
+        throw new httpError('Could not identify Seller',401);
+    }
+    res.status(201).json({msg : 'Logged In'}); 
+};
+
+const sellerSignup = (req,res,next) =>{
+    const {s_id,v_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
+        bank,branch,sh_city,sh_area,sh_place,sh_area_pc} = req.body;
+    const newSeller = {s_id,v_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
+        bank,branch,sh_city,sh_area,sh_place,sh_area_pc};
+    dummy_seller.push(newSeller);
+    res.status(201).json({msg : 'New Seller Added'});
+};
+
 
 exports.getsellerinfobyid = getsellerinfobyid;
+exports.sellerLogin = sellerLogin;
+exports.sellerSignup = sellerSignup;
