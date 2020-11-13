@@ -11,7 +11,6 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import Divider from "@material-ui/core/Divider";
 import Category from "./CategoryDrawer";
 import CategoryList from "./CategoryList";

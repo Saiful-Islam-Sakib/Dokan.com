@@ -15,8 +15,6 @@ import Avatar from "@material-ui/core/Avatar";
 import ImageIcon from "@material-ui/icons/Image";
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
-import WorkIcon from "@material-ui/icons/Work";
-import BeachAccessIcon from "@material-ui/icons/BeachAccess";
 
 const useStyles = makeStyles((theme) => ({
     root: {
