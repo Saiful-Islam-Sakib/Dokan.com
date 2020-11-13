@@ -8,8 +8,31 @@ let dummy_product = [
         price : '48',
         category : 'consumer_food',
         sub_category: 'flour',
-        tag : ['ata','moyda','flour'],
-        s_id : 'sell1'
+        tag : ['ata','moyda','flour','ACI','Maida'],
+        s_id : 'sell1',
+        sh_name: 'Shohag store'
+    },
+    {
+        p_id : 'p2',
+        name : 'Miniket Rice 5 kg',
+        brand: 'Bashundhara',
+        price : '300',
+        category : 'consumer_food',
+        sub_category: 'rice',
+        tag : ['cal','chal','rice','Miniket','Bashundhara'],
+        s_id : 'sell1',
+        sh_name: 'Shohag store'
+    },
+    {
+        p_id : 'p3',
+        name : 'Air Freshner',
+        brand: 'ACI',
+        price : '570',
+        category : 'Toiletries',
+        sub_category: 'Air freshner',
+        tag : ['freser','freshner','air freshner','ACI'],
+        s_id : 'sell2',
+        sh_name: 'Dani store'
     }
 ];
 
@@ -39,6 +62,16 @@ const deleteproduct = (req,res,nest) => {
     res.status(200).json({msg : 'Product Deleted'});
 };
 
+const productSearch  = (req,res,next) => {
+    const ptag = req.params.pname;
+    const dum_prod = dummy_product.filter(p => p.name === ptag);
+    if(dum_prod.length === 0){
+        return res.status(404).json({msg : 'Product not found'});
+    }
+    res.status(200).json(dum_prod);
+};
+
 exports.getproductbyid = getproductbyid;
 exports.createproduct = createproduct;
 exports.deleteproduct = deleteproduct;
+exports.productSearch = productSearch;
