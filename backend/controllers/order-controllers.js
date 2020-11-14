@@ -1,4 +1,5 @@
 const httpError = require('../models/http-errors');
+const {validationResult} = require('express-validator');
 
 let dummy_order = [
     {
@@ -13,6 +14,11 @@ let dummy_order = [
 ];
 
 const createNewOrder = (req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Something wrong in Order',422);
+    }
     const cus_id = req.body.cid;
     const {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered} = req.body;
 
@@ -34,6 +40,11 @@ const getOrderbyid = (req,res,next) =>{
 };
 
 const orderConfirmation = (req,res,next) => {
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Not appropiate confirmation was sent',204);
+    }
     const { order_confirmation } = req.body;
     const order_id = req.body.oid;
     const updateOrderConf = dummy_order.find(p => p.id === order_id);
@@ -44,7 +55,11 @@ const orderConfirmation = (req,res,next) => {
 };
 
 const deleteOrder = (req,res,next) => {
+
     const order_id = req.body.oid;
+    if(!dummy_order.find(p => p.id === order_id)){
+        throw new httpError('Order is invalid',404);
+    }
     const ordCon = dummy_order.find(p => p.id === order_id);
     //console.log(ordCon);
     if(ordCon.order_confirmation == 'false'){
@@ -55,13 +70,18 @@ const deleteOrder = (req,res,next) => {
 };
 
 const orderDelivered = (req,res,next) => {
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Not appropiate confirmation was sent',204);
+    }
     const { order_delivered } = req.body;
     const order_id = req.body.oid;
     const updateOrderDel = dummy_order.find(p => p.id === order_id);
     const orderIndex = dummy_order.findIndex(p => p.id === order_id);
     updateOrderDel.order_delivered = order_delivered;
     dummy_order[orderIndex] = updateOrderDel;
-    res.status(201).json({msg : 'Your order was delivered'});
+    res.status(201).json({msg : 'Order delivered'});
 };
 
 exports.getOrderbyid = getOrderbyid;

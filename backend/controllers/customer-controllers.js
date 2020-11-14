@@ -70,6 +70,9 @@ const updatecustomer = (req,res,next) =>{
 
 const deletecustomer = (req,res,next) =>{
     const cus_id = req.body.cid;
+    if(!dummy_customer.filter( p => p.id !== cus_id)){
+        throw new httpError('Could not find customer!',404);
+    }
     dummy_customer = dummy_customer.filter( p => p.id !== cus_id);
     res.status(200).json({msg : 'Customer Deleted'});
 };
