@@ -6,4 +6,8 @@ const router = express.Router();
 
 router.get('/:sid', sellerController.getsellerinfobyid);
 
+router.post('/login',sellerController.sellerLogin);
+
+router.post('/signup',sellerController.sellerSignup);
+
 module.exports = router;

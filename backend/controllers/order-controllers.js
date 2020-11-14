@@ -6,7 +6,7 @@ let dummy_order = [
         product : 'p1',
 	    quantity : '2',
         total_amount : '1000',
-        c_id : 'cus01',
+        c_id : 'cus1',
         order_confirmation: 'false',
         order_delivered: 'false'
     }
