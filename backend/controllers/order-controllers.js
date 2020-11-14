@@ -55,7 +55,6 @@ const orderConfirmation = (req,res,next) => {
 };
 
 const deleteOrder = (req,res,next) => {
-
     const order_id = req.body.oid;
     if(!dummy_order.find(p => p.id === order_id)){
         throw new httpError('Order is invalid',404);

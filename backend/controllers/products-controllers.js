@@ -1,4 +1,5 @@
 const httpError = require('../models/http-errors');
+const {validationResult} = require('express-validator');
 
 let dummy_product = [
     {
@@ -47,7 +48,12 @@ const getproductbyid = (req,res,next) =>{
     res.json({prod_info});
 };
 
-const createproduct = (req,res,next) => {
+const addproduct = (req,res,next) => {
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        return res.json({msg: 'Invalid information'});
+    }
     const {p_id, name,brand,price,category,sub_category,tag,s_id } = req.body;
     const createdprod = {
         p_id, name,brand,price,category,sub_category,tag,s_id
@@ -58,6 +64,9 @@ const createproduct = (req,res,next) => {
 
 const deleteproduct = (req,res,nest) => {
     const del_prod = req.body.pid;
+    if(!dummy_product.filter(p => p.id !== del_prod)){
+        throw new httpError('Could not find product',404);
+    }
     dummy_product = dummy_product.filter(p => p.id !== del_prod);
     res.status(200).json({msg : 'Product Deleted'});
 };
@@ -80,7 +89,7 @@ const prodSearchbyCategory = (req ,res ,next) =>{
 };
 
 exports.getproductbyid = getproductbyid;
-exports.createproduct = createproduct;
+exports.addproduct = addproduct;
 exports.deleteproduct = deleteproduct;
 exports.productSearch = productSearch;
 exports.prodSearchbyCategory = prodSearchbyCategory;
