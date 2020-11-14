@@ -47,20 +47,25 @@ const customerSignup = (req,res,next) => {
 };
 
 const updatecustomer = (req,res,next) =>{
-  const {c_id,phone,city,area,place,address,delivery_add} = req.body;
-  const cus_id = req.body.cid;
-  
-  const updateCusInfo = dummy_customer.find(p => p.id === cus_id);
-  const customerIndex = dummy_customer.findIndex(p => p.id === cus_id);
-  updateCusInfo.phone = phone;
-  updateCusInfo.city = city;
-  updateCusInfo.area = area;
-  updateCusInfo.place = place;
-  updateCusInfo.address = address;
-  updateCusInfo.delivery_add = delivery_add;
+    const err = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information',422);
+    }
+    const {c_id,phone,city,area,place,address,delivery_add} = req.body;
+    const cus_id = req.body.cid;
 
-  dummy_customer[customerIndex] = updateCusInfo;
-  res.status(200).json({customer: updateCusInfo});
+    const updateCusInfo = dummy_customer.find(p => p.id === cus_id);
+    const customerIndex = dummy_customer.findIndex(p => p.id === cus_id);
+    updateCusInfo.phone = phone;
+    updateCusInfo.city = city;
+    updateCusInfo.area = area;
+    updateCusInfo.place = place;
+    updateCusInfo.address = address;
+    updateCusInfo.delivery_add = delivery_add;
+
+    dummy_customer[customerIndex] = updateCusInfo;
+    res.status(200).json({customer: updateCusInfo});
 };
 
 const deletecustomer = (req,res,next) =>{
