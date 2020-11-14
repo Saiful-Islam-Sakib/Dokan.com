@@ -1,4 +1,5 @@
 const httpError = require('../models/http-errors');
+const {validationResult} = require('express-validator');
 
 let dummy_customer = [
     {
@@ -31,9 +32,15 @@ const getcusinfobyid = (req,res,next) =>{
 };
 
 const customerSignup = (req,res,next) => {
-    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add} = req.body;
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information submitted',422);
+    }
+
+    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
     const createdUser = {
-        c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,orders
+        c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
     };
     dummy_customer.push(createdUser);
     res.status(201).json({user : createdUser});

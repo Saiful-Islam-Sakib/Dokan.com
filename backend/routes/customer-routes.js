@@ -1,12 +1,18 @@
 const express = require('express');
 const customerController = require('../controllers/customer-controllers');
+const { check } = require('express-validator');
 
 const router = express.Router();
 
 
 router.get('/:cid', customerController.getcusinfobyid);
 
-router.post('/signup', customerController.customerSignup);
+router.post('/signup',
+    [check('f_name').not().isEmpty() ,check('l_name').not().isEmpty(),check('email').not().isEmpty(),
+    check('phone').not().isEmpty(),check('gender').not().isEmpty(),check('birthday').not().isEmpty(),
+    check('city').not().isEmpty(),check('area').not().isEmpty(),check('place').not().isEmpty(),
+    check('address').not().isEmpty(),check('delivery_add').not().isEmpty(),check('password').not().isEmpty()],
+    customerController.customerSignup);
 
 router.patch('/:cid/edit', customerController.updatecustomer);
 

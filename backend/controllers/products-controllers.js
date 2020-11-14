@@ -70,17 +70,17 @@ const productSearch  = (req,res,next) => {
     }
     res.status(200).json(dum_prod);
 };
-const prodSearchWithCategory = (req,res,next) =>{
+const prodSearchbyCategory = (req ,res ,next) =>{
     const p_cat = req.params.pcat;
-    const dum_prod = dummy_product.filter(p => p.category === p_cat);
-    if(dum_prod.length === 0){
+    const dum_product = dummy_product.filter(p => p.category === p_cat);
+    if(dum_product.length === 0){
         return res.status(404).json({msg : 'Product not found'});
     }
-    res.status(200).json(dum_prod);
-}
+    res.status(200).json(dum_product);
+};
 
 exports.getproductbyid = getproductbyid;
 exports.createproduct = createproduct;
 exports.deleteproduct = deleteproduct;
 exports.productSearch = productSearch;
-exports.prodSearchWithCategory = prodSearchWithCategory;
+exports.prodSearchbyCategory = prodSearchbyCategory;
