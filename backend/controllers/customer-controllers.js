@@ -1,5 +1,6 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
+const customer = require('../models/customer-model');
 
 let dummy_customer = [
     {
@@ -31,7 +32,7 @@ const getcusinfobyid = (req,res,next) =>{
     res.json({cus_info});
 };
 
-const customerSignup = (req,res,next) => {
+const customerSignup = async (req,res,next) => {
     const err  = validationResult(req);
     if(!err.isEmpty()){
         console.log(err);
@@ -39,10 +40,15 @@ const customerSignup = (req,res,next) => {
     }
 
     const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
-    const createdUser = {
+    const createdUser =  new customer({
         c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
-    };
-    dummy_customer.push(createdUser);
+    });
+    try{
+        await createdUser.save();
+    }catch(err){
+        const erro = new httpError('Customer Signup failed',500);
+        return next(erro);
+    }
     res.status(201).json({user : createdUser});
 };
 

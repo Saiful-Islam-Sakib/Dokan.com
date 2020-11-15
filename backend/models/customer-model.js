@@ -13,6 +13,7 @@ const customerSchema = new mongo.Schema({
     place : {type : String, required: true},
     address : {type : String, required: true},
     delivery_add : {type : String, required: true},
+    password : {type : String, required:true},
     orders: {type: String}
 });
 
