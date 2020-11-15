@@ -14,6 +14,7 @@ let dummy_customer = [
         place : 'sector 4',
         address : '38/3 road no-16',
         delivery_add : '38/3 road no-16',
+        password : '123456',
         orders: ['1','2']
     }
 ];
@@ -29,8 +30,8 @@ const getcusinfobyid = (req,res,next) =>{
     res.json({cus_info});
 };
 
-const createcustomer = (req,res,next) => {
-    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,orders} = req.body;
+const customerSignup = (req,res,next) => {
+    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add} = req.body;
     const createdUser = {
         c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,orders
     };
@@ -61,8 +62,17 @@ const deletecustomer = (req,res,next) =>{
     res.status(200).json({msg : 'Customer Deleted'});
 };
 
+const customerLogin = (req,res,next) => {
+    const {email , phone , password} = req.body;
+    const validCustomer = dummy_customer.find(p => (p.email === email || p.phone === phone ));
+    if(!validCustomer || validCustomer.password !== password){
+        throw new httpError('Could not identify Customer',401);
+    }
+    res.status(201).json({msg : 'Logged In'});
+};
 
 exports.getcusinfobyid = getcusinfobyid;
-exports.createcustomer = createcustomer;
+exports.customerSignup = customerSignup;
 exports.updatecustomer = updatecustomer;
 exports.deletecustomer = deletecustomer;
+exports.customerLogin = customerLogin;
