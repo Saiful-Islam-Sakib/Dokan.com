@@ -33,7 +33,12 @@ export default function OutlinedCard() {
                     <SmallCard></SmallCard>
                     <SmallCard></SmallCard>
                 </Card>
-                <CardActions>
+                <CardActions
+                    style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                    }}
+                >
                     <Button size="small">more</Button>
                 </CardActions>
             </Card>

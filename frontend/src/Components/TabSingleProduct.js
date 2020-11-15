@@ -8,7 +8,17 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
-import { Button, OutlinedInput, TextField } from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    CardMedia,
+    OutlinedInput,
+    Paper,
+    TextField,
+} from "@material-ui/core";
+
+import avater from "../image/fresh_chinigura.png";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -47,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         width: "100%",
+    },
+    userAvatar: {
+        maxHeight: 100,
+        maxWidth: 100,
+        objectFit: "fill",
     },
 }));
 
@@ -108,24 +123,107 @@ export default function FullWidthTabs() {
                         <TextField
                             id="reviewText"
                             placeholder="empty"
-                            required
                             fullWidth
                             multiline
                             rows={8}
                             variant="outlined"
                             style={{ marginBottom: 8 }}
                         />
-                        <Button
-                            variant="contained"
-                            type="submit"
-                            color="primary"
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                            }}
                         >
-                            Send
-                        </Button>
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                color="primary"
+                            >
+                                Send
+                            </Button>
+                        </div>
                     </form>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Comments
+                    <Typography component="legend" style={{ marginBottom: 8 }}>
+                        Comment:
+                    </Typography>
+                    <form>
+                        <TextField
+                            id="reviewText"
+                            placeholder="empty"
+                            required
+                            fullWidth
+                            multiline
+                            rows={5}
+                            variant="outlined"
+                            style={{ marginBottom: 8 }}
+                        />
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                            }}
+                        >
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                color="primary"
+                            >
+                                Send
+                            </Button>
+                        </div>
+                    </form>
+
+                    <div style={{ margin: 16 }}></div>
+
+                    <Box style={{ display: "flex", marginBottom: 16 }}>
+                        <Card style={{ marginRight: 16 }}>
+                            <CardContent>
+                                <CardMedia
+                                    className={classes.userAvatar}
+                                    component="img"
+                                    image={avater}
+                                    title="Contemplative Reptile"
+                                />
+                            </CardContent>
+                        </Card>
+                        <Card style={{ flexGrow: 1 }}>
+                            <CardContent>
+                                <Typography variant="h5" component="h2">
+                                    User Name
+                                </Typography>
+                                <Typography variant="body2" component="p">
+                                    feel free to comment about anything of this
+                                    product................
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Box>
+                    <Box style={{ display: "flex", marginBottom: 16 }}>
+                        <Card style={{ marginRight: 16 }}>
+                            <CardContent>
+                                <CardMedia
+                                    className={classes.userAvatar}
+                                    component="img"
+                                    image={avater}
+                                    title="Contemplative Reptile"
+                                />
+                            </CardContent>
+                        </Card>
+                        <Card style={{ flexGrow: 1 }}>
+                            <CardContent>
+                                <Typography variant="h5" component="h2">
+                                    User Name
+                                </Typography>
+                                <Typography variant="body2" component="p">
+                                    feel free to comment about anything of this
+                                    product................
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Box>
                 </TabPanel>
             </SwipeableViews>
         </div>
