@@ -314,6 +314,14 @@ export default function PrimarySearchAppBar() {
                     >
                         Top_Products
                     </Link>
+                    <Link
+                        // for testing
+                        href="/singleProduct"
+                        className={classes.logoLink}
+                        style={{ marginLeft: "16px" }}
+                    >
+                        Single_Product_View
+                    </Link>
                 </Typography>
             </AppBar>
             <div style={{ marginBottom: 120 }}></div>

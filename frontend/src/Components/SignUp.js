@@ -14,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 function Copyright() {
     return (
@@ -72,6 +73,27 @@ export default function SignUp() {
                 </Typography>
                 <form className={classes.form}>
                     <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <RadioGroup
+                                row
+                                aria-label="accountType"
+                                name="accountType"
+                                defaultValue="Radio"
+                            >
+                                <FormControlLabel
+                                    value="Buyer"
+                                    control={<Radio required color="primary" />}
+                                    label="Buyer"
+                                    labelPlacement="start"
+                                />
+                                <FormControlLabel
+                                    value="Seller"
+                                    control={<Radio required color="primary" />}
+                                    label="Seller"
+                                    labelPlacement="start"
+                                />
+                            </RadioGroup>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
@@ -109,15 +131,11 @@ export default function SignUp() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <FormControl
-                                variant="outlined"
-                                fullWidth
-                                className={classes.formControl}
-                            >
+                            <FormControl variant="outlined" fullWidth>
                                 <InputLabel id="genderLabel">Gender</InputLabel>
                                 <Select
                                     labelId="genderLabel"
-                                    id="gendrid"
+                                    id="genderid"
                                     value={gender}
                                     onChange={handleChange}
                                     label="Gender"
