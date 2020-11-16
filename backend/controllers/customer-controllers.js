@@ -1,4 +1,6 @@
 const httpError = require('../models/http-errors');
+const {validationResult} = require('express-validator');
+const customer = require('../models/customer-model');
 
 let dummy_customer = [
     {
@@ -30,34 +32,53 @@ const getcusinfobyid = (req,res,next) =>{
     res.json({cus_info});
 };
 
-const customerSignup = (req,res,next) => {
-    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add} = req.body;
-    const createdUser = {
-        c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,orders
-    };
-    dummy_customer.push(createdUser);
+const customerSignup = async (req,res,next) => {
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information submitted',422);
+    }
+
+    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
+    const createdUser =  new customer({
+        c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
+    });
+    try{
+        await createdUser.save();
+    }catch(err){
+        const erro = new httpError('Customer Signup failed',500);
+        return next(erro);
+    }
     res.status(201).json({user : createdUser});
 };
 
 const updatecustomer = (req,res,next) =>{
-  const {c_id,phone,city,area,place,address,delivery_add} = req.body;
-  const cus_id = req.body.cid;
-  
-  const updateCusInfo = dummy_customer.find(p => p.id === cus_id);
-  const customerIndex = dummy_customer.findIndex(p => p.id === cus_id);
-  updateCusInfo.phone = phone;
-  updateCusInfo.city = city;
-  updateCusInfo.area = area;
-  updateCusInfo.place = place;
-  updateCusInfo.address = address;
-  updateCusInfo.delivery_add = delivery_add;
+    const err = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information',422);
+    }
+    const {c_id,phone,city,area,place,address,delivery_add} = req.body;
+    const cus_id = req.body.cid;
 
-  dummy_customer[customerIndex] = updateCusInfo;
-  res.status(200).json({customer: updateCusInfo});
+    const updateCusInfo = dummy_customer.find(p => p.id === cus_id);
+    const customerIndex = dummy_customer.findIndex(p => p.id === cus_id);
+    updateCusInfo.phone = phone;
+    updateCusInfo.city = city;
+    updateCusInfo.area = area;
+    updateCusInfo.place = place;
+    updateCusInfo.address = address;
+    updateCusInfo.delivery_add = delivery_add;
+
+    dummy_customer[customerIndex] = updateCusInfo;
+    res.status(200).json({customer: updateCusInfo});
 };
 
 const deletecustomer = (req,res,next) =>{
     const cus_id = req.body.cid;
+    if(!dummy_customer.filter( p => p.id !== cus_id)){
+        throw new httpError('Could not find customer!',404);
+    }
     dummy_customer = dummy_customer.filter( p => p.id !== cus_id);
     res.status(200).json({msg : 'Customer Deleted'});
 };

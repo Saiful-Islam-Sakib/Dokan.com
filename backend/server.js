@@ -1,6 +1,6 @@
 const express = require('express');
 const parser = require('body-parser');
-const customerData = require('./database');
+const mongo = require('mongoose');
 
 const customerRoutes = require('./routes/customer-routes'); 
 const orderRoutes = require('./routes/order-routes');
@@ -12,17 +12,7 @@ const httpError = require('./models/http-errors');
 const app = express();
 
 app.use(parser.json());
-/*
-app.use(parser.urlencoded({extended : false}));
 
-app.post('/user', (req,res,next) =>{
-    res.send('<h1> ' + req.body.username + '</h1>');
-})
-
-app.use('/',(req , res , next) => {
-    res.send('<form action="/user" method="POST"><input type="text" name="username"><button type="submit">Create user</button></form>');
-});
-*/
 app.use('/dokan.com/customer',customerRoutes);
 
 app.use('/dokan.com/order/customer',orderRoutes);
@@ -33,7 +23,9 @@ app.use('/dokan.com/products',productRoutes);
 
 app.use('/dokan.com/seller',sellerRoutes);
 
-app.post('/dokan.com/newCustomer', customerData.createCustomer);
+//app.post('/dokan.com/newCustomer', customerData.createCustomer);
+
+//app.get('/dokan.com/allcustomer', customerData.getcustomer);
 
 app.use((req,res,next) =>{
     const error = new httpError('Could not find this directory',404);
@@ -48,4 +40,10 @@ app.use((error , req , res , next ) => {
     res.json({message: error.message || 'An unknown error occured'});
 });
 
-app.listen(5000);
+
+mongo.connect('mongodb+srv://Junaeid:admin101@cluster0.fronr.mongodb.net/Dokan?retryWrites=true&w=majority'
+).then(() => {
+    app.listen(5000);
+}).catch((err) => {
+    console.log(err);
+});
