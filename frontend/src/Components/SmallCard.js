@@ -21,7 +21,7 @@ const innerCardStyle = makeStyles({
     },
 });
 
-export default function SmallCard() {
+export default function SmallCard(props) {
     const classes2 = innerCardStyle();
 
     return (

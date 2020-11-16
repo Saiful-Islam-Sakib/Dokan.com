@@ -49,13 +49,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SingleProduct() {
     const classes = useStyles();
     const [value, setValue] = React.useState(1);
+    const [selectedImage, setImage] = React.useState(i1);
 
     const handleChange = () => (event) => {
         setValue(event.target.value);
     };
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
             <div className={classes.root}>
                 <Grid container spacing={1}>
                     <Grid item xs={4} sm={2}>
@@ -66,6 +67,9 @@ export default function SingleProduct() {
                                         component="img"
                                         className={classes.cardMedia}
                                         image={i1}
+                                        onClick={() => {
+                                            setImage(i1);
+                                        }}
                                     />
                                 </CardContent>
                             </CardActionArea>
@@ -77,6 +81,9 @@ export default function SingleProduct() {
                                         component="img"
                                         className={classes.cardMedia}
                                         image={i2}
+                                        onClick={() => {
+                                            setImage(i2);
+                                        }}
                                     />
                                 </CardContent>
                             </CardActionArea>
@@ -88,6 +95,9 @@ export default function SingleProduct() {
                                         component="img"
                                         className={classes.cardMedia}
                                         image={i3}
+                                        onClick={() => {
+                                            setImage(i3);
+                                        }}
                                     />
                                 </CardContent>
                             </CardActionArea>
@@ -100,7 +110,7 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.selectedCardMedia}
-                                        image={i1}
+                                        image={selectedImage}
                                     />
                                 </CardContent>
                             </CardActionArea>
@@ -119,16 +129,26 @@ export default function SingleProduct() {
                                     Full Name of a product
                                 </Typography>
                                 <Typography color="textSecondary" gutterBottom>
-                                    <Link href="#" color="inherit">
+                                    <Link href="#vendor" color="inherit">
                                         by : Vendor Name
                                     </Link>
                                 </Typography>
-                                <Rating
-                                    name="read-only"
-                                    value={4}
-                                    readOnly
-                                    size="small"
-                                />
+                                <div style={{ display: "flex" }}>
+                                    <Typography variant="h6">4.4</Typography>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            marginRight: 5,
+                                        }}
+                                    ></div>
+                                    <Rating
+                                        name="read-only"
+                                        value={4} // avg of star
+                                        readOnly
+                                        size="large"
+                                        max="1"
+                                    />
+                                </div>
                                 <div style={{ marginBottom: 10 }}>
                                     <Divider></Divider>
                                 </div>

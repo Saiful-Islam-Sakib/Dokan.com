@@ -39,14 +39,14 @@ const tutorialSteps = [
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 1000,
+        maxWidth: "100%",
         flexGrow: 1,
         marginTop: 100,
     },
     img: {
         maxHeight: 400,
         display: "block",
-        maxWidth: 1000,
+        maxWidth: "100%",
         overflow: "hidden",
         width: "100%",
     },

@@ -244,7 +244,7 @@ export default function PrimarySearchAppBar() {
                             </Typography>
                         </IconButton>
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={0} color="secondary">
+                            <Badge badgeContent={1} color="secondary">
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
@@ -315,12 +315,12 @@ export default function PrimarySearchAppBar() {
                         Top_Products
                     </Link>
                     <Link
-                        // for testing
-                        href="/singleProduct"
+                        // for testingggggggggggggggggggggggggggggggggggggg
+                        href="/listOfProducts"
                         className={classes.logoLink}
                         style={{ marginLeft: "16px" }}
                     >
-                        Single_Product_View
+                        list_of_products
                     </Link>
                 </Typography>
             </AppBar>

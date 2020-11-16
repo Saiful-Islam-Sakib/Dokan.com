@@ -63,6 +63,7 @@ export default function CustomizedSelects() {
                     onChange={handleChange}
                     backgroundColor="white"
                     input={<BootstrapInput />}
+                    style={{ backgroundColor: "#ffffff" }}
                 >
                     <MenuItem value={"All"}>All</MenuItem>
                     <MenuItem value={"consumerFood"}>Consumer food</MenuItem>

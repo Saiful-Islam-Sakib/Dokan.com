@@ -90,8 +90,8 @@ export default function FullWidthTabs() {
                     centered
                     aria-label="full width tabs example"
                 >
-                    <Tab label="Review" {...a11yProps(0)} />
-                    <Tab label="Comments" {...a11yProps(1)} />
+                    <Tab label="Comments" {...a11yProps(0)} />
+                    <Tab label="Review" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -100,52 +100,6 @@ export default function FullWidthTabs() {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <Typography component="legend" style={{ marginBottom: 8 }}>
-                        Rate This Product
-                    </Typography>
-                    <form>
-                        <Rating
-                            name="ratingGiven"
-                            value={RatingValue}
-                            onChange={(event, newValue) => {
-                                setRatingValue(newValue);
-                            }}
-                        />
-                        <div style={{ marginBottom: 8 }}></div>
-                        <OutlinedInput
-                            id="reviewerName"
-                            value={"Name"}
-                            readOnly
-                            fullWidth
-                            multiline
-                            style={{ marginBottom: 8 }}
-                        />
-                        <TextField
-                            id="reviewText"
-                            placeholder="empty"
-                            fullWidth
-                            multiline
-                            rows={8}
-                            variant="outlined"
-                            style={{ marginBottom: 8 }}
-                        />
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "flex-end",
-                            }}
-                        >
-                            <Button
-                                variant="contained"
-                                type="submit"
-                                color="primary"
-                            >
-                                Send
-                            </Button>
-                        </div>
-                    </form>
-                </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
                     <Typography component="legend" style={{ marginBottom: 8 }}>
                         Comment:
                     </Typography>
@@ -224,6 +178,52 @@ export default function FullWidthTabs() {
                             </CardContent>
                         </Card>
                     </Box>
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    <Typography component="legend" style={{ marginBottom: 8 }}>
+                        Rate This Product
+                    </Typography>
+                    <form>
+                        <Rating
+                            name="ratingGiven"
+                            value={RatingValue}
+                            onChange={(event, newValue) => {
+                                setRatingValue(newValue);
+                            }}
+                        />
+                        <div style={{ marginBottom: 8 }}></div>
+                        <OutlinedInput
+                            id="reviewerName"
+                            value={"Name"}
+                            readOnly
+                            fullWidth
+                            multiline
+                            style={{ marginBottom: 8 }}
+                        />
+                        <TextField
+                            id="reviewText"
+                            placeholder="empty"
+                            fullWidth
+                            multiline
+                            rows={8}
+                            variant="outlined"
+                            style={{ marginBottom: 8 }}
+                        />
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                            }}
+                        >
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                color="primary"
+                            >
+                                Send
+                            </Button>
+                        </div>
+                    </form>
                 </TabPanel>
             </SwipeableViews>
         </div>
