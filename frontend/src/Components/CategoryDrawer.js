@@ -12,6 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
+import { Link } from "@material-ui/core";
 
 const useStyles = makeStyles({
     list: {
@@ -35,10 +36,19 @@ export default function TemporaryDrawer() {
     const [state, setState] = React.useState({
         left: false,
     });
+
     const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
 
     const handleClick = () => {
         setOpen(!open);
+    };
+    const handleClick2 = () => {
+        setOpen2(!open2);
+    };
+    const handleClick3 = () => {
+        setOpen3(!open3);
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -62,14 +72,87 @@ export default function TemporaryDrawer() {
             <img className={classes.header__logo} src={logo} alt="logo" />
             <Divider></Divider>
             <List>
-                <ListItem button key="Home Appliance" onClick={handleClick}>
-                    <ListItemText primary="Home Appliance" />
+                <ListItem button key="Consumer food" onClick={handleClick}>
+                    <ListItemText primary="Consumer food" />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem button>
-                            <ListItemText primary="Nested list item" />
+                            <ListItemText primary="Flour" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Rice" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Milk" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Spices & sauce " />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Salt" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Sugar" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="onion-garlic-potato" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Tea" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Chocolate" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Snacks" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="cooking & baking" />
+                        </ListItem>
+                    </List>
+                </Collapse>
+                <ListItem button key="Toletries" onClick={handleClick2}>
+                    <ListItemText primary="Toletries" />
+                    {open2 ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open2} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem button>
+                            <ListItemText primary="washroom toletries" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="home & kitchen toletries" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Air freshener" />
+                        </ListItem>
+                    </List>
+                </Collapse>
+                <ListItem button key="Health & Care" onClick={handleClick3}>
+                    <ListItemText primary="Health & Care" />
+                    {open3 ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open3} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem button>
+                            <ListItemText primary="Toothbrush" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Toothpaste" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Soap" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Shampoo" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Skin-care" />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Face Mask" />
                         </ListItem>
                     </List>
                 </Collapse>

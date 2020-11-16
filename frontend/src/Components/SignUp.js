@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -16,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 function Copyright() {
     return (
@@ -24,7 +23,7 @@ function Copyright() {
             {"2020 - "}
             {new Date().getFullYear()}
             {", "}
-            <Link color="inherit" href="#">
+            <Link color="inherit" href="/">
                 dokan.com
             </Link>
         </Typography>
@@ -74,6 +73,27 @@ export default function SignUp() {
                 </Typography>
                 <form className={classes.form}>
                     <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <RadioGroup
+                                row
+                                aria-label="accountType"
+                                name="accountType"
+                                defaultValue="Radio"
+                            >
+                                <FormControlLabel
+                                    value="Buyer"
+                                    control={<Radio required color="primary" />}
+                                    label="Buyer"
+                                    labelPlacement="start"
+                                />
+                                <FormControlLabel
+                                    value="Seller"
+                                    control={<Radio required color="primary" />}
+                                    label="Seller"
+                                    labelPlacement="start"
+                                />
+                            </RadioGroup>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
@@ -111,15 +131,11 @@ export default function SignUp() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <FormControl
-                                variant="outlined"
-                                fullWidth
-                                className={classes.formControl}
-                            >
+                            <FormControl variant="outlined" fullWidth>
                                 <InputLabel id="genderLabel">Gender</InputLabel>
                                 <Select
                                     labelId="genderLabel"
-                                    id="gendrid"
+                                    id="genderid"
                                     value={gender}
                                     onChange={handleChange}
                                     label="Gender"
