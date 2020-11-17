@@ -14,7 +14,6 @@ import {
     CardContent,
     CardMedia,
     OutlinedInput,
-    Paper,
     TextField,
 } from "@material-ui/core";
 

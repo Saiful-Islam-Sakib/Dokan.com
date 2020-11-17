@@ -9,7 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { TextField } from "@material-ui/core";
+import { Link, TextField } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 const styles = (theme) => ({
     root: {
@@ -74,34 +76,44 @@ const locations = [
 ];
 
 export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [areaName, setArea] = React.useState([]);
-    const [placeName, setPlace] = React.useState([""]);
+    const [placeName, setPlace] = React.useState([]);
+
+    const [city, setmycity] = React.useState("");
+    const [area, setmyarea] = React.useState("");
+    const [place, setmyplace] = React.useState("");
+
+    const [errorState, seterror] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
-        setOpen(false);
+        if (city.length > 0 && area.length > 0 && place.length > 0) {
+            setOpen(false);
+            seterror(false);
+        } else {
+            seterror(true);
+        }
     };
 
     return (
         <div>
             <Button
-                variant="outlined"
-                color="primary"
+                color="secondary"
+                startIcon={<LocationOnOutlinedIcon />}
                 onClick={handleClickOpen}
             >
-                Open dialog
+                <Typography>{`${city} / ${area} / ${place}`}</Typography>
             </Button>
             <Dialog
-                onClose={handleClose}
                 disableBackdropClick
                 disableEscapeKeyDown
                 aria-labelledby="customized-dialog-title"
                 open={open}
             >
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                <DialogTitle id="customized-dialog-title">
                     Please select Your Location
                 </DialogTitle>
                 <DialogContent dividers>
@@ -111,8 +123,11 @@ export default function CustomizedDialogs() {
                     <form style={{ display: "flex" }}>
                         <Autocomplete
                             id="locationCity"
+                            disableClearable
                             options={locations}
-                            getOptionLabel={(option) => option.city}
+                            getOptionLabel={(option) => {
+                                return option.city;
+                            }}
                             style={{ width: 300 }}
                             renderInput={(params) => (
                                 <TextField
@@ -122,13 +137,17 @@ export default function CustomizedDialogs() {
                                 />
                             )}
                             onChange={(event, option) => {
+                                setmycity(option.city);
                                 setArea(option.zone);
                             }}
                         />
                         <Autocomplete
                             id="locationArea"
+                            disableClearable
                             options={areaName}
-                            getOptionLabel={(option) => option.area}
+                            getOptionLabel={(option) => {
+                                return option.area;
+                            }}
                             style={{ width: 300 }}
                             renderInput={(params) => (
                                 <TextField
@@ -138,13 +157,17 @@ export default function CustomizedDialogs() {
                                 />
                             )}
                             onChange={(event, option) => {
+                                setmyarea(option.area);
                                 setPlace(option.place);
                             }}
                         />
                         <Autocomplete
                             id="locationPlace"
+                            disableClearable
                             options={placeName}
-                            getOptionLabel={(option) => option.place}
+                            getOptionLabel={(option) => {
+                                return option;
+                            }}
                             style={{ width: 300 }}
                             renderInput={(params) => (
                                 <TextField
@@ -153,11 +176,26 @@ export default function CustomizedDialogs() {
                                     variant="outlined"
                                 />
                             )}
+                            onChange={(event, option) => {
+                                setmyplace(option);
+                            }}
                         />
                     </form>
                 </DialogContent>
+                {errorState ? (
+                    <Typography>
+                        <Alert severity="warning">
+                            All fields are required
+                        </Alert>
+                    </Typography>
+                ) : null}
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button
+                        autoFocus
+                        type="submit"
+                        onClick={handleClose}
+                        color="primary"
+                    >
                         ok
                     </Button>
                 </DialogActions>

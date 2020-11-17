@@ -143,7 +143,7 @@ export default function SingleProduct() {
                                     ></div>
                                     <Rating
                                         name="read-only"
-                                        value={4} // avg of star
+                                        value={4} // avg of star that rounds automatically
                                         readOnly
                                         size="large"
                                         max="1"

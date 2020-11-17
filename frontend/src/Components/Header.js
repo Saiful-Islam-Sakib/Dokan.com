@@ -17,6 +17,7 @@ import CategoryList from "./CategoryList";
 import Link from "@material-ui/core/Link";
 import CartList from "./CartList";
 import { Breadcrumbs } from "@material-ui/core";
+import LocationAlart from "./locationAlert";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -287,8 +288,11 @@ export default function PrimarySearchAppBar() {
                             Contacts
                         </Link>
                     </Breadcrumbs>
-                </Typography>
-                <Typography className={secondHeaderClass.root}>
+                    <Divider
+                        orientation="vertical"
+                        flexItem
+                        variant="middle"
+                    ></Divider>
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link href="/consumerfood" className={classes.logoLink}>
                             Consumer_Food
@@ -304,8 +308,14 @@ export default function PrimarySearchAppBar() {
                         </Link>
                     </Breadcrumbs>
                 </Typography>
+                <Typography
+                    className={secondHeaderClass.root}
+                    style={{ backgroundColor: "#131921" }}
+                >
+                    <LocationAlart></LocationAlart>
+                </Typography>
             </AppBar>
-            <div style={{ marginBottom: 120 }}></div>
+            <div style={{ marginBottom: 150 }}></div>
             {renderMobileMenu}
             {renderMenu}
         </div>
