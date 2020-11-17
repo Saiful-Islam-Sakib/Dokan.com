@@ -14,13 +14,17 @@ router.post('/signup',
     check('address').not().isEmpty(),check('delivery_add').not().isEmpty(),check('password').isLength({min:6})],
     customerController.customerSignup);
 
-router.patch('/:cid/edit',
-    [check('phone').isLength({min:11,max:11}),check('city').not().isEmpty(),check('area').not().isEmpty(),
+router.patch('/editinfo/:cid',
+    [check('phone').isLength({min:11}),check('city').not().isEmpty(),check('area').not().isEmpty(),
     check('place').not().isEmpty(),check('address').not().isEmpty(),check('delivery_add').not().isEmpty()], 
     customerController.updatecustomer);
 
 router.delete('/delete/:cid', customerController.deletecustomer); // Admin previlege ,so it should be moved to admin-controller 
 
 router.post('/login',customerController.customerLogin);
+
+router.patch('/changePassword/:cid', 
+    [check('prevPassword').isLength({min:6}),check('newPassword').isLength({min:6})],
+    customerController.changePassword);
 
 module.exports = router;
