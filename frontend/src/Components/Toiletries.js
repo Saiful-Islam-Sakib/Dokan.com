@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         flexWrap: "wrap",
+        justifyContent: "center",
     },
     title: {
         fontSize: 14,
@@ -23,10 +24,12 @@ export default function OutlinedCard() {
     return (
         <div style={{ marginBottom: 50 }}>
             <Typography variant="h5" gutterBottom component="p">
-                Top Deals
+                Toiletries
             </Typography>
             <Card>
                 <Card className={classes.root} variant="outlined">
+                    <SmallCard></SmallCard>
+                    <SmallCard></SmallCard>
                     <SmallCard></SmallCard>
                     <SmallCard></SmallCard>
                     <SmallCard></SmallCard>

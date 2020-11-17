@@ -102,7 +102,7 @@ export default function CustomizedDialogs() {
                 open={open}
             >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Select Your Location
+                    Please select Your Location
                 </DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>

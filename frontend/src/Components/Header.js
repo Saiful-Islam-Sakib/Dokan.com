@@ -16,6 +16,7 @@ import Category from "./CategoryDrawer";
 import CategoryList from "./CategoryList";
 import Link from "@material-ui/core/Link";
 import CartList from "./CartList";
+import { Breadcrumbs } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         width: "100%",
         [theme.breakpoints.up("sm")]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: theme.spacing(1),
             width: "auto",
         },
     },
@@ -173,7 +174,7 @@ export default function PrimarySearchAppBar() {
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="cart" color="inherit">
-                    <Badge badgeContent={0} color="secondary">
+                    <Badge badgeContent={1} color="secondary">
                         <CartList></CartList>
                     </Badge>
                 </IconButton>
@@ -214,9 +215,11 @@ export default function PrimarySearchAppBar() {
                         </Link>
                     </Typography>
 
+                    <div className={classes.grow} />
+
                     <CategoryList></CategoryList>
 
-                    <div className={classes.search}>
+                    <div className={classes.search} style={{ flexGrow: 2 }}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -228,6 +231,7 @@ export default function PrimarySearchAppBar() {
                             }}
                             inputProps={{ "aria-label": "search" }}
                             onChange={onChangeSearchbar}
+                            fullWidth
                         />
                     </div>
                     <div className={classes.grow} />
@@ -272,56 +276,33 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar>
                 <Typography className={secondHeaderClass.root}>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        About
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Contacts
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Seller
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Deals
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Products
-                    </Link>
-                    <Link
-                        // for testingggggggggggggggggggggggggggggggggggggg
-                        href="/listOfProducts"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        list_of_products
-                    </Link>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link href="/" className={classes.logoLink}>
+                            Home
+                        </Link>
+                        <Link href="/about" className={classes.logoLink}>
+                            About
+                        </Link>
+                        <Link href="/contacts" className={classes.logoLink}>
+                            Contacts
+                        </Link>
+                    </Breadcrumbs>
+                </Typography>
+                <Typography className={secondHeaderClass.root}>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link href="/consumerfood" className={classes.logoLink}>
+                            Consumer_Food
+                        </Link>
+                        <Link href="/toiletries" className={classes.logoLink}>
+                            Toiletries
+                        </Link>
+                        <Link
+                            href="/healthandcare"
+                            className={classes.logoLink}
+                        >
+                            {"Health_&_care"}
+                        </Link>
+                    </Breadcrumbs>
                 </Typography>
             </AppBar>
             <div style={{ marginBottom: 120 }}></div>

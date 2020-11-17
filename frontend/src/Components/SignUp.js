@@ -14,7 +14,6 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 function Copyright() {
     return (
@@ -62,7 +61,7 @@ export default function SignUp() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -73,27 +72,6 @@ export default function SignUp() {
                 </Typography>
                 <form className={classes.form}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <RadioGroup
-                                row
-                                aria-label="accountType"
-                                name="accountType"
-                                defaultValue="Radio"
-                            >
-                                <FormControlLabel
-                                    value="Buyer"
-                                    control={<Radio required color="primary" />}
-                                    label="Buyer"
-                                    labelPlacement="start"
-                                />
-                                <FormControlLabel
-                                    value="Seller"
-                                    control={<Radio required color="primary" />}
-                                    label="Seller"
-                                    labelPlacement="start"
-                                />
-                            </RadioGroup>
-                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
@@ -127,7 +105,7 @@ export default function SignUp() {
                                 label="Age"
                                 name="age"
                                 type="number"
-                                autoComplete="age"
+                                autoComplete
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -167,10 +145,23 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="phoneNumber"
-                                label="Phone Number"
+                                label="Phone Number : 01xxxxxxxxx"
                                 name="phoneNumber"
-                                type="number"
-                                autoComplete="phoneNumber"
+                                type="tel"
+                                autoComplete
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            {/* city , area , place : text box */}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="homeAddress"
+                                label="Home Address"
+                                name="homeAddress"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -182,7 +173,7 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
+                                autoComplete
                             />
                         </Grid>
                         <Grid item xs={12}>

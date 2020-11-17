@@ -5,7 +5,6 @@ import SignUp from "./Components/SignUp";
 import Footer from "./Components/Footer";
 import Body from "./Components/HomePageBody";
 import SingleProduct from "./Components/SingleProduct";
-import ListOfProducts from "./Components/listOfProducts";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -23,9 +22,6 @@ function App() {
                     </Route>
                     <Route exact path="/signUp">
                         <SignUp></SignUp>
-                    </Route>
-                    <Route exact path="/listOfProducts">
-                        <ListOfProducts></ListOfProducts>
                     </Route>
                 </Switch>
                 <Footer></Footer>
