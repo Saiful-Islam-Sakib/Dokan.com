@@ -12,7 +12,8 @@ router.patch('/sell1/orderDeli/:oid',check('order_delivered').not().isEmpty(), o
 
 router.post('/:cid/newOrder',
     [check('product').not().isEmpty(),check('quantity').isLength({min:1}),check('total_amount').isLength({min:3}),
-    check('c_id').not().isEmpty(),check('corder_confirmation').not().isEmpty(),check('order_delivered').not().isEmpty()],
+    check('c_id').not().isEmpty(),check('order_confirmation').not().isEmpty(),check('order_delivered').not().isEmpty(),
+    check('order_date').not().isEmpty()],
     orderControllers.createNewOrder);
 
 router.delete('/:cid/:oid',orderControllers.deleteOrder);

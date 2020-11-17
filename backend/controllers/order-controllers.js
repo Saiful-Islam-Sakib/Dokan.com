@@ -1,5 +1,6 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
+const order = require('../models/order-model');
 
 let dummy_order = [
     {
@@ -13,17 +14,23 @@ let dummy_order = [
     }
 ];
 
-const createNewOrder = (req,res,next) =>{
+const createNewOrder = async (req,res,next) =>{
     const err  = validationResult(req);
     if(!err.isEmpty()){
         console.log(err);
         throw new httpError('Something wrong in Order',422);
     }
-    const cus_id = req.body.cid;
-    const {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered} = req.body;
+    //const cus_id = req.body.cid;
+    const {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
 
-    const createdorder = {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered};
-    dummy_order.push(createdorder);
+    const createdorder = new order ({o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
+    try{
+        await createdorder.save();
+    }catch(err){
+        const erro = new httpError('Could not place an order',500);
+        return next(erro);
+    }
+    //dummy_order.push(createdorder);
     res.status(201).json({msg : 'Your Order has been placed'});
 };
 
