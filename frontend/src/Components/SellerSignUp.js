@@ -277,47 +277,6 @@ export default function SignUp() {
                                     name="homeAddress"
                                 />
                             </Grid>
-                            {/* <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Registration:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="retype-password"
-                                    label="Retype-Password"
-                                    type="password"
-                                    id="retype-password"
-                                    autoComplete="retype-password"
-                                />
-                            </Grid> */}
                         </Grid>
                         <Divider
                             orientation="vertical"
