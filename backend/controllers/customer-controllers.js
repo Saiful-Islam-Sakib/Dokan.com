@@ -21,15 +21,19 @@ let dummy_customer = [
     }
 ];
 
-const getcusinfobyid = (req,res,next) =>{
+const getcusinfobyid = async (req,res,next) =>{
     const cus_id = req.params.cid;
-    const cus_info = dummy_customer.find(a =>{
-        return a.c_id == cus_id;
-    });
+    let cus_info; 
+    try{
+       cus_info = await customer.findById(cus_id);
+    }catch(err){
+        const erro = new httpError('Something went wrong,could not find customer information',500);
+        return next(erro);
+    }
     if (!cus_info){
         throw new httpError('Could not find Customer.',404);
     }
-    res.json({cus_info});
+    res.json({cus_info : cus_info.toObject({getters : true})});
 };
 
 const customerSignup = async (req,res,next) => {
