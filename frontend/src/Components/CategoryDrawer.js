@@ -12,7 +12,6 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
-import { Link } from "@material-ui/core";
 
 const useStyles = makeStyles({
     list: {
@@ -40,6 +39,8 @@ export default function TemporaryDrawer() {
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [open3, setOpen3] = React.useState(false);
+
+    const [selectedCategory, setCategory] = React.useState("");
 
     const handleClick = () => {
         setOpen(!open);
@@ -78,38 +79,104 @@ export default function TemporaryDrawer() {
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("flour");
+                                setCategory("flour");
+                            }}
+                        >
                             <ListItemText primary="Flour" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("rice");
+                                setCategory("rice");
+                            }}
+                        >
                             <ListItemText primary="Rice" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("milk");
+                                setCategory("milk");
+                            }}
+                        >
                             <ListItemText primary="Milk" />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemText primary="Spices & sauce " />
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("spiceAndSauce");
+                                setCategory("spiceAndSauce");
+                            }}
+                        >
+                            <ListItemText primary={"Spices & sauce"} />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("salt");
+                                setCategory("salt");
+                            }}
+                        >
                             <ListItemText primary="Salt" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("sugar");
+                                setCategory("sugar");
+                            }}
+                        >
                             <ListItemText primary="Sugar" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("onionGarlicPotato");
+                                setCategory("onionGarlicPotato");
+                            }}
+                        >
                             <ListItemText primary="onion-garlic-potato" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("tea");
+                                setCategory("tea");
+                            }}
+                        >
                             <ListItemText primary="Tea" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("chocolate");
+                                setCategory("chocolate");
+                            }}
+                        >
                             <ListItemText primary="Chocolate" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("snacks");
+                                setCategory("snacks");
+                            }}
+                        >
                             <ListItemText primary="Snacks" />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemText primary="cooking & baking" />
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("cookingAndBacking");
+                                setCategory("cookingAndBacking");
+                            }}
+                        >
+                            <ListItemText primary={"cooking & baking"} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -119,39 +186,95 @@ export default function TemporaryDrawer() {
                 </ListItem>
                 <Collapse in={open2} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button>
-                            <ListItemText primary="washroom toletries" />
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("washroomToilatries");
+                                setCategory("salt");
+                            }}
+                        >
+                            <ListItemText primary="washroom toiletries" />
                         </ListItem>
-                        <ListItem button>
-                            <ListItemText primary="home & kitchen toletries" />
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("homeAndKitchenToiletries");
+                                setCategory("homeAndKitchenToiletries");
+                            }}
+                        >
+                            <ListItemText
+                                primary={"home & kitchen toiletries"}
+                            />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("airFreshener");
+                                setCategory("airFreshener");
+                            }}
+                        >
                             <ListItemText primary="Air freshener" />
                         </ListItem>
                     </List>
                 </Collapse>
-                <ListItem button key="Health & Care" onClick={handleClick3}>
-                    <ListItemText primary="Health & Care" />
+                <ListItem button key={"Health & Care"} onClick={handleClick3}>
+                    <ListItemText primary={"Health & Care"} />
                     {open3 ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open3} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("toothBrush");
+                                setCategory("toothBrush");
+                            }}
+                        >
                             <ListItemText primary="Toothbrush" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("toothPaste");
+                                setCategory("toothPaste");
+                            }}
+                        >
                             <ListItemText primary="Toothpaste" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("soap");
+                                setCategory("soap");
+                            }}
+                        >
                             <ListItemText primary="Soap" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("shampoo");
+                                setCategory("shampoo");
+                            }}
+                        >
                             <ListItemText primary="Shampoo" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("skinCare");
+                                setCategory("skinCare");
+                            }}
+                        >
                             <ListItemText primary="Skin-care" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("faceMask");
+                                setCategory("faceMask");
+                            }}
+                        >
                             <ListItemText primary="Face Mask" />
                         </ListItem>
                     </List>

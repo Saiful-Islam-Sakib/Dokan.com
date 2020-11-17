@@ -12,7 +12,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
     return (
         <Router>
-            <div className="App">
+            <div
+                className="App"
+                style={{
+                    backgroundImage: `linear-gradient(to left, gray, white, gray)`,
+                }}
+            >
                 <Header />
                 <Switch>
                     <Route exact path="/">

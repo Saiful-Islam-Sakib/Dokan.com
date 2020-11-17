@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: "100%",
         flexGrow: 1,
-        marginTop: 100,
+        //marginTop: 100,
     },
     img: {
         maxHeight: 400,

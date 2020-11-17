@@ -327,7 +327,7 @@ export default function PrimarySearchAppBar() {
                     <LocationAlart></LocationAlart>
                 </Typography>
             </AppBar>
-            <div style={{ marginBottom: 150 }}></div>
+            <div style={{ height: 150, background: "#131921" }}></div>
             {renderMobileMenu}
             {renderMenu}
         </div>

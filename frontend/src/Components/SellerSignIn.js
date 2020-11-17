@@ -66,9 +66,9 @@ function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
+                        id="sellerEmail"
                         label="Email / Phone Number"
-                        name="email"
+                        name="sellerEmail"
                         autoComplete="email"
                         autoFocus
                     />
@@ -77,10 +77,10 @@ function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
+                        name="sellerPassword"
                         label="Password"
                         type="password"
-                        id="password"
+                        id="sellerPassword"
                         autoComplete="current-password"
                     />
                     <FormControlLabel
