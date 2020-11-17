@@ -82,18 +82,25 @@ const orderConfirmation = async (req,res,next) => {
     res.status(201).json({msg : 'Your order has been confirmed'});
 };
 
-const deleteOrder = (req,res,next) => {
-    const order_id = req.body.oid;
-    if(!dummy_order.find(p => p.id === order_id)){
-        throw new httpError('Order is invalid',404);
+const deleteOrder = async (req,res,next) => {
+    const order_id = req.params.oid;
+    let orderinfo;
+    try{
+        orderinfo = await order.findById(order_id); 
+    }catch(err){
+        const erro = new httpError('Order not found',500);
+        return next(erro);
     }
-    const ordCon = dummy_order.find(p => p.id === order_id);
-    //console.log(ordCon);
-    if(ordCon.order_confirmation == 'false'){
-        dummy_order = dummy_order.filter(p => p.id !== order_id);
-        return res.status(200).json({msg : 'Order Cancelled'});
+    if(orderinfo.order_confirmation === true){
+        return res.json({msg : 'Your order is already confirmed'});
     }
-    res.status(401).json({msg : 'Sorry your order has been confirmed'});
+    try{
+        await orderinfo.remove();
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
+    return res.status(201).json({msg : 'Successfully deleted order'});
 };
 
 const orderDelivered = async (req,res,next) => {
