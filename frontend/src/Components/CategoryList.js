@@ -63,10 +63,12 @@ export default function CustomizedSelects() {
                     onChange={handleChange}
                     backgroundColor="white"
                     input={<BootstrapInput />}
+                    style={{ backgroundColor: "#ffffff" }}
                 >
                     <MenuItem value={"All"}>All</MenuItem>
-                    <MenuItem value={"Spices"}>Spices</MenuItem>
-                    <MenuItem value={"Home Appliance"}>Home Appliance</MenuItem>
+                    <MenuItem value={"consumerFood"}>Consumer food</MenuItem>
+                    <MenuItem value={"toletries"}>Toletries</MenuItem>
+                    <MenuItem value={"health&Care"}>Health & Care</MenuItem>
                 </Select>
             </FormControl>
         </div>
