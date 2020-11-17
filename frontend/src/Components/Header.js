@@ -94,7 +94,7 @@ const secondHeaderStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "gray",
+        backgroundColor: "#131921",
         flexFlow: "row wrap",
     },
 }));
@@ -153,13 +153,34 @@ export default function PrimarySearchAppBar() {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             id={mobileMenuId}
             keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                    aria-label="account"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+            </MenuItem>
+            <Divider></Divider>
+            <MenuItem>
+                <IconButton aria-label="cart" color="inherit">
+                    <Badge badgeContent={1} color="secondary">
+                        <CartList></CartList>
+                    </Badge>
+                </IconButton>
+                <p>Cart</p>
+            </MenuItem>
+            <Divider></Divider>
             <MenuItem>
                 <IconButton aria-label="signIn" color="inherit">
                     <Typography>
@@ -173,24 +194,19 @@ export default function PrimarySearchAppBar() {
                     </Typography>
                 </IconButton>
             </MenuItem>
+            <Divider></Divider>
             <MenuItem>
-                <IconButton aria-label="cart" color="inherit">
-                    <Badge badgeContent={1} color="secondary">
-                        <CartList></CartList>
-                    </Badge>
+                <IconButton aria-label="sellerSignIn" color="inherit">
+                    <Typography>
+                        <Link
+                            href="/sellerSignIn"
+                            className={classes.logoLink}
+                            style={{ textDecoration: "none" }}
+                        >
+                            Seller Sign In
+                        </Link>
+                    </Typography>
                 </IconButton>
-                <p>Cart</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
             </MenuItem>
         </Menu>
     );
@@ -248,6 +264,16 @@ export default function PrimarySearchAppBar() {
                                 </Link>
                             </Typography>
                         </IconButton>
+                        <IconButton aria-label="sellerSignIn" color="inherit">
+                            <Typography>
+                                <Link
+                                    href="/sellerSignIn"
+                                    className={classes.logoLink}
+                                >
+                                    Seller ?
+                                </Link>
+                            </Typography>
+                        </IconButton>
                         <IconButton aria-label="cart" color="inherit">
                             <Badge badgeContent={1} color="secondary">
                                 <CartList></CartList>
@@ -278,15 +304,9 @@ export default function PrimarySearchAppBar() {
                 </Toolbar>
                 <Typography className={secondHeaderClass.root}>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link href="/" className={classes.logoLink}>
-                            Home
-                        </Link>
-                        <Link href="/about" className={classes.logoLink}>
-                            About
-                        </Link>
-                        <Link href="/contacts" className={classes.logoLink}>
-                            Contacts
-                        </Link>
+                        <Link href="/">Home</Link>
+                        <Link href="/about">About</Link>
+                        <Link href="/contacts">Contacts</Link>
                     </Breadcrumbs>
                     <Divider
                         orientation="vertical"
@@ -294,24 +314,16 @@ export default function PrimarySearchAppBar() {
                         variant="middle"
                     ></Divider>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link href="/consumerfood" className={classes.logoLink}>
-                            Consumer_Food
-                        </Link>
-                        <Link href="/toiletries" className={classes.logoLink}>
-                            Toiletries
-                        </Link>
-                        <Link
-                            href="/healthandcare"
-                            className={classes.logoLink}
-                        >
-                            {"Health_&_care"}
-                        </Link>
+                        <Link href="/consumerfood">Consumer_Food</Link>
+                        <Link href="/toiletries">Toiletries</Link>
+                        <Link href="/healthandcare">{"Health_&_care"}</Link>
                     </Breadcrumbs>
                 </Typography>
-                <Typography
-                    className={secondHeaderClass.root}
-                    style={{ backgroundColor: "#131921" }}
-                >
+                <Divider
+                    variant="middle"
+                    style={{ backgroundColor: "whitesmoke" }}
+                ></Divider>
+                <Typography className={secondHeaderClass.root}>
                     <LocationAlart></LocationAlart>
                 </Typography>
             </AppBar>

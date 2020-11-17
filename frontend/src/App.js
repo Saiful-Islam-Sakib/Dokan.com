@@ -4,7 +4,8 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Footer from "./Components/Footer";
 import Body from "./Components/HomePageBody";
-import SingleProduct from "./Components/SingleProduct";
+import SellerSignIn from "./Components/SellerSignIn";
+import SellerSignUp from "./Components/SellerSignUp";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -22,6 +23,12 @@ function App() {
                     </Route>
                     <Route exact path="/signUp">
                         <SignUp></SignUp>
+                    </Route>
+                    <Route exact path="/sellerSignIn">
+                        <SellerSignIn></SellerSignIn>
+                    </Route>
+                    <Route exact path="/sellerSignUp">
+                        <SellerSignUp></SellerSignUp>
                     </Route>
                 </Switch>
                 <Footer></Footer>
