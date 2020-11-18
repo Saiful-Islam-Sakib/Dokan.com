@@ -306,7 +306,6 @@ export default function PrimarySearchAppBar() {
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link href="/">Home</Link>
                         <Link href="/about">About</Link>
-                        <Link href="/contacts">Contacts</Link>
                     </Breadcrumbs>
                     <Divider
                         orientation="vertical"

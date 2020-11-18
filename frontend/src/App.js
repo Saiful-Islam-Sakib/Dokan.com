@@ -6,6 +6,7 @@ import Footer from "./Components/Footer";
 import Body from "./Components/HomePageBody";
 import SellerSignIn from "./Components/SellerSignIn";
 import SellerSignUp from "./Components/SellerSignUp";
+import About from "./Components/AboutPage";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -22,6 +23,9 @@ function App() {
                 <Switch>
                     <Route exact path="/">
                         <Body></Body>
+                    </Route>
+                    <Route exact path="/about">
+                        <About></About>
                     </Route>
                     <Route exact path="/signIn">
                         <SignIn></SignIn>
