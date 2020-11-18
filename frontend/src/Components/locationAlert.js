@@ -9,7 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import {TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
@@ -76,7 +76,13 @@ const locations = [
 ];
 
 export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(
+        sessionStorage.city !== undefined &&
+            sessionStorage.area !== undefined &&
+            sessionStorage.place !== undefined
+            ? false
+            : true
+    );
     const [areaName, setArea] = React.useState([]);
     const [placeName, setPlace] = React.useState([]);
 
@@ -105,7 +111,13 @@ export default function CustomizedDialogs() {
                 startIcon={<LocationOnOutlinedIcon />}
                 onClick={handleClickOpen}
             >
-                <Typography>{`${city} / ${area} / ${place}`}</Typography>
+                <Typography>
+                    {`${sessionStorage.getItem(
+                        "city"
+                    )} / ${sessionStorage.getItem(
+                        "area"
+                    )} / ${sessionStorage.getItem("place")}`}
+                </Typography>
             </Button>
             <Dialog
                 disableBackdropClick
@@ -138,6 +150,7 @@ export default function CustomizedDialogs() {
                             )}
                             onChange={(event, option) => {
                                 setmycity(option.city);
+                                sessionStorage.setItem("city", option.city);
                                 setArea(option.zone);
                             }}
                         />
@@ -158,6 +171,7 @@ export default function CustomizedDialogs() {
                             )}
                             onChange={(event, option) => {
                                 setmyarea(option.area);
+                                sessionStorage.setItem("area", option.area);
                                 setPlace(option.place);
                             }}
                         />
@@ -178,6 +192,7 @@ export default function CustomizedDialogs() {
                             )}
                             onChange={(event, option) => {
                                 setmyplace(option);
+                                sessionStorage.setItem("place", option);
                             }}
                         />
                     </form>

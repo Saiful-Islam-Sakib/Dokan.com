@@ -17,7 +17,8 @@ function App() {
             <div
                 className="App"
                 style={{
-                    backgroundImage: `linear-gradient(to left, gray, white, gray)`,
+                    //backgroundImage: `linear-gradient(to left, gray, white, gray)`,
+                    //backgroundImage: `linear-gradient(white 50%, #131921)`,
                 }}
             >
                 <Header />
