@@ -7,6 +7,7 @@ import Body from "./Components/HomePageBody";
 import SellerSignIn from "./Components/SellerSignIn";
 import SellerSignUp from "./Components/SellerSignUp";
 import About from "./Components/AboutPage";
+import CheckOut from "./Components/Checkout/Checkout";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -38,6 +39,9 @@ function App() {
                     </Route>
                     <Route exact path="/sellerSignUp">
                         <SellerSignUp></SellerSignUp>
+                    </Route>
+                    <Route exact path="/checkout">
+                        <CheckOut></CheckOut>
                     </Route>
                 </Switch>
                 <Footer></Footer>

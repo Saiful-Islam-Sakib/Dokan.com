@@ -15,6 +15,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ImageIcon from "@material-ui/icons/Image";
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.default,
     },
     quantityNumber: {
+        minWidth: 20,
         maxWidth: 50,
         maxHeight: 30,
-        marginRight: "8px",
     },
 }));
 
@@ -71,32 +72,39 @@ export default function AlertDialog() {
                         <List className={classes.root}>
                             <ListItem>
                                 <ListItemAvatar>
-                                    <Avatar>
-                                        <ImageIcon />
-                                    </Avatar>
+                                    <Avatar
+                                        variant="rounded"
+                                        alt="productImage"
+                                        src="#image"
+                                    ></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Rice 1 kg"
+                                    primary="Rice 1 asdasd asas dasdas dasd asd  dasd"
                                     secondary="$100"
+                                    style={{ marginRight: "1rem" }}
                                 />
                                 <TextField
                                     id="filled-disabled"
                                     type="number"
                                     defaultValue="1"
                                     inputProps={{
-                                        min: "0",
+                                        min: "1",
                                         style: { textAlign: "center" },
                                     }}
                                     className={classes.quantityNumber}
                                 />
-                                <Button>X</Button>
+                                <Button>
+                                    <DeleteIcon></DeleteIcon>
+                                </Button>
                             </ListItem>
                         </List>
                     </DialogContentText>
                 </DialogContent>
                 <Divider></Divider>
                 <DialogActions>
-                    <Button color="primary">Checkout</Button>
+                    <Button color="primary" variant="outlined" href="/checkout">
+                        Checkout
+                    </Button>
                     <Button onClick={handleClose} color="primary" autoFocus>
                         Close
                     </Button>
