@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20,
     },
     cardMedia: {
-        height: 80,
+        maxHeight: 80,
         objectFit: "fill",
     },
     selectedCard: {
@@ -185,7 +185,7 @@ export default function SingleProduct() {
                                     id="sub"
                                     variant="outlined"
                                     onClick={() => {
-                                        if (value > 0) {
+                                        if (value > 1) {
                                             setValue(value - 1);
                                         }
                                     }}
