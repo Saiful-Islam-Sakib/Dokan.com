@@ -115,6 +115,7 @@ export default function Checkout() {
                                     send you an update when your order has
                                     shipped.
                                 </Typography>
+                                <div style={{ marginBottom: "15%" }}></div>
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
