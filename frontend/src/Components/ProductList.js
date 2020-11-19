@@ -1339,7 +1339,7 @@ export default function ProductList() {
                         onChange={handleChange}
                         label="Sort"
                     >
-                        <MenuItem value="sort">Sort</MenuItem>
+                        <MenuItem value="">Sort</MenuItem>
                         <MenuItem value="priceHL">
                             {"Price Hight -> Low"}
                         </MenuItem>

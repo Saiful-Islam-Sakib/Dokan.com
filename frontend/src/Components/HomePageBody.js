@@ -6,7 +6,6 @@ import Toiletries from "./Toiletries";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardMedia } from "@material-ui/core";
-import ProductListing from "./ProductList";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,8 +47,6 @@ export default function HomePageBody() {
                         <ConsumerFood></ConsumerFood>
                         <HealthCare></HealthCare>
                         <Toiletries></Toiletries>
-                        {/* test */}
-                        <ProductListing></ProductListing>
                     </Container>
                     <Card style={{ marginRight: 20 }}>
                         <CardMedia
