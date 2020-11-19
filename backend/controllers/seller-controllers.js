@@ -62,6 +62,22 @@ const sellerSignup = async (req,res,next) =>{
     }
     const {v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
         bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc} = req.body;
+    
+        let existingSeller1;
+        let existingSeller2;
+        try{
+            existingSeller1 = await seller.findOne({email : email});
+            existingSeller2 = await seller.findOne({phone : phone});
+        }catch(err){
+            const erro = new httpError('Seller Signup failed,please try again',500);
+            return next(erro);
+        }
+        if(existingSeller1 || existingSeller2 ){
+            const erro = new httpError('Seller already exist',422);
+            return next(erro);
+        }
+    
+
     const newSeller = new seller ({v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
         bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc});
     //dummy_seller.push(newSeller);
