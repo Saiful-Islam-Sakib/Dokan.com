@@ -46,12 +46,12 @@ const innerCardStyle = makeStyles({
 });
 
 const products = [
-    { id: 1, name: "name", brand: "brand", vendor: "a", price: 100 },
-    { id: 2, name: "name", brand: "brand", vendor: "b", price: 100 },
-    { id: 3, name: "name", brand: "brand", vendor: "c", price: 100 },
-    { id: 4, name: "name", brand: "brand", vendor: "d", price: 100 },
-    { id: 5, name: "name", brand: "brand", vendor: "e", price: 100 },
-    { id: 6, name: "name", brand: "brand", vendor: "f", price: 100 },
+    { id: 1, name: "name1", brand: "brand1", vendor: "a", price: 100 },
+    { id: 2, name: "name2", brand: "brand2", vendor: "b", price: 200 },
+    { id: 3, name: "name3", brand: "brand3", vendor: "c", price: 300 },
+    { id: 4, name: "name4", brand: "brand4", vendor: "d", price: 400 },
+    { id: 5, name: "name5", brand: "brand5", vendor: "e", price: 500 },
+    { id: 6, name: "name6", brand: "brand6", vendor: "f", price: 600 },
 ];
 
 export default function ProductList() {
