@@ -45,12 +45,28 @@ const getsellerinfobyid = async(req,res,next) =>{
     res.status(201).json({msg : sellerinfo.toObject({getters : true})});
 };
 
-const sellerLogin = (req,res,next) =>{
+const sellerLogin = async(req,res,next) =>{
    const {email,phone,password} = req.body;
+   /*
    const validSeller = dummy_seller.find(p => (p.email === email || p.phone === phone ));
     if(!validSeller || validSeller.password !== password){
         throw new httpError('Could not identify Seller',401);
+    } */
+
+    let existingSeller1;
+    let existingSeller2;
+    try{
+        existingSeller1 = await seller.findOne({email : email});
+        existingSeller2 = await seller.findOne({phone : phone});
+    }catch(err){
+        const erro = new httpError('Seller Login failed,please try again',500);
+        return next(erro);
     }
+    if(!(existingSeller1 || existingSeller2) || (existingSeller1.password !== password || existingSeller2.password !== password) ){
+        const erro = new httpError('Invalid credentials ,could not log in',401);
+        return next(erro);
+    }
+
     res.status(201).json({msg : 'Logged In'}); 
 };
 

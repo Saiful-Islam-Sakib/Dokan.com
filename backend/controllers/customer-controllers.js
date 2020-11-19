@@ -149,12 +149,27 @@ const deletecustomer = (req,res,next) =>{
     res.status(200).json({msg : 'Customer Deleted'});
 };
 
-const customerLogin = (req,res,next) => {
+const customerLogin = async(req,res,next) => {
     const {email , phone , password} = req.body;
+    /*
     const validCustomer = dummy_customer.find(p => (p.email === email || p.phone === phone ));
     if(!validCustomer || validCustomer.password !== password){
         throw new httpError('Could not identify Customer',401);
+    } */
+    let existingUser1;
+    let existingUser2;
+    try{
+        existingUser1 = await customer.findOne({email : email});
+        existingUser2 = await customer.findOne({phone : phone});
+    }catch(err){
+        const erro = new httpError('Customer Login failed,please try again',500);
+        return next(erro);
     }
+    if(!(existingUser1 || existingUser2) || (existingUser1.password !== password || existingUser1.password !== password) ){
+        const erro = new httpError('Invalid credentials ,could not log in',401);
+        return next(erro);
+    }
+
     res.status(201).json({msg : 'Logged In'});
 };
 
