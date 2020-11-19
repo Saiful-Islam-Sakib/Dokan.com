@@ -26,7 +26,7 @@ const createNewOrder = async (req,res,next) =>{
     //const cus_id = req.body.cid;
     const {p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
 
-    const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
+    // const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
     let customerexist;
     try{
         customerexist = await customer.findById(c_id);
@@ -49,6 +49,8 @@ const createNewOrder = async (req,res,next) =>{
         const erro = new httpError('Could not find product',500);
         return next(erro);
     }
+    const s_id = productexist.s_id;
+    const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date,s_id});
     //console.log(customerexist);
     try{
         //await createdorder.save();

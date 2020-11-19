@@ -8,7 +8,8 @@ const orderSchema = new mongo.Schema({
     total_amount : {type: Number , required: true},
     c_id : {type: mongo.Types.ObjectId , required: true, ref:'Customer'},
     order_confirmation: {type: Boolean , default:false},
-    order_delivered: {type: Boolean , default:false}
+    order_delivered: {type: Boolean , default:false},
+    s_id : {type: mongo.Types.ObjectId , required: true}
 });
 
 module.exports = mongo.model('Order',orderSchema);
