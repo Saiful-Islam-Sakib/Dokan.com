@@ -15,8 +15,8 @@ router.post('/sell1/newProduct',
 
 router.delete('/sell1/deleteProd/:pid',productControllers.deleteproduct); // This feature should be used by a seller
 
-router.get('/searchb/:pname',productControllers.productSearch);
+router.get('/searchbyname/:pname',productControllers.productSearch);
 
-router.get('/searchc/:pcat',productControllers.prodSearchbyCategory);
+router.get('/searchbycategory/:pcat',productControllers.prodSearchbyCategory);
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const httpError = require('../models/http-errors');
+const seller = require('../models/seller-model');
+const {validationResult} = require('express-validator');
 
 const dummy_seller = [
     {
@@ -24,15 +26,23 @@ const dummy_seller = [
     }
 ];
 
-const getsellerinfobyid = (req,res,next) =>{
+const getsellerinfobyid = async(req,res,next) =>{
     const seller_id = req.params.sid;
+    /*
     const seller_info = dummy_seller.find(a =>{
         return a.s_id == seller_id;
-    });
-    if (!seller_info){
+    }); */
+    let sellerinfo;
+    try{
+        sellerinfo = await seller.findById(seller_id); 
+    }catch(err){
+        const erro = new httpError('Customer Signup failed',500);
+        return next(erro);
+    }
+    if (!sellerinfo){
         throw new httpError('Could not find Seller.',404);
     }
-    res.json({seller_info});
+    res.status(201).json({msg : sellerinfo.toObject({getters : true})});
 };
 
 const sellerLogin = (req,res,next) =>{
@@ -44,13 +54,25 @@ const sellerLogin = (req,res,next) =>{
     res.status(201).json({msg : 'Logged In'}); 
 };
 
-const sellerSignup = (req,res,next) =>{
-    const {s_id,v_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
-        bank,branch,sh_city,sh_area,sh_place,sh_area_pc} = req.body;
-    const newSeller = {s_id,v_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
-        bank,branch,sh_city,sh_area,sh_place,sh_area_pc};
-    dummy_seller.push(newSeller);
-    res.status(201).json({msg : 'New Seller Added'});
+const sellerSignup = async (req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information submitted',422);
+    }
+    const {v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
+        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc} = req.body;
+    const newSeller = new seller ({v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
+        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc});
+    //dummy_seller.push(newSeller);
+    //console.log(newSeller);
+    try{
+        await newSeller.save();
+    }catch(err){
+        const erro = new httpError('Seller Signup failed',500);
+        return next(erro);
+    }
+    res.status(201).json({msg : newSeller.toObject({getters : true})});
 };
 
 

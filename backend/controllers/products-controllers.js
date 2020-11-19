@@ -1,5 +1,6 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
+const product = require('../models/product-model');
 
 let dummy_product = [
     {
@@ -37,55 +38,97 @@ let dummy_product = [
     }
 ];
 
-const getproductbyid = (req,res,next) =>{
+const getproductbyid = async (req,res,next) =>{
     const prod_id = req.params.pid;
-    const prod_info = dummy_product.find(a =>{
-        return a.p_id == prod_id;
-    });
+    let prod_info;
+    try{
+        prod_info = await product.findById(prod_id);
+    }catch(err){
+        const erro = new httpError('Sorry, something went wrong',500);
+        return next(erro);
+    }
     if (!prod_info){
         throw new httpError('Could not find the provided Product.',404);
     }
     res.json({prod_info});
 };
 
-const addproduct = (req,res,next) => {
+const addproduct = async(req,res,next) => {
     const err  = validationResult(req);
     if(!err.isEmpty()){
         console.log(err);
         return res.json({msg: 'Invalid information'});
     }
     const {p_id, name,brand,price,category,sub_category,tag,s_id } = req.body;
-    const createdprod = {
+    const createdprod = new product({
         p_id, name,brand,price,category,sub_category,tag,s_id
-    };
-    dummy_product.push(createdprod);
+    });
+    //dummy_product.push(createdprod);
+    console.log(createdprod);
+    try{
+        await createdprod.save();
+    }catch(err){
+        const erro = new httpError('Something gone wrong',500);
+        return next(erro);
+    }
     res.status(201).json({msg : 'New Product added'});
 };
 
-const deleteproduct = (req,res,nest) => {
-    const del_prod = req.body.pid;
+const deleteproduct = async(req,res,next) => {
+    const del_prod = req.params.pid;
+    /*
     if(!dummy_product.filter(p => p.id !== del_prod)){
         throw new httpError('Could not find product',404);
     }
-    dummy_product = dummy_product.filter(p => p.id !== del_prod);
+    dummy_product = dummy_product.filter(p => p.id !== del_prod); */
+    let prod;
+    try{
+        prod = await product.findById(del_prod);
+    }catch(err){
+        const erro = new httpError('Requested product is not avaiable',500);
+        return next(erro);
+    }
+    try{
+        await prod.remove();
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
     res.status(200).json({msg : 'Product Deleted'});
 };
 
-const productSearch  = (req,res,next) => {
+const productSearch  = async (req,res,next) => {
     const pname = req.params.pname;
+    /*
     const dum_prod = dummy_product.filter(p => p.name === pname);
     if(dum_prod.length === 0){
         return res.status(404).json({msg : 'Product not found'});
+    }*/
+    let prod;
+    try{
+        prod = await product.find({name : pname});
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
     }
-    res.status(200).json(dum_prod);
+    res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
 };
-const prodSearchbyCategory = (req ,res ,next) =>{
+const prodSearchbyCategory = async(req ,res ,next) =>{
     const p_cat = req.params.pcat;
+    /*
     const dum_product = dummy_product.filter(p => p.category === p_cat);
     if(dum_product.length === 0){
         return res.status(404).json({msg : 'Product not found'});
+    }*/
+    let prod;
+    try{
+        prod = await product.find({category : p_cat});
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
     }
-    res.status(200).json(dum_product);
+    res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
+    //res.status(200).json(dum_product);
 };
 
 exports.getproductbyid = getproductbyid;
