@@ -95,7 +95,7 @@ const sellerSignup = async (req,res,next) =>{
     
 
     const newSeller = new seller ({v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
-        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc});
+        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc,products:[]});
     //dummy_seller.push(newSeller);
     //console.log(newSeller);
     try{

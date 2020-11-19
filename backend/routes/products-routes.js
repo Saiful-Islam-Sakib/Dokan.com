@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/:pid', productControllers.getproductbyid);
 
-router.post('/sell1/newProduct',
+router.post('/newProduct',
     [check('name').not().isEmpty(),check('brand').not().isEmpty(),check('price').not().isEmpty(),
     check('price').isLength({min:2,max:3}),check('category').not().isEmpty(),check('sub_category').not().isEmpty(),
     check('s_id').not().isEmpty()],
