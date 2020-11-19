@@ -141,6 +141,7 @@ const changePassword = async (req,res,next) =>{
     res.status(200).json({msg: 'Successfully changed password'});
 };
 
+//This will be used by the admin
 const deletecustomer = (req,res,next) =>{
     const cus_id = req.body.cid;
     if(!dummy_customer.filter( p => p.id !== cus_id)){
