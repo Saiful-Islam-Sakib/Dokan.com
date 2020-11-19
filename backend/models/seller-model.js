@@ -1,10 +1,11 @@
 const mongo  = require('mongoose');
+const uniqueVali = require('mongoose-unique-validator');
 
 const sellerSchema = new mongo.Schema({
     //s_id : {type:String,required:true},
     v_f_name : {type:String,required:true},
     v_l_name : {type:String,required:true},
-    email : {type:String,required:true},
+    email : {type:String,required:true,unique:true},
     phone : {type:String,required:true},
     trade_lic_no : {type:String,required:true},
     birthday : {type:String,required:true},
@@ -23,5 +24,6 @@ const sellerSchema = new mongo.Schema({
     sh_place : {type:String,required:true},
     sh_area_pc : {type:String,required:true}
 });
+sellerSchema.plugin(uniqueVali);
 
 module.exports = new mongo.model('Seller',sellerSchema);

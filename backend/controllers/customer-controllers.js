@@ -45,6 +45,20 @@ const customerSignup = async (req,res,next) => {
     }
 
     const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
+
+    let existingUser;
+
+    try{
+        existingUser = await customer.findOne({email : email});
+    }catch(err){
+        const erro = new httpError('Customer Signup failed,please try again',500);
+        return next(erro);
+    }
+    if(existingUser){
+        const erro = new httpError('Customer already exist',422);
+        return next(erro);
+    }
+
     const createdUser =  new customer({
         c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
     });
@@ -54,7 +68,7 @@ const customerSignup = async (req,res,next) => {
         const erro = new httpError('Customer Signup failed',500);
         return next(erro);
     }
-    res.status(201).json({user : createdUser});
+    res.status(201).json({user : createdUser.toObject({getters:true})});
 };
 
 const updatecustomer = async (req,res,next) =>{
