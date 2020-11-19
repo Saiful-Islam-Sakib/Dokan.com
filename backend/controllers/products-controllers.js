@@ -1,6 +1,8 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const product = require('../models/product-model');
+const mongo = require('mongoose');
+const seller = require('../models/seller-model');
 
 let dummy_product = [
     {
@@ -64,9 +66,33 @@ const addproduct = async(req,res,next) => {
         p_id, name,brand,price,category,sub_category,tag,s_id
     });
     //dummy_product.push(createdprod);
-    console.log(createdprod);
+    //console.log(createdprod);
+    let sellerexist;
     try{
-        await createdprod.save();
+        sellerexist = await seller.findById(s_id);
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
+    if(!sellerexist){
+        const erro = new httpError('Seller not exist',401);
+        return next(erro);
+    }
+    //console.log(sellerexist);
+    try{
+        //await createdprod.save();
+        const session = await mongo.startSession();
+        //console.log('1');
+        session.startTransaction();
+        //console.log('2');
+        await createdprod.save({session : session});
+        //console.log('3');
+        sellerexist.products.push(createdprod);
+        //console.log('4');
+        await sellerexist.save({seller: session});
+        //console.log('5');
+        await session.commitTransaction();
+        //console.log('6');
     }catch(err){
         const erro = new httpError('Something gone wrong',500);
         return next(erro);

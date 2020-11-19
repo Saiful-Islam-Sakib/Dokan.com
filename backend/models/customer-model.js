@@ -1,11 +1,12 @@
 const mongo = require('mongoose');
+const uniqueVali = require('mongoose-unique-validator');
 
 const customerSchema = new mongo.Schema({
-    c_id : {type : String, required: true},
+    //c_id : {type : String, required: true},
     f_name : {type : String, required: true},
     l_name : {type : String, required: true},
-    email : {type : String ,required: true},
-    phone : {type : String, required: true},
+    email : {type : String ,required: true, unique:true},
+    phone : {type : String, required: true, unique:true},
     gender : {type : String, required: true},
     birthday : {type : String, required: true},
     city : {type : String, required: true},
@@ -14,7 +15,8 @@ const customerSchema = new mongo.Schema({
     address : {type : String, required: true},
     delivery_add : {type : String, required: true},
     password : {type : String, required:true},
-    orders: {type: String}
+    orders: [{type : mongo.Types.ObjectId, required:true, ref:'Order'}]
 });
+customerSchema.plugin(uniqueVali);
 
 module.exports = mongo.model('Customer',customerSchema);

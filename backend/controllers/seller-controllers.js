@@ -45,13 +45,44 @@ const getsellerinfobyid = async(req,res,next) =>{
     res.status(201).json({msg : sellerinfo.toObject({getters : true})});
 };
 
-const sellerLogin = (req,res,next) =>{
+const sellerLogin = async(req,res,next) =>{
    const {email,phone,password} = req.body;
+   /*
    const validSeller = dummy_seller.find(p => (p.email === email || p.phone === phone ));
     if(!validSeller || validSeller.password !== password){
         throw new httpError('Could not identify Seller',401);
+    } */
+
+    let existingSeller1;
+    let existingSeller2;
+    if(email){
+        try{
+            existingSeller1 = await seller.findOne({email : email});
+        }catch(err){
+            const erro = new httpError('Seller Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser1,'here');
+        if(!existingSeller1 || existingSeller1.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'});    
     }
-    res.status(201).json({msg : 'Logged In'}); 
+    if(phone){
+        try{
+            existingSeller2 = await seller.findOne({phone : phone});
+        }catch(err){
+            const erro = new httpError('Seller Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser2,'there');
+        if(!existingSeller2 || existingSeller2.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'}); 
+    }
 };
 
 const sellerSignup = async (req,res,next) =>{
@@ -62,8 +93,24 @@ const sellerSignup = async (req,res,next) =>{
     }
     const {v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
         bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc} = req.body;
+    
+        let existingSeller1;
+        let existingSeller2;
+        try{
+            existingSeller1 = await seller.findOne({email : email});
+            existingSeller2 = await seller.findOne({phone : phone});
+        }catch(err){
+            const erro = new httpError('Seller Signup failed,please try again',500);
+            return next(erro);
+        }
+        if(existingSeller1 || existingSeller2 ){
+            const erro = new httpError('Seller already exist',422);
+            return next(erro);
+        }
+    
+
     const newSeller = new seller ({v_f_name,v_l_name,email,phone,trade_lic_no,birthday,v_city,v_area,v_address,nid,password,b_acc,b_acc_no,
-        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc});
+        bank,branch,sh_name,sh_city,sh_area,sh_place,sh_area_pc,products:[]});
     //dummy_seller.push(newSeller);
     //console.log(newSeller);
     try{

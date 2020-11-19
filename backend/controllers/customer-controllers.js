@@ -44,9 +44,24 @@ const customerSignup = async (req,res,next) => {
         throw new httpError('Invalid information submitted',422);
     }
 
-    const {c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
+    const {f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
+
+    let existingUser1;
+    let existingUser2;
+    try{
+        existingUser1 = await customer.findOne({email : email});
+        existingUser2 = await customer.findOne({phone : phone});
+    }catch(err){
+        const erro = new httpError('Customer Signup failed,please try again',500);
+        return next(erro);
+    }
+    if(existingUser1 || existingUser2 ){
+        const erro = new httpError('Customer already exist',422);
+        return next(erro);
+    }
+
     const createdUser =  new customer({
-        c_id,f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
+        f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password,orders:[]
     });
     try{
         await createdUser.save();
@@ -54,7 +69,7 @@ const customerSignup = async (req,res,next) => {
         const erro = new httpError('Customer Signup failed',500);
         return next(erro);
     }
-    res.status(201).json({user : createdUser});
+    res.status(201).json({user : createdUser.toObject({getters:true})});
 };
 
 const updatecustomer = async (req,res,next) =>{
@@ -84,6 +99,7 @@ const updatecustomer = async (req,res,next) =>{
     updateCusInfo.delivery_add = delivery_add;
 
     //dummy_customer[customerIndex] = updateCusInfo;
+    //console.log(updateCusInfo);
     try{
         await updateCusInfo.save();
     }catch(err){
@@ -125,6 +141,7 @@ const changePassword = async (req,res,next) =>{
     res.status(200).json({msg: 'Successfully changed password'});
 };
 
+//This will be used by the admin
 const deletecustomer = (req,res,next) =>{
     const cus_id = req.body.cid;
     if(!dummy_customer.filter( p => p.id !== cus_id)){
@@ -134,13 +151,43 @@ const deletecustomer = (req,res,next) =>{
     res.status(200).json({msg : 'Customer Deleted'});
 };
 
-const customerLogin = (req,res,next) => {
+const customerLogin = async(req,res,next) => {
     const {email , phone , password} = req.body;
+    /*
     const validCustomer = dummy_customer.find(p => (p.email === email || p.phone === phone ));
     if(!validCustomer || validCustomer.password !== password){
         throw new httpError('Could not identify Customer',401);
+    } */
+    let existingUser1;
+    let existingUser2;
+    if(email){
+        try{
+            existingUser1 = await customer.findOne({email : email});
+        }catch(err){
+            const erro = new httpError('Customer Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser1,'here');
+        if(!existingUser1 || existingUser1.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'});    
     }
-    res.status(201).json({msg : 'Logged In'});
+    if(phone){
+        try{
+            existingUser2 = await customer.findOne({phone : phone});
+        }catch(err){
+            const erro = new httpError('Customer Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser2,'there');
+        if(!existingUser2 || existingUser2.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'});
+    }
 };
 
 exports.getcusinfobyid = getcusinfobyid;
