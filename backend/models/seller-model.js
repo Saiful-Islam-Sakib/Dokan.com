@@ -6,7 +6,7 @@ const sellerSchema = new mongo.Schema({
     v_f_name : {type:String,required:true},
     v_l_name : {type:String,required:true},
     email : {type:String,required:true,unique:true},
-    phone : {type:String,required:true},
+    phone : {type:String,required:true,unique:true},
     trade_lic_no : {type:String,required:true},
     birthday : {type:String,required:true},
     v_city : {type:String,required:true},

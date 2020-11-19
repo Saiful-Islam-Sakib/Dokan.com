@@ -6,7 +6,7 @@ const customerSchema = new mongo.Schema({
     f_name : {type : String, required: true},
     l_name : {type : String, required: true},
     email : {type : String ,required: true, unique:true},
-    phone : {type : String, required: true},
+    phone : {type : String, required: true, unique:true},
     gender : {type : String, required: true},
     birthday : {type : String, required: true},
     city : {type : String, required: true},
