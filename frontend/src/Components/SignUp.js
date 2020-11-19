@@ -61,7 +61,11 @@ export default function SignUp() {
     };
 
     return (
-        <Container component="main" maxWidth="sm">
+        <Container
+            component="main"
+            maxWidth="sm"
+            style={{ backgroundColor: "white", borderRadius: 10 }}
+        >
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -150,9 +154,6 @@ export default function SignUp() {
                                 type="tel"
                                 autoComplete
                             />
-                        </Grid>
-                        <Grid item xs={12}>
-                            {/* city , area , place : text box */}
                         </Grid>
                         <Grid item xs={12}>
                             <TextField

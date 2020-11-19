@@ -51,7 +51,11 @@ function SignIn() {
     const classes = useStyles();
 
     return (
-        <Container component="main" maxWidth="sm">
+        <Container
+            component="main"
+            maxWidth="sm"
+            style={{ backgroundColor: "white", borderRadius: 10 }}
+        >
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>

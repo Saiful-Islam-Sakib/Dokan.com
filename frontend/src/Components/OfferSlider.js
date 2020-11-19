@@ -13,27 +13,27 @@ const tutorialSteps = [
     {
         label: "Add Banner 1",
         imgPath:
-            "https://bowiebearsnews.com/wp-content/uploads/2019/09/Screenshot-2019-09-17-14.41.59-e1568752961622-900x452.png",
+            "https://image.freepik.com/free-photo/indian-spices-herbs-black-table_84485-703.jpg",
     },
     {
         label: "Add Banner 2",
         imgPath:
-            "https://image.freepik.com/free-vector/furniture-sale-banners-with-discount_23-2148701995.jpg",
+            "https://image.freepik.com/free-photo/top-view-food-frame-wooden-background_23-2148723496.jpg",
     },
     {
         label: "Add Banner 3",
         imgPath:
-            "https://image.freepik.com/free-vector/black-friday-sale-shopping-cart-banner-with-text-space_1017-28049.jpg",
+            "https://image.freepik.com/free-photo/top-view-circular-food-frame_23-2148723455.jpg",
     },
     {
         label: "Add Banner 4",
         imgPath:
-            "https://image.freepik.com/free-vector/buy-now-button-template-design-business-banner-shopping-cart-trolley-signs-user-interface-element_183303-15.jpg",
+            "https://image.freepik.com/free-photo/small-plant-near-various-cosmetics-bottles_23-2147787958.jpg",
     },
     {
         label: "Add Banner 5",
         imgPath:
-            "https://image.freepik.com/free-vector/black-friday-sale-stylish-banner-with-text-space_1017-28050.jpg",
+            "https://image.freepik.com/free-photo/grandmother-hands-old-woman-with-flour-shape-heart-with-flour-dark-black-table-food-recipe-menu-background-place-text-long-banner-format_114941-92.jpg",
     },
 ];
 

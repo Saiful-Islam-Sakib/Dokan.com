@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "gray",
+        backgroundColor: "#131921",
+        color:"white",
         alignItems: "center",
         minHeight: 60,
         marginTop: "15%",
@@ -19,13 +20,13 @@ export default function StickyFooter() {
 
     return (
         <div className={classes.root}>
-            <Typography variant="body1" color="textSecondary" align="center">
+            <Typography variant="body1" align="center">
                 {"Copyright © "}
                 <Link color="inherit" href="/">
-                    dokan.com
-                </Link>{" "}
+                    www.dokan.com
+                </Link>{" (2020 - "}
                 {new Date().getFullYear()}
-                {"."}
+                {")."}
             </Typography>
         </div>
     );

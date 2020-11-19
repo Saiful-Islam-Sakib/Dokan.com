@@ -96,7 +96,11 @@ export default function SignUp() {
     const [bankBranch, setbankbranch] = React.useState("");
 
     return (
-        <Container component="main" maxWidth="lg">
+        <Container
+            component="main"
+            maxWidth="lg"
+            style={{ backgroundColor: "white", borderRadius: 10 }}
+        >
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
