@@ -1,6 +1,8 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const order = require('../models/order-model');
+const customer = require('../models/customer-model');
+const mongo  = require('mongoose');
 
 let dummy_order = [
     {
@@ -21,11 +23,29 @@ const createNewOrder = async (req,res,next) =>{
         throw new httpError('Something wrong in Order',422);
     }
     //const cus_id = req.body.cid;
-    const {o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
+    const {product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
 
-    const createdorder = new order ({o_id,product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
+    const createdorder = new order ({product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
+    let customerexist;
     try{
-        await createdorder.save();
+        customerexist = await customer.findById(c_id);
+    }catch(err){
+        const erro = new httpError('Could not make an order',500);
+        return next(erro);
+    }
+    if(!customerexist){
+        const erro = new httpError('Could not find user',500);
+        return next(erro);
+    }
+    //console.log(customerexist);
+    try{
+        //await createdorder.save();
+        const session = await mongo.startSession();
+        session.startTransaction();
+        await createdorder.save({session: session});
+        customerexist.orders.push(createdorder);
+        await customerexist.save({session: session});
+        await session.commitTransaction();
     }catch(err){
         const erro = new httpError('Could not place an order',500);
         return next(erro);

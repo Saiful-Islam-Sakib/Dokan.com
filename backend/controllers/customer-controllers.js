@@ -61,7 +61,7 @@ const customerSignup = async (req,res,next) => {
     }
 
     const createdUser =  new customer({
-        f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password
+        f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password,orders:[]
     });
     try{
         await createdUser.save();

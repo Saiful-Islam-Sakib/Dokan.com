@@ -1,6 +1,8 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const product = require('../models/product-model');
+const mongo = require('mongoose');
+const seller = require('../models/seller-model');
 
 let dummy_product = [
     {
