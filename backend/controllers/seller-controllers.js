@@ -55,19 +55,34 @@ const sellerLogin = async(req,res,next) =>{
 
     let existingSeller1;
     let existingSeller2;
-    try{
-        existingSeller1 = await seller.findOne({email : email});
-        existingSeller2 = await seller.findOne({phone : phone});
-    }catch(err){
-        const erro = new httpError('Seller Login failed,please try again',500);
-        return next(erro);
+    if(email){
+        try{
+            existingSeller1 = await seller.findOne({email : email});
+        }catch(err){
+            const erro = new httpError('Seller Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser1,'here');
+        if(!existingSeller1 || existingSeller1.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'});    
     }
-    if(!(existingSeller1 || existingSeller2) || (existingSeller1.password !== password || existingSeller2.password !== password) ){
-        const erro = new httpError('Invalid credentials ,could not log in',401);
-        return next(erro);
+    if(phone){
+        try{
+            existingSeller2 = await seller.findOne({phone : phone});
+        }catch(err){
+            const erro = new httpError('Seller Login failed,please try again',500);
+            return next(erro);
+        }
+        //console.log(existingUser2,'there');
+        if(!existingSeller2 || existingSeller2.password !== password ){
+            const erro = new httpError('Invalid credentials ,could not log in',401);
+            return next(erro);
+        }
+        res.status(201).json({msg : 'Logged In'}); 
     }
-
-    res.status(201).json({msg : 'Logged In'}); 
 };
 
 const sellerSignup = async (req,res,next) =>{
