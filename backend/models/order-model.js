@@ -2,7 +2,7 @@ const mongo = require('mongoose');
 
 const orderSchema = new mongo.Schema({
     //o_id : {type: String , required: true},
-    product : {type: String , required: true},
+    p_id : {type: mongo.Types.ObjectId , required: true, ref : 'Product'},
     quantity : {type: Number , required: true},
     order_date : {type: String ,required:true},
     total_amount : {type: Number , required: true},

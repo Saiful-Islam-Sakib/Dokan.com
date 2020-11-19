@@ -3,6 +3,7 @@ const {validationResult} = require('express-validator');
 const order = require('../models/order-model');
 const customer = require('../models/customer-model');
 const mongo  = require('mongoose');
+const product = require('../models/product-model');
 
 let dummy_order = [
     {
@@ -23,9 +24,9 @@ const createNewOrder = async (req,res,next) =>{
         throw new httpError('Something wrong in Order',422);
     }
     //const cus_id = req.body.cid;
-    const {product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
+    const {p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date} = req.body;
 
-    const createdorder = new order ({product,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
+    const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
     let customerexist;
     try{
         customerexist = await customer.findById(c_id);
@@ -35,6 +36,17 @@ const createNewOrder = async (req,res,next) =>{
     }
     if(!customerexist){
         const erro = new httpError('Could not find user',500);
+        return next(erro);
+    }
+    let productexist;
+    try{
+        productexist = await product.findById(p_id);
+    }catch(err){
+        const erro = new httpError('Could not make an order',500);
+        return next(erro);
+    }
+    if(!productexist){
+        const erro = new httpError('Could not find product',500);
         return next(erro);
     }
     //console.log(customerexist);
