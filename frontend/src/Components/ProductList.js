@@ -1264,6 +1264,25 @@ const products = [
     },
 ];
 
+function compareValues(key, order = "asc") {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            return 0;
+        }
+
+        const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+        const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return order === "desc" ? comparison * -1 : comparison;
+    };
+}
+
 export default function ProductList() {
     const classes = useStyles();
     const classes2 = innerCardStyle();
@@ -1293,7 +1312,17 @@ export default function ProductList() {
     };
 
     const handleChange = (event) => {
-        setSort(event.target.value);
+        let e = event.target.value;
+        setSort(e);
+        if (e === "priceLH") {
+            products.sort(compareValues("price", "asc"));
+        } else if (e === "priceHL") {
+            products.sort(compareValues("price", "desc"));
+        } else if (e === "ratingLH") {
+            products.sort(compareValues("rating", "asc"));
+        } else if (e === "ratingHL") {
+            products.sort(compareValues("rating", "desc"));
+        }
     };
 
     return (
@@ -1302,25 +1331,25 @@ export default function ProductList() {
                 <FormControl variant="outlined">
                     <InputLabel id="sortId">Sort</InputLabel>
                     <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
+                        labelId="sortLabel"
+                        id="sortId"
                         autoWidth="true"
                         displayEmpty
                         value={sort}
                         onChange={handleChange}
                         label="Sort"
                     >
-                        <MenuItem value="">Sort</MenuItem>
-                        <MenuItem value={"priceHL"}>
+                        <MenuItem value="sort">Sort</MenuItem>
+                        <MenuItem value="priceHL">
                             {"Price Hight -> Low"}
                         </MenuItem>
-                        <MenuItem value={"priceLH"}>
+                        <MenuItem value="priceLH">
                             {"Price Low -> High"}
                         </MenuItem>
-                        <MenuItem value={"ratingHL"}>
+                        <MenuItem value="ratingHL">
                             {"Rating High -> Low"}
                         </MenuItem>
-                        <MenuItem value={"ratingLH"}>
+                        <MenuItem value="ratingLH">
                             {"Rating Low -> High"}
                         </MenuItem>
                     </Select>
