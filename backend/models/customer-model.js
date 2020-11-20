@@ -9,11 +9,11 @@ const customerSchema = new mongo.Schema({
     phone : {type : String, required: true, unique:true},
     gender : {type : String, required: true},
     birthday : {type : String, required: true},
-    city : {type : String, required: true},
-    area : {type : String, required: true},
-    place : {type : String, required: true},
+    //city : {type : String, required: true},
+    //area : {type : String, required: true},
+    //place : {type : String, required: true},
     address : {type : String, required: true},
-    delivery_add : {type : String, required: true},
+    //delivery_add : {type : String, required: true},
     password : {type : String, required:true},
     orders: [{type : mongo.Types.ObjectId, required:true, ref:'Order'}]
 });
