@@ -73,7 +73,7 @@ function SignIn() {
                 }
             );
             const data = await res.json();
-
+            // fetch user data ................................................................here
             console.log(data);
             if (data.msg == "Logged In") {
                 if (rememberMe) {
@@ -136,7 +136,15 @@ function SignIn() {
                         }}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={
+                            <Checkbox
+                                value="remember"
+                                color="primary"
+                                onChange={(event) => {
+                                    setRememberMe(event.target.checked);
+                                }}
+                            />
+                        }
                         label="Remember me"
                     />
                     <Button

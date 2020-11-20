@@ -125,7 +125,7 @@ export default function CustomizedDialogs() {
                 aria-labelledby="customized-dialog-title"
                 open={open}
             >
-                <DialogTitle id="customized-dialog-title">
+                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Please select Your Location
                 </DialogTitle>
                 <DialogContent dividers>
