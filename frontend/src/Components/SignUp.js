@@ -70,7 +70,9 @@ export default function SignUp() {
 
     const handleSignUp = () => {
         // history.push("/"); to redirect
-        // insert data into database
+        if (password === rePassword) {
+            // insert data into database
+        }
     };
 
     return (
