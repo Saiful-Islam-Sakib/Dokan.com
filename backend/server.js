@@ -13,6 +13,13 @@ const app = express();
 
 app.use(parser.json());
 
+app.use((req,res,next) =>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Headers','Content-Type,Accept,Origin,X-Requested-With,Authorization');
+    res.setHeader('Access-Control-Allow-Methods','GET,POST,DELETE,PATCH');
+    next();
+});
+
 app.use('/dokan.com/customer',customerRoutes);
 
 app.use('/dokan.com/order/customer',orderRoutes);
