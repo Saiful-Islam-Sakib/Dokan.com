@@ -41,7 +41,8 @@ const customerSignup = async (req,res,next) => {
     const err  = validationResult(req);
     if(!err.isEmpty()){
         console.log(err);
-        throw new httpError('Invalid information submitted',422);
+        const erro = new httpError('Customer Signup failed,please try again',422);
+        return next(erro);
     }
 
     const {f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
