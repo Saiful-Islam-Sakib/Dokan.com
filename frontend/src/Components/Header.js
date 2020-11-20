@@ -18,6 +18,7 @@ import Link from "@material-ui/core/Link";
 import CartList from "./CartList";
 import { Breadcrumbs } from "@material-ui/core";
 import LocationAlart from "./locationAlert";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -103,8 +104,11 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const secondHeaderClass = secondHeaderStyles();
 
+    const history = useHistory();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [signOutStatus, setSignOutStatus] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -130,6 +134,22 @@ export default function PrimarySearchAppBar() {
         console.log(event.target.value);
     };
 
+    const handleMyProfile = () => {
+        handleMenuClose();
+        history.push("/UserProfile");
+    };
+
+    const handleSignOut = () => {
+        handleMenuClose();
+        if (localStorage.getItem("login") === true) {
+            localStorage.removeItem("login");
+        }
+        if (sessionStorage.getItem("login") === true) {
+            sessionStorage.removeItem("login");
+        }
+        setSignOutStatus(false); // sign in korle ai status true korte hobe ....
+    };
+
     const menuId = "primary-search-account-menu";
     const renderMenu = (
         <Menu
@@ -141,11 +161,12 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Favorite</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Order history</MenuItem>
+            <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
+            <MenuItem onClick={handleMyProfile}>Favorite</MenuItem>
+            <MenuItem onClick={handleMyProfile}>Order history</MenuItem>
             <Divider />
-            <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+            {/* nicher line ar code ta sign in hole show korbe naile korbe na ... eta change kora lagbe  */}
+            <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
     );
 
@@ -160,6 +181,8 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            {/* Profile namer nicher ai menu ta sign korle shathe nam dekhabe  */}
+            {/* ar  */}
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     aria-label="account"

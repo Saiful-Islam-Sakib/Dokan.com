@@ -48,8 +48,6 @@ export default function HomePageBody() {
                         <ConsumerFood></ConsumerFood>
                         <HealthCare></HealthCare>
                         <Toiletries></Toiletries>
-                        {/* test */}
-                        <UserProfile></UserProfile>
                     </Container>
                     <Card style={{ marginRight: 20 }}>
                         <CardMedia

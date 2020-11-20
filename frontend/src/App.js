@@ -8,19 +8,23 @@ import SellerSignIn from "./Components/SellerSignIn";
 import SellerSignUp from "./Components/SellerSignUp";
 import About from "./Components/AboutPage";
 import CheckOut from "./Components/Checkout/Checkout";
+import MyProfile from "./Components/UserProfile/UserProfile";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import UserProfile from "./Components/UserProfile/UserProfile";
 
 function App() {
     return (
         <Router>
             <div
                 className="App"
-                style={{
-                    //backgroundImage: `linear-gradient(to left, gray, white, gray)`,
-                    //backgroundImage: `linear-gradient(white 50%, #131921)`,
-                    //backgroundImage: `linear-gradient(white 50%, pink, red)`,
-                }}
+                style={
+                    {
+                        //backgroundImage: `linear-gradient(to left, gray, white, gray)`,
+                        //backgroundImage: `linear-gradient(white 50%, #131921)`,
+                        //backgroundImage: `linear-gradient(white 50%, pink, red)`,
+                    }
+                }
             >
                 <Header />
                 <Switch>
@@ -44,6 +48,9 @@ function App() {
                     </Route>
                     <Route exact path="/checkout">
                         <CheckOut></CheckOut>
+                    </Route>
+                    <Route exact path="/UserProfile">
+                        <UserProfile></UserProfile>
                     </Route>
                 </Switch>
                 <Footer></Footer>

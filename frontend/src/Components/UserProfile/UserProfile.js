@@ -15,9 +15,6 @@ import NameIcon from "@material-ui/icons/Person";
 import TabUserProfile from "./TabUserProfile";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        marginTop: "10%",
-    },
     cardRoot: {
         display: "flex",
         flexWrap: "wrap",
@@ -37,7 +34,7 @@ export default function UserProfile() {
 
     return (
         <div>
-            <Container maxWidth="lg" className={classes.root}>
+            <Container maxWidth="lg">
                 <Card className={classes.cardRoot}>
                     <CardMedia
                         className={classes.cardMedia}

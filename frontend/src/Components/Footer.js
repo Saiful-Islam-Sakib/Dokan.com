@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         backgroundColor: "#131921",
-        color:"white",
+        color: "white",
         alignItems: "center",
         minHeight: 60,
-        marginTop: "15%",
+        marginTop: "20%",
     },
 }));
 
@@ -24,7 +24,8 @@ export default function StickyFooter() {
                 {"Copyright © "}
                 <Link color="inherit" href="/">
                     www.dokan.com
-                </Link>{" (2020 - "}
+                </Link>
+                {" (2020 - "}
                 {new Date().getFullYear()}
                 {")."}
             </Typography>
