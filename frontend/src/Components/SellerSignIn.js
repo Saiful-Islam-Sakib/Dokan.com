@@ -20,7 +20,7 @@ function Copyright() {
             {"2020 - "}
             {new Date().getFullYear()}
             {", "}
-            <Link color="inherit" href="#">
+            <Link color="inherit" href="/">
                 dokan.com
             </Link>
         </Typography>
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.main,
     },
     form: {
-        width: "100%", // Fix IE 11 issue.
+        width: "100%",
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -49,6 +49,25 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
+
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [errorStatus, setErrorStatus] = React.useState(false);
+
+    const handleSignIn = (event) => {
+        // history.push("/"); to redirect
+        // er niche kaj korba
+        //
+        //
+        //
+        //
+        //
+        //
+        // for changes in error status
+        // if (response == "..."){
+        //     setErrorStatus(true);
+        // }
+    };
 
     return (
         <Container
@@ -73,8 +92,12 @@ function SignIn() {
                         id="sellerEmail"
                         label="Email / Phone Number"
                         name="sellerEmail"
+                        type="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -85,7 +108,10 @@ function SignIn() {
                         label="Password"
                         type="password"
                         id="sellerPassword"
-                        autoComplete="current-password"
+                        autoComplete="password"
+                        onChange={(event) => {
+                            setPassword(event.target.value);
+                        }}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -94,9 +120,15 @@ function SignIn() {
                     <Button
                         type="submit"
                         fullWidth
+                        disabled={
+                            email.length > 0 && password.length > 0
+                                ? false
+                                : true
+                        }
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={handleSignIn}
                     >
                         Sign In
                     </Button>

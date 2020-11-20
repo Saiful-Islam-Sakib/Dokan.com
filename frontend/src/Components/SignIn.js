@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom"; // react hook to redirect to any location
 
 function Copyright() {
     return (
@@ -49,12 +50,25 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
+    const history = useHistory(); //for redirection
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [errorStatus, setErrorStatus] = React.useState(false);
 
-    const handleSignIn = () => {
-        // ekhane change korba
+    const handleSignIn = (event) => {
+        // history.push("/"); to redirect
+        // er niche kaj korba
+        //
+        //
+        //
+        //
+        //
+        //
+        // for changes in error status
+        // if (response == "..."){
+        //     setErrorStatus(true);
+        // }
     };
 
     return (
@@ -73,11 +87,13 @@ function SignIn() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         id="email"
+                        type="email"
                         label="Email / Phone Number"
                         name="email"
                         autoComplete="email"
@@ -87,6 +103,7 @@ function SignIn() {
                         }}
                     />
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
@@ -95,7 +112,7 @@ function SignIn() {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="password"
                         onChange={(event) => {
                             setPassword(event.target.value);
                         }}
@@ -107,6 +124,11 @@ function SignIn() {
                     <Button
                         type="submit"
                         fullWidth
+                        disabled={
+                            email.length > 0 && password.length > 0
+                                ? false
+                                : true
+                        }
                         variant="contained"
                         color="primary"
                         className={classes.submit}
