@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom"; // react hook to redirect to any location
 
 function Copyright() {
     return (
@@ -49,23 +50,42 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
+    const history = useHistory(); //for redirection
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    let lol;
-    const handleSignIn =() => {
-        // ekhane change korba
-        const data = {method : 'POST',headers : 'application/json',
-                                body : JSON.stringify({
-                                    email : email, phone : email,password : password
-                                })};
-        lol = fetch('http://localhost:5000/dokan.com/customer/login',data).then(response => response.json());
-        
-    }
-    console.log(lol);
-    console.log(email);
-    console.log(password);
+    const [errorStatus, setErrorStatus] = React.useState(false);
 
+    const handleSignIn = async event => {
+        event.preventDefault();
+        try{
+            const res = await fetch('http://localhost:5000/dokan.com/customer/login',{
+                method: 'POST',
+                headers : {'Content-type' : 'application/json'},
+                body: JSON.stringify({
+                    email: email, phone : email, password : password
+                })
+            });
+            const data = await res.json();
+            console.log(data);
+        }catch(err){
+            console.log(err);
+        }
+
+
+        // history.push("/"); to redirect
+        // er niche kaj korba
+        //
+        //
+        //
+        //
+        //
+        //
+        // for changes in error status
+        // if (response == "..."){
+        //     setErrorStatus(true);
+        // }
+    };
 
     return (
         <Container
@@ -83,11 +103,13 @@ function SignIn() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         id="email"
+                        type="email"
                         label="Email / Phone Number"
                         name="email"
                         autoComplete="email"
@@ -97,6 +119,7 @@ function SignIn() {
                         }}
                     />
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
@@ -105,7 +128,7 @@ function SignIn() {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="password"
                         onChange={(event) => {
                             setPassword(event.target.value);
                         }}
@@ -117,6 +140,11 @@ function SignIn() {
                     <Button
                         type="submit"
                         fullWidth
+                        disabled={
+                            email.length > 0 && password.length > 0
+                                ? false
+                                : true
+                        }
                         variant="contained"
                         color="primary"
                         className={classes.submit}

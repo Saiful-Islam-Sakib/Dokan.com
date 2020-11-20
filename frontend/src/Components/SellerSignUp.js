@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import { Divider } from "@material-ui/core";
 import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
     return (
@@ -79,21 +80,43 @@ const bank = [
 
 export default function SignUp() {
     const classes = useStyles();
+    const history = useHistory();
 
     const [areaName, setArea] = React.useState([]);
     const [placeName, setPlace] = React.useState([]);
     const [branch, setbranch] = React.useState([]);
 
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
+    const [phoneNumber, setPhoneNumber] = React.useState("");
+    const [tradeLicense, setTradeLicense] = React.useState("");
+    const [nid, setNID] = React.useState("");
+    const [birthday, setBirthday] = React.useState("");
+
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [rePassword, setRePassword] = React.useState("");
+
     const [sellerCity, setsellercity] = React.useState("");
     const [sellerArea, setsellerarea] = React.useState("");
     const [sellerPlace, setsellerplace] = React.useState("");
+    const [sellerAddress, setSellerAddress] = React.useState("");
 
+    const [shopName, setshopName] = React.useState("");
+    const [postalCode, setshopPostalCode] = React.useState("");
     const [shopCity, setshopcity] = React.useState("");
     const [shopArea, setshoparea] = React.useState("");
     const [shopPlace, setshopplace] = React.useState("");
 
     const [bankName, setbankname] = React.useState("");
     const [bankBranch, setbankbranch] = React.useState("");
+    const [accountName, setbankAccountName] = React.useState("");
+    const [accountNumber, setbankAccountNumber] = React.useState("");
+
+    const handleSignUp = () => {
+        // history.push("/"); to redirect
+        //ekhane data up hobe database
+    };
 
     return (
         <Container
@@ -132,6 +155,9 @@ export default function SignUp() {
                                     type="text"
                                     label="First Name"
                                     autoFocus
+                                    onChange={(event) => {
+                                        setFirstName(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -144,6 +170,9 @@ export default function SignUp() {
                                     name="lastName"
                                     type="text"
                                     autoComplete
+                                    onChange={(event) => {
+                                        setLastName(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -156,6 +185,9 @@ export default function SignUp() {
                                     name="phoneNumber"
                                     type="tel"
                                     autoComplete
+                                    onChange={(event) => {
+                                        setPhoneNumber(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -166,6 +198,10 @@ export default function SignUp() {
                                     id="tradeLicenseNumber"
                                     label="Trade License Number"
                                     name="tradeLicenseNumber"
+                                    type="text"
+                                    onChange={(event) => {
+                                        setTradeLicense(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -176,6 +212,10 @@ export default function SignUp() {
                                     id="nid"
                                     label="NID Number"
                                     name="nid"
+                                    type="number"
+                                    onChange={(event) => {
+                                        setNID(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -189,6 +229,9 @@ export default function SignUp() {
                                     defaultValue="1900-12-31"
                                     InputLabelProps={{
                                         shrink: true,
+                                    }}
+                                    onChange={(event) => {
+                                        setBirthday(event.target.value);
                                     }}
                                 />
                             </Grid>
@@ -279,6 +322,11 @@ export default function SignUp() {
                                     id="homeAddress"
                                     label="Home Address"
                                     name="homeAddress"
+                                    autoComplete="Addresses"
+                                    type="text"
+                                    onChange={(event) => {
+                                        setSellerAddress(event.target.value);
+                                    }}
                                 />
                             </Grid>
                         </Grid>
@@ -354,6 +402,10 @@ export default function SignUp() {
                                     id="bankAccountName"
                                     label="Account Name"
                                     name="bankAccountName"
+                                    type="text"
+                                    onChange={(event) => {
+                                        setbankAccountName(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -364,6 +416,12 @@ export default function SignUp() {
                                     id="bankAccountNumber"
                                     label="Account Number"
                                     name="bankAccountNumber"
+                                    type="number"
+                                    onChange={(event) => {
+                                        setbankAccountNumber(
+                                            event.target.value
+                                        );
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -379,6 +437,10 @@ export default function SignUp() {
                                     id="shopName"
                                     label="Shop Name"
                                     name="shopName"
+                                    type="text"
+                                    onChange={(event) => {
+                                        setshopName(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
@@ -463,7 +525,10 @@ export default function SignUp() {
                                     id="shopAreaPC"
                                     label="Shop Area PC"
                                     name="shopAreaPC"
-                                    type="tel"
+                                    type="number"
+                                    onChange={(event) => {
+                                        setshopPostalCode(event.target.value);
+                                    }}
                                 />
                             </Grid>
                         </Grid>
@@ -491,7 +556,10 @@ export default function SignUp() {
                                     label="Email Address"
                                     name="email"
                                     type="email"
-                                    autoComplete
+                                    autoComplete="email"
+                                    onChange={(event) => {
+                                        setEmail(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -503,7 +571,10 @@ export default function SignUp() {
                                     label="Password"
                                     type="password"
                                     id="password"
-                                    autoComplete="current-password"
+                                    autoComplete="password"
+                                    onChange={(event) => {
+                                        setPassword(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -516,6 +587,9 @@ export default function SignUp() {
                                     type="password"
                                     id="retype-password"
                                     autoComplete="retype-password"
+                                    onChange={(event) => {
+                                        setRePassword(event.target.value);
+                                    }}
                                 />
                             </Grid>
                             <Button
@@ -524,6 +598,7 @@ export default function SignUp() {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onclick={handleSignUp}
                             >
                                 Sign Up
                             </Button>
