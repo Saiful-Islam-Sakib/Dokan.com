@@ -73,9 +73,9 @@ function SignIn() {
                 }
             );
             const data = await res.json();
-            // fetch user data ................................................................here
+
             console.log(data);
-            if (data.msg == "Logged In") {
+            if (data.msg.email === email || data.msg.phone === email) {
                 if (rememberMe) {
                     localStorage.setItem("login", true);
                 } else {
