@@ -68,7 +68,25 @@ export default function SignUp() {
     const [rePassword, setRePassword] = React.useState("");
     const [gender, setGender] = React.useState("");
 
-    const handleSignUp = () => {
+    const handleSignUp = async event => {
+        event.preventDefault();
+        try{
+            const res = await fetch('http://localhost:5000/dokan.com/customer/signup',{
+                method: 'POST',
+                headers : {'Content-type' : 'application/json'},
+                body: JSON.stringify({
+                    f_name : firstName, l_name : lastName ,
+                    email : email, phone : phone, gender : gender,
+                    birthday : birthday, address : address,
+                    password : password
+                })
+            });
+            const data = await res.json();
+            console.log(data);
+        }catch(err){
+            console.log(err);
+        }
+
         // history.push("/"); to redirect
         if (password === rePassword) {
             // insert data into database
