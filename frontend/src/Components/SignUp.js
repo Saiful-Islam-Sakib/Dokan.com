@@ -59,7 +59,7 @@ export default function SignUp() {
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
-    const [age, setAge] = React.useState("");
+    // const [age, setAge] = React.useState("");
     const [birthday, setBirthday] = React.useState("");
     const [phoneNumber, setPhoneNumber] = React.useState("");
     const [address, setAddress] = React.useState("");
@@ -121,7 +121,7 @@ export default function SignUp() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        {/* <Grid item xs={12} sm={6}>
                             <TextField
                                 variant="outlined"
                                 fullWidth
@@ -134,8 +134,8 @@ export default function SignUp() {
                                     setAge(event.target.value);
                                 }}
                             />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
+                        </Grid> */}
+                        <Grid item xs={12}>
                             <FormControl variant="outlined" fullWidth>
                                 <InputLabel id="genderLabel">Gender</InputLabel>
                                 <Select
