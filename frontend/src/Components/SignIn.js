@@ -55,36 +55,38 @@ function SignIn() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
+    const [rememberMe, setRememberMe] = React.useState(false);
 
-    const handleSignIn = async event => {
+    const handleSignIn = async (event) => {
         event.preventDefault();
-        try{
-            const res = await fetch('http://localhost:5000/dokan.com/customer/login',{
-                method: 'POST',
-                headers : {'Content-type' : 'application/json'},
-                body: JSON.stringify({
-                    email: email, phone : email, password : password
-                })
-            });
+        try {
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/customer/login",
+                {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({
+                        email: email,
+                        phone: email,
+                        password: password,
+                    }),
+                }
+            );
             const data = await res.json();
+
             console.log(data);
-        }catch(err){
+            if (data.msg == "Logged In") {
+                if (rememberMe) {
+                    localStorage.setItem("login", true);
+                } else {
+                    sessionStorage.setItem("login", true);
+                }
+                history.push("/");
+            }
+        } catch (err) {
             console.log(err);
+            setErrorStatus(true);
         }
-
-
-        // history.push("/"); to redirect
-        // er niche kaj korba
-        //
-        //
-        //
-        //
-        //
-        //
-        // for changes in error status
-        // if (response == "..."){
-        //     setErrorStatus(true);
-        // }
     };
 
     return (
