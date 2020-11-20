@@ -52,10 +52,20 @@ function SignIn() {
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-
-    const handleSignIn = () => {
+    let lol;
+    const handleSignIn =() => {
         // ekhane change korba
-    };
+        const data = {method : 'POST',headers : 'application/json',
+                                body : JSON.stringify({
+                                    email : email, phone : email,password : password
+                                })};
+        lol = fetch('http://localhost:5000/dokan.com/customer/login',data).then(response => response.json());
+        
+    }
+    console.log(lol);
+    console.log(email);
+    console.log(password);
+
 
     return (
         <Container
