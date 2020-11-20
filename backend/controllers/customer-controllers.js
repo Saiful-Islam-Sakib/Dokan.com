@@ -45,8 +45,8 @@ const customerSignup = async (req,res,next) => {
         return next(erro);
     }
 
-    const {f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password} = req.body;
-
+    const {f_name,l_name,email,phone,gender,birthday,address,password} = req.body;
+            //city,area,place,,delivery_add
     let existingUser1;
     let existingUser2;
     try{
@@ -62,8 +62,9 @@ const customerSignup = async (req,res,next) => {
     }
 
     const createdUser =  new customer({
-        f_name,l_name,email,phone,gender,birthday,city,area,place,address,delivery_add,password,orders:[]
+        f_name,l_name,email,phone,gender,birthday,address,password,orders:[]
     });
+        //,city,area,place,delivery_add
     try{
         await createdUser.save();
     }catch(err){
