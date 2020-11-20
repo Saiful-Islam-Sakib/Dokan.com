@@ -82,6 +82,9 @@ function SignIn() {
                     sessionStorage.setItem("login", true);
                 }
                 history.push("/");
+            }else {
+                setErrorStatus(true);
+                setPassword("");
             }
         } catch (err) {
             console.log(err);
@@ -129,6 +132,7 @@ function SignIn() {
                         name="password"
                         label="Password"
                         type="password"
+                        value={password}
                         id="password"
                         autoComplete="password"
                         onChange={(event) => {
