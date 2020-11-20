@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
 function SignIn() {
     const classes = useStyles();
 
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+
+    const handleSignIn = () => {
+        // ekhane change korba
+    };
+
     return (
         <Container
             component="main"
@@ -75,6 +82,9 @@ function SignIn() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -86,6 +96,9 @@ function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(event) => {
+                            setPassword(event.target.value);
+                        }}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -97,6 +110,7 @@ function SignIn() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={handleSignIn}
                     >
                         Sign In
                     </Button>
