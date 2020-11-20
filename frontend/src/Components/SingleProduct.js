@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20,
     },
     cardMedia: {
-        height: 80,
+        maxHeight: 80,
         objectFit: "fill",
     },
     selectedCard: {
@@ -143,7 +143,7 @@ export default function SingleProduct() {
                                     ></div>
                                     <Rating
                                         name="read-only"
-                                        value={4} // avg of star
+                                        value={4} // avg of star that rounds automatically
                                         readOnly
                                         size="large"
                                         max="1"
@@ -185,7 +185,7 @@ export default function SingleProduct() {
                                     id="sub"
                                     variant="outlined"
                                     onClick={() => {
-                                        if (value > 0) {
+                                        if (value > 1) {
                                             setValue(value - 1);
                                         }
                                     }}

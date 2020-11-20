@@ -15,9 +15,8 @@ const BootstrapInput = withStyles((theme) => ({
         borderRadius: 4,
         position: "relative",
         backgroundColor: theme.palette.background.paper,
-        border: "1px solid #ced4da",
-        fontSize: 16,
-        padding: "10px 26px 10px 12px",
+        fontSize: 14,
+        padding: "10px",
         transition: theme.transitions.create(["border-color", "box-shadow"]),
         // Use the system font instead of the default Roboto font.
         fontFamily: [
@@ -31,27 +30,21 @@ const BootstrapInput = withStyles((theme) => ({
             '"Apple Color Emoji"',
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
-        ].join(","),
-        "&:focus": {
-            borderRadius: 4,
-            borderColor: "#ffffff",
-            boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-        },
+        ].join(",")
     },
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
     margin: {
-        margin: theme.spacing(1),
-        marginLeft: 20,
+        marginLeft: 10,
     },
 }));
 
 export default function CustomizedSelects() {
     const classes = useStyles();
-    const [categories, setAge] = React.useState("");
+    const [categories, setCategory] = React.useState("All");
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setCategory(event.target.value);
     };
     return (
         <div>

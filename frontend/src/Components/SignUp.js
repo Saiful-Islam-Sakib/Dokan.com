@@ -14,7 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
     return (
@@ -55,14 +55,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
+    const history = useHistory();
+
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
+    const [age, setAge] = React.useState("");
+    const [birthday, setBirthday] = React.useState("");
+    const [phoneNumber, setPhoneNumber] = React.useState("");
+    const [address, setAddress] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [rePassword, setRePassword] = React.useState("");
     const [gender, setGender] = React.useState("");
 
-    const handleChange = (event) => {
-        setGender(event.target.value);
+    const handleSignUp = () => {
+        // history.push("/"); to redirect
+        // insert data into database
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container
+            component="main"
+            maxWidth="sm"
+            style={{ backgroundColor: "white", borderRadius: 10 }}
+        >
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -73,27 +89,6 @@ export default function SignUp() {
                 </Typography>
                 <form className={classes.form}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <RadioGroup
-                                row
-                                aria-label="accountType"
-                                name="accountType"
-                                defaultValue="Radio"
-                            >
-                                <FormControlLabel
-                                    value="Buyer"
-                                    control={<Radio required color="primary" />}
-                                    label="Buyer"
-                                    labelPlacement="start"
-                                />
-                                <FormControlLabel
-                                    value="Seller"
-                                    control={<Radio required color="primary" />}
-                                    label="Seller"
-                                    labelPlacement="start"
-                                />
-                            </RadioGroup>
-                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
@@ -105,6 +100,10 @@ export default function SignUp() {
                                 type="text"
                                 label="First Name"
                                 autoFocus
+                                autoComplete="First name"
+                                onChange={(event) => {
+                                    setFirstName(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -116,7 +115,10 @@ export default function SignUp() {
                                 label="Last Name"
                                 name="lastName"
                                 type="text"
-                                autoComplete="lname"
+                                autoComplete="Last Name"
+                                onChange={(event) => {
+                                    setLastName(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -128,6 +130,9 @@ export default function SignUp() {
                                 name="age"
                                 type="number"
                                 autoComplete="age"
+                                onChange={(event) => {
+                                    setAge(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -137,7 +142,9 @@ export default function SignUp() {
                                     labelId="genderLabel"
                                     id="genderid"
                                     value={gender}
-                                    onChange={handleChange}
+                                    onChange={(event) => {
+                                        setGender(event.target.value);
+                                    }}
                                     label="Gender"
                                     name="gender"
                                 >
@@ -156,8 +163,12 @@ export default function SignUp() {
                                 name="birthday"
                                 type="date"
                                 defaultValue="1900-12-31"
+                                autoComplete="Birthday"
                                 InputLabelProps={{
                                     shrink: true,
+                                }}
+                                onChange={(event) => {
+                                    setBirthday(event.target.value);
                                 }}
                             />
                         </Grid>
@@ -167,10 +178,27 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="phoneNumber"
-                                label="Phone Number"
+                                label="Phone Number : 01xxxxxxxxx"
                                 name="phoneNumber"
-                                type="number"
-                                autoComplete="phoneNumber"
+                                type="tel"
+                                autoComplete="Phone Number"
+                                onChange={(event) => {
+                                    setPhoneNumber(event.target.value);
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="homeAddress"
+                                label="Home Address"
+                                name="homeAddress"
+                                autoComplete="Addresses"
+                                onChange={(event) => {
+                                    setAddress(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -182,7 +210,10 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
+                                autoComplete="Email"
+                                onChange={(event) => {
+                                    setEmail(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -195,6 +226,9 @@ export default function SignUp() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(event) => {
+                                    setPassword(event.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -207,6 +241,9 @@ export default function SignUp() {
                                 type="password"
                                 id="retypepassword"
                                 autoComplete="retype-password"
+                                onChange={(event) => {
+                                    setRePassword(event.target.value);
+                                }}
                             />
                         </Grid>
                     </Grid>
@@ -216,6 +253,7 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={handleSignUp}
                     >
                         Sign Up
                     </Button>

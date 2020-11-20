@@ -8,11 +8,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useHistory } from "react-router-dom"; // react hook to redirect to any location
+import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
 
 function Copyright() {
     return (
@@ -21,7 +20,7 @@ function Copyright() {
             {"2020 - "}
             {new Date().getFullYear()}
             {", "}
-            <Link color="inherit" href="#">
+            <Link color="inherit" href="/">
                 dokan.com
             </Link>
         </Typography>
@@ -37,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },
     form: {
-        width: "100%", // Fix IE 11 issue.
+        width: "100%",
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -50,29 +49,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
-    const history = useHistory(); //for redirection
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
 
-    const handleSignIn = async event => {
-        event.preventDefault();
-        try{
-            const res = await fetch('http://localhost:5000/dokan.com/customer/login',{
-                method: 'POST',
-                headers : {'Content-type' : 'application/json'},
-                body: JSON.stringify({
-                    email: email, phone : email, password : password
-                })
-            });
-            const data = await res.json();
-            console.log(data);
-        }catch(err){
-            console.log(err);
-        }
-
-
+    const handleSignIn = (event) => {
         // history.push("/"); to redirect
         // er niche kaj korba
         //
@@ -96,22 +78,21 @@ function SignIn() {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <StorefrontRoundedIcon></StorefrontRoundedIcon>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Seller Sign in
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
-                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        type="email"
+                        id="sellerEmail"
                         label="Email / Phone Number"
-                        name="email"
+                        name="sellerEmail"
+                        type="email"
                         autoComplete="email"
                         autoFocus
                         onChange={(event) => {
@@ -119,15 +100,14 @@ function SignIn() {
                         }}
                     />
                     <TextField
-                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
+                        name="sellerPassword"
                         label="Password"
                         type="password"
-                        id="password"
+                        id="sellerPassword"
                         autoComplete="password"
                         onChange={(event) => {
                             setPassword(event.target.value);
@@ -159,8 +139,8 @@ function SignIn() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/signUp" variant="body2">
-                                {"Don't have an account? Sign Up"}
+                            <Link href="/sellerSignUp" variant="body2">
+                                {"Don't have a Seller account? Sign Up"}
                             </Link>
                         </Grid>
                     </Grid>

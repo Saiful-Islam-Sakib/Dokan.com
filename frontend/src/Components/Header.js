@@ -16,6 +16,8 @@ import Category from "./CategoryDrawer";
 import CategoryList from "./CategoryList";
 import Link from "@material-ui/core/Link";
 import CartList from "./CartList";
+import { Breadcrumbs } from "@material-ui/core";
+import LocationAlart from "./locationAlert";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         width: "100%",
         [theme.breakpoints.up("sm")]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: theme.spacing(1),
             width: "auto",
         },
     },
@@ -92,7 +94,7 @@ const secondHeaderStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "gray",
+        backgroundColor: "#131921",
         flexFlow: "row wrap",
     },
 }));
@@ -151,13 +153,34 @@ export default function PrimarySearchAppBar() {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             id={mobileMenuId}
             keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                    aria-label="account"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+            </MenuItem>
+            <Divider></Divider>
+            <MenuItem>
+                <IconButton aria-label="cart" color="inherit">
+                    <Badge badgeContent={1} color="secondary">
+                        <CartList></CartList>
+                    </Badge>
+                </IconButton>
+                <p>Cart</p>
+            </MenuItem>
+            <Divider></Divider>
             <MenuItem>
                 <IconButton aria-label="signIn" color="inherit">
                     <Typography>
@@ -171,24 +194,19 @@ export default function PrimarySearchAppBar() {
                     </Typography>
                 </IconButton>
             </MenuItem>
+            <Divider></Divider>
             <MenuItem>
-                <IconButton aria-label="cart" color="inherit">
-                    <Badge badgeContent={0} color="secondary">
-                        <CartList></CartList>
-                    </Badge>
+                <IconButton aria-label="sellerSignIn" color="inherit">
+                    <Typography>
+                        <Link
+                            href="/sellerSignIn"
+                            className={classes.logoLink}
+                            style={{ textDecoration: "none" }}
+                        >
+                            Seller Sign In
+                        </Link>
+                    </Typography>
                 </IconButton>
-                <p>Cart</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
             </MenuItem>
         </Menu>
     );
@@ -214,9 +232,11 @@ export default function PrimarySearchAppBar() {
                         </Link>
                     </Typography>
 
+                    <div className={classes.grow} />
+
                     <CategoryList></CategoryList>
 
-                    <div className={classes.search}>
+                    <div className={classes.search} style={{ flexGrow: 2 }}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -228,6 +248,7 @@ export default function PrimarySearchAppBar() {
                             }}
                             inputProps={{ "aria-label": "search" }}
                             onChange={onChangeSearchbar}
+                            fullWidth
                         />
                     </div>
                     <div className={classes.grow} />
@@ -240,6 +261,16 @@ export default function PrimarySearchAppBar() {
                                     style={{ textDecoration: "none" }}
                                 >
                                     Sign In
+                                </Link>
+                            </Typography>
+                        </IconButton>
+                        <IconButton aria-label="sellerSignIn" color="inherit">
+                            <Typography>
+                                <Link
+                                    href="/sellerSignIn"
+                                    className={classes.logoLink}
+                                >
+                                    Seller ?
                                 </Link>
                             </Typography>
                         </IconButton>
@@ -272,59 +303,30 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar>
                 <Typography className={secondHeaderClass.root}>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        About
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Contacts
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Seller
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Deals
-                    </Link>
-                    <Link
-                        href="/"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        Top_Products
-                    </Link>
-                    <Link
-                        // for testingggggggggggggggggggggggggggggggggggggg
-                        href="/listOfProducts"
-                        className={classes.logoLink}
-                        style={{ marginLeft: "16px" }}
-                    >
-                        list_of_products
-                    </Link>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link href="/">Home</Link>
+                        <Link href="/about">About</Link>
+                    </Breadcrumbs>
+                    <Divider
+                        orientation="vertical"
+                        flexItem
+                        variant="middle"
+                    ></Divider>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link href="/consumerfood">Consumer_Food</Link>
+                        <Link href="/toiletries">Toiletries</Link>
+                        <Link href="/healthandcare">{"Health_&_care"}</Link>
+                    </Breadcrumbs>
+                </Typography>
+                <Divider
+                    variant="middle"
+                    style={{ backgroundColor: "whitesmoke" }}
+                ></Divider>
+                <Typography className={secondHeaderClass.root}>
+                    <LocationAlart></LocationAlart>
                 </Typography>
             </AppBar>
-            <div style={{ marginBottom: 120 }}></div>
+            <div style={{ height: 150, background: "#131921" }}></div>
             {renderMobileMenu}
             {renderMenu}
         </div>
