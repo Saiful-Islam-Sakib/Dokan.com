@@ -5,7 +5,7 @@ const productControllers = require('../controllers/products-controllers');
 const router = express.Router();
 
 
-router.get('/:pid', productControllers.getproductbyid);
+router.get('/productdetails/:pid', productControllers.getproductbyid);
 
 router.post('/newProduct',
     [check('name').not().isEmpty(),check('brand').not().isEmpty(),check('price').not().isEmpty(),
@@ -15,8 +15,10 @@ router.post('/newProduct',
 
 router.delete('/sell1/deleteProd/:pid',productControllers.deleteproduct); // This feature should be used by a seller
 
-router.get('/searchbyname/:pname',productControllers.productSearch);
+router.get('/consumerFood/:psubcat',productControllers.productbySubcat);
 
-router.get('/searchbycategory/:pcat',productControllers.prodSearchbyCategory);
+//router.get('/searchbycategory/:pcat',productControllers.prodSearchbyCategory);
+
+//router.delete('/sp/:id',productControllers.del);
 
 module.exports = router;
