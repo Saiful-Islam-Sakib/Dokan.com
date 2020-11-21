@@ -12,7 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
-import flour1 from "../image/consumer/flour _ suji/teer_flour_maida.png";
+import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
     list: {
@@ -118,6 +118,15 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
+                                console.log("oil");
+                                setCategory("oil");
+                            }}
+                        >
+                            <ListItemText primary="Oil" />
+                        </ListItem>
+                        <ListItem
+                            button
+                            onClick={() => {
                                 console.log("milk");
                                 setCategory("milk");
                             }}
@@ -127,11 +136,11 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("spiceAndSauce");
-                                setCategory("spiceAndSauce");
+                                console.log("spicePickle");
+                                setCategory("spicePickle");
                             }}
                         >
-                            <ListItemText primary={"Spices & sauce"} />
+                            <ListItemText primary={"Spices & Pickles"} />
                         </ListItem>
                         <ListItem
                             button
@@ -158,7 +167,7 @@ export default function TemporaryDrawer() {
                                 setCategory("onionGarlicPotato");
                             }}
                         >
-                            <ListItemText primary="onion-garlic-potato" />
+                            <ListItemText primary="Onion-Garlic-Potato" />
                         </ListItem>
                         <ListItem
                             button
@@ -190,11 +199,11 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("cookingAndBacking");
-                                setCategory("cookingAndBacking");
+                                console.log("cookingBaking");
+                                setCategory("cookingBaking");
                             }}
                         >
-                            <ListItemText primary={"cooking & baking"} />
+                            <ListItemText primary={"Cooking & Baking"} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -207,22 +216,20 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("washroomToilatries");
-                                setCategory("salt");
+                                console.log("washroomToletries");
+                                setCategory("washroomToletries");
                             }}
                         >
-                            <ListItemText primary="washroom toiletries" />
+                            <ListItemText primary="Washroom Toiletries" />
                         </ListItem>
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("homeAndKitchenToiletries");
-                                setCategory("homeAndKitchenToiletries");
+                                console.log("homeKitchenToiletries");
+                                setCategory("homeKitchenToiletries");
                             }}
                         >
-                            <ListItemText
-                                primary={"home & kitchen toiletries"}
-                            />
+                            <ListItemText primary={"Home & Kitchen"} />
                         </ListItem>
                         <ListItem
                             button
@@ -231,7 +238,7 @@ export default function TemporaryDrawer() {
                                 setCategory("airFreshener");
                             }}
                         >
-                            <ListItemText primary="Air freshener" />
+                            <ListItemText primary="Air Freshener" />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -246,8 +253,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("toothBrush");
-                                setCategory("toothBrush");
+                                console.log("toothbrush");
+                                setCategory("toothbrush");
                             }}
                         >
                             <ListItemText primary="Toothbrush" />
@@ -255,8 +262,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("toothPaste");
-                                setCategory("toothPaste");
+                                console.log("toothpaste");
+                                setCategory("toothpaste");
                             }}
                         >
                             <ListItemText primary="Toothpaste" />
