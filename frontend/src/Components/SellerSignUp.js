@@ -113,46 +113,41 @@ export default function SignUp() {
     const [bankBranch, setbankbranch] = React.useState("");
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
-
+  
     const [signUpStatus, setSignUpStatus] = React.useState(false);
 
-    const handleSignUp = async (event) => {
+    const handleSignUpSeller = async event => {
         event.preventDefault();
         if (password === rePassword) {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/seller/signup",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            f_name: firstName,
-                            l_name: lastName,
-                            email: email,
-                            phone: phoneNumber,
-                            trade_lic_no: tradeLicense,
-                            birthday: birthday,
-                            password: password,
-                            nid: nid,
-                            v_city: sellerCity,
-                            v_area: sellerArea,
-                            v_address: sellerAddress,
-                            sh_name: shopName,
-                            sh_area: shopArea,
-                            sh_city: shopCity,
-                            sh_place: shopPlace,
-                            sh_area_pc: postalCode,
-                            bank: bankName,
-                            b_acc_no: accountNumber,
-                            b_acc: accountName,
-                            branch: bankBranch,
-                        }),
-                    }
-                );
+            try{
+                const res = await fetch('http://localhost:5000/dokan.com/seller/signup',{
+                    method: 'POST',
+                    headers : {'Content-type' : 'application/json'},
+                    body: JSON.stringify({
+                        v_f_name : firstName,
+                        v_l_name : lastName,
+                        email : email,
+                        phone : phoneNumber,
+                        trade_lic_no : tradeLicense,
+                        birthday : birthday,
+                        password : password,
+                        nid :nid,
+                        v_city : sellerCity,
+                        v_area : sellerArea,
+                        v_address: sellerAddress,sh_name :shopName,
+                        sh_area: shopArea, sh_city : shopCity,
+                        sh_place : shopPlace, sh_area_pc :postalCode,
+                        bank:bankName,b_acc_no:accountNumber,
+                        b_acc:accountName,branch:bankBranch
+                    })
+                });
                 const data = await res.json();
                 console.log(data);
-                setSignUpStatus(true);
-            } catch (err) {
+                if(data.msg.email === email){
+                    console.log('Successfully SignedUp as a seller');
+                    setSignUpStatus(true);
+                }
+            }catch(err){
                 console.log(err);
             }
         }
@@ -657,23 +652,31 @@ export default function SignUp() {
                                 <Button
                                     type="submit"
                                     fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={handleSignUp}
-                                >
-                                    Sign Up
-                                </Button>
-                                <Grid container justify="flex-end">
-                                    <Grid item>
-                                        <Link
-                                            href="/sellerSignIn"
-                                            variant="body2"
-                                        >
-                                            Already have a Seller account? Sign
-                                            in
-                                        </Link>
-                                    </Grid>
+                                    name="retype-password"
+                                    label="Retype-Password"
+                                    type="password"
+                                    id="retype-password"
+                                    autoComplete="retype-password"
+                                    onChange={(event) => {
+                                        setRePassword(event.target.value);
+                                    }}
+                                />
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleSignUpSeller}
+                            >
+                                Sign Up
+                            </Button>
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <Link href="/sellerSignIn" variant="body2">
+                                        Already have a Seller account? Sign in
+                                    </Link>
                                 </Grid>
                             </Grid>
                         </Container>
