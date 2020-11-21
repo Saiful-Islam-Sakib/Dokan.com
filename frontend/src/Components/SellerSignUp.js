@@ -152,7 +152,15 @@ export default function SignUp() {
                     console.log('Successfully SignedUp as a seller');
                     setSignUpStatus(true);
                 }
+<<<<<<< HEAD
             }catch(err){
+=======
+<<<<<<< HEAD
+            }catch (err) {
+=======
+            }catch(err){
+>>>>>>> edff179aa5faef3354380505c9dbfaf8769cd851
+>>>>>>> aabc629c7480439b5087da62db626e40b274f326
                 console.log(err);
             }
     }
