@@ -176,8 +176,6 @@ export default function PrimarySearchAppBar() {
     const mobileMenuId = "primary-search-account-menu-mobile";
     const renderMobileMenu = (
         <>
-            {/* Profile namer nicher ai menu ta sign korle shathe nam dekhabe  */}
-            {/* ar  */}
             {localStorage.getItem("login") === true ||
             sessionStorage.getItem("login") === true ? (
                 <Menu
