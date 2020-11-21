@@ -107,7 +107,7 @@ const sellerSignup = async (req,res,next) =>{
             return next(erro);
         }
         if(existingSeller1 || existingSeller2 ){
-            const erro = new httpError('Seller already exist',422);
+            const erro = new httpError('Seller already exist',421);
             return next(erro);
         }
     

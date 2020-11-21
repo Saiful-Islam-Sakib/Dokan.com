@@ -113,19 +113,26 @@ export default function SignUp() {
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
 
-    const handleSignUp = async event => {
+    const handleSignUpSeller = async event => {
         event.preventDefault();
+        console.log('Here1');
         if (password === rePassword) {
+            console.log('Here2');
             try{
                 const res = await fetch('http://localhost:5000/dokan.com/seller/signup',{
                     method: 'POST',
                     headers : {'Content-type' : 'application/json'},
                     body: JSON.stringify({
-                        f_name : firstName, l_name : lastName ,
-                        email : email, phone : phoneNumber, trade_lic_no:tradeLicense,
+                        v_f_name : firstName,
+                        v_l_name : lastName,
+                        email : email,
+                        phone : phoneNumber,
+                        trade_lic_no : tradeLicense,
                         birthday : birthday,
-                        password : password,nid :nid,
-                        v_city : sellerCity, v_area : sellerArea,
+                        password : password,
+                        nid :nid,
+                        v_city : sellerCity,
+                        v_area : sellerArea,
                         v_address: sellerAddress,sh_name :shopName,
                         sh_area: shopArea, sh_city : shopCity,
                         sh_place : shopPlace, sh_area_pc :postalCode,
@@ -135,6 +142,9 @@ export default function SignUp() {
                 });
                 const data = await res.json();
                 console.log(data);
+                if(data.msg.email === email){
+                    console.log('Successfully SignedUp as a seller');
+                }
             }catch(err){
                 console.log(err);
             }
@@ -625,7 +635,7 @@ export default function SignUp() {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
-                                onclick={handleSignUp}
+                                onClick={handleSignUpSeller}
                             >
                                 Sign Up
                             </Button>

@@ -57,7 +57,7 @@ const customerSignup = async (req,res,next) => {
         return next(erro);
     }
     if(existingUser1 || existingUser2 ){
-        const erro = new httpError('Customer already exist',422);
+        const erro = new httpError('Customer already exist',421);
         return next(erro);
     }
 
