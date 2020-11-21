@@ -108,7 +108,6 @@ export default function PrimarySearchAppBar() {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [signOutStatus, setSignOutStatus] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -143,95 +142,115 @@ export default function PrimarySearchAppBar() {
         handleMenuClose();
         if (localStorage.getItem("login") === true) {
             localStorage.removeItem("login");
-        }
-        if (sessionStorage.getItem("login") === true) {
+        } else if (sessionStorage.getItem("login") === true) {
             sessionStorage.removeItem("login");
         }
-        setSignOutStatus(false); // sign in korle ai status true korte hobe ....
     };
 
     const menuId = "primary-search-account-menu";
     const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
-            <MenuItem onClick={handleMyProfile}>Favorite</MenuItem>
-            <MenuItem onClick={handleMyProfile}>Order history</MenuItem>
-            <Divider />
-            {/* nicher line ar code ta sign in hole show korbe naile korbe na ... eta change kora lagbe  */}
-            <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
-        </Menu>
+        <>
+            {localStorage.getItem("login") === true ||
+            sessionStorage.getItem("login") === true ? (
+                <Menu
+                    anchorEl={anchorEl}
+                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    id={menuId}
+                    keepMounted
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    open={isMenuOpen}
+                    onClose={handleMenuClose}
+                >
+                    <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
+                    <MenuItem onClick={handleMyProfile}>Favorite</MenuItem>
+                    <MenuItem onClick={handleMyProfile}>Order history</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                </Menu>
+            ) : (
+                <></>
+            )}
+        </>
     );
 
     const mobileMenuId = "primary-search-account-menu-mobile";
     const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "center" }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
+        <>
             {/* Profile namer nicher ai menu ta sign korle shathe nam dekhabe  */}
             {/* ar  */}
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
+            {localStorage.getItem("login") === true ||
+            sessionStorage.getItem("login") === true ? (
+                <Menu
+                    anchorEl={mobileMoreAnchorEl}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    id={mobileMenuId}
+                    keepMounted
+                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={isMobileMenuOpen}
+                    onClose={handleMobileMenuClose}
                 >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-            <Divider></Divider>
-            <MenuItem>
-                <IconButton aria-label="cart" color="inherit">
-                    <Badge badgeContent={1} color="secondary">
-                        <CartList></CartList>
-                    </Badge>
-                </IconButton>
-                <p>Cart</p>
-            </MenuItem>
-            <Divider></Divider>
-            <MenuItem>
-                <IconButton aria-label="signIn" color="inherit">
-                    <Typography>
-                        <Link
-                            href="/signIn"
-                            className={classes.logoLink}
-                            style={{ textDecoration: "none" }}
+                    <MenuItem onClick={handleProfileMenuOpen}>
+                        <IconButton
+                            aria-label="account"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
                         >
-                            Sign In
-                        </Link>
-                    </Typography>
-                </IconButton>
-            </MenuItem>
-            <Divider></Divider>
-            <MenuItem>
-                <IconButton aria-label="sellerSignIn" color="inherit">
-                    <Typography>
-                        <Link
-                            href="/sellerSignIn"
-                            className={classes.logoLink}
-                            style={{ textDecoration: "none" }}
-                        >
-                            Seller Sign In
-                        </Link>
-                    </Typography>
-                </IconButton>
-            </MenuItem>
-        </Menu>
+                            <AccountCircle />
+                        </IconButton>
+                        <p>Profile</p>
+                    </MenuItem>
+                    <Divider></Divider>
+                    <MenuItem>
+                        <IconButton aria-label="cart" color="inherit">
+                            <Badge badgeContent={1} color="secondary">
+                                <CartList></CartList>
+                            </Badge>
+                        </IconButton>
+                        <p>Cart</p>
+                    </MenuItem>
+                    <Divider></Divider>
+                </Menu>
+            ) : (
+                <Menu
+                    anchorEl={mobileMoreAnchorEl}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    id={mobileMenuId}
+                    keepMounted
+                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={isMobileMenuOpen}
+                    onClose={handleMobileMenuClose}
+                >
+                    <MenuItem>
+                        <IconButton aria-label="signIn" color="inherit">
+                            <Typography>
+                                <Link
+                                    href="/signIn"
+                                    className={classes.logoLink}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    Sign In
+                                </Link>
+                            </Typography>
+                        </IconButton>
+                    </MenuItem>
+                    <Divider></Divider>
+                    <MenuItem>
+                        <IconButton aria-label="sellerSignIn" color="inherit">
+                            <Typography>
+                                <Link
+                                    href="/sellerSignIn"
+                                    className={classes.logoLink}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    Seller Sign In
+                                </Link>
+                            </Typography>
+                        </IconButton>
+                    </MenuItem>
+                </Menu>
+            )}
+        </>
     );
 
     return (
@@ -277,42 +296,73 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         {/* sign in kore felle sign in and Seller? option show korbe na */}
-                        <IconButton aria-label="signIn" color="inherit">
-                            <Typography>
-                                <Link
-                                    href="/signIn"
-                                    className={classes.logoLink}
-                                    style={{ textDecoration: "none" }}
+                        {localStorage.getItem("login") === true ||
+                        sessionStorage.getItem("login") === true ? (
+                            <></>
+                        ) : (
+                            <>
+                                <IconButton aria-label="signIn" color="inherit">
+                                    <Typography>
+                                        <Link
+                                            href="/signIn"
+                                            className={classes.logoLink}
+                                            style={{ textDecoration: "none" }}
+                                        >
+                                            Sign In
+                                        </Link>
+                                    </Typography>
+                                </IconButton>
+                                <IconButton
+                                    aria-label="sellerSignIn"
+                                    color="inherit"
                                 >
-                                    Sign In
-                                </Link>
-                            </Typography>
-                        </IconButton>
-                        <IconButton aria-label="sellerSignIn" color="inherit">
-                            <Typography>
-                                <Link
-                                    href="/sellerSignIn"
-                                    className={classes.logoLink}
-                                >
-                                    Seller ?
-                                </Link>
-                            </Typography>
-                        </IconButton>
+                                    <Typography>
+                                        <Link
+                                            href="/sellerSignIn"
+                                            className={classes.logoLink}
+                                        >
+                                            Seller ?
+                                        </Link>
+                                    </Typography>
+                                </IconButton>
+                            </>
+                        )}
                         <IconButton aria-label="cart" color="inherit">
                             <Badge badgeContent={1} color="secondary">
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        {localStorage.getItem("login") === true ||
+                        sessionStorage.getItem("login") === true ? (
+                            <>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    {/* user name from redux sotre ***************************************************************** */}
+                                    <Typography variant="h6">
+                                        {"Sakib"}
+                                    </Typography>
+                                </IconButton>
+                            </>
+                        ) : (
+                            <>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </>
+                        )}
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

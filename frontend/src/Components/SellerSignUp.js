@@ -13,6 +13,7 @@ import { Divider } from "@material-ui/core";
 import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert";
 
 function Copyright() {
     return (
@@ -91,7 +92,7 @@ export default function SignUp() {
     const [phoneNumber, setPhoneNumber] = React.useState("");
     const [tradeLicense, setTradeLicense] = React.useState("");
     const [nid, setNID] = React.useState("");
-    const [birthday, setBirthday] = React.useState("");
+    const [birthday, setBirthday] = React.useState("2000-12-31");
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -112,6 +113,8 @@ export default function SignUp() {
     const [bankBranch, setbankbranch] = React.useState("");
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
+  
+    const [signUpStatus, setSignUpStatus] = React.useState(false);
 
     const handleSignUpSeller = async event => {
         event.preventDefault();
@@ -142,15 +145,12 @@ export default function SignUp() {
                 console.log(data);
                 if(data.msg.email === email){
                     console.log('Successfully SignedUp as a seller');
+                    setSignUpStatus(true);
                 }
             }catch(err){
                 console.log(err);
             }
         }
-
-        // history.push("/"); to redirect
-        //ekhane data up hobe database
-
     };
 
     return (
@@ -160,462 +160,497 @@ export default function SignUp() {
             style={{ backgroundColor: "white", borderRadius: 10 }}
         >
             <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <StorefrontRoundedIcon></StorefrontRoundedIcon>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Seller Sign up
-                </Typography>
-                <form className={classes.form}>
-                    <div style={{ display: "flex", flexWrap: "wrap" }}>
-                        <Grid
-                            container
-                            spacing={2}
-                            style={{ maxWidth: "49%", alignSelf: "flex-start" }}
+            {signUpStatus ? (
+                <div>
+                    <Alert style={{ maxWidth: "100%" }}>
+                        <Typography>
+                            {"!!!   Sign Up Successful   !!!"}
+                        </Typography>
+                        <a href="/sellerSignIn">Sign In</a>
+                    </Alert>
+                </div>
+            ) : (
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <StorefrontRoundedIcon></StorefrontRoundedIcon>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Seller Sign up
+                    </Typography>
+                    <form className={classes.form}>
+                        <div style={{ display: "flex", flexWrap: "wrap" }}>
+                            <Grid
+                                container
+                                spacing={2}
+                                style={{
+                                    maxWidth: "49%",
+                                    alignSelf: "flex-start",
+                                }}
+                            >
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">
+                                        Personal Information:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        autoComplete="first name"
+                                        name="firstName"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="firstName"
+                                        type="text"
+                                        label="First Name"
+                                        autoFocus
+                                        onChange={(event) => {
+                                            setFirstName(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="lastName"
+                                        label="Last Name"
+                                        name="lastName"
+                                        type="text"
+                                        autoComplete="last name"
+                                        onChange={(event) => {
+                                            setLastName(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="phoneNumber"
+                                        label="Phone Number : 01xxxxxxxxx"
+                                        name="phoneNumber"
+                                        type="tel"
+                                        autoComplete="phone number"
+                                        onChange={(event) => {
+                                            setPhoneNumber(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="tradeLicenseNumber"
+                                        label="Trade License Number"
+                                        name="tradeLicenseNumber"
+                                        type="text"
+                                        onChange={(event) => {
+                                            setTradeLicense(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="nid"
+                                        label="NID Number"
+                                        name="nid"
+                                        type="number"
+                                        onChange={(event) => {
+                                            setNID(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        id="birthday"
+                                        label="Birthday"
+                                        name="birthday"
+                                        type="date"
+                                        defaultValue={birthday}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        onChange={(event) => {
+                                            setBirthday(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">
+                                        Own Address:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="sellerlocationCity"
+                                        disableClearable
+                                        options={locations}
+                                        getOptionLabel={(option) => {
+                                            return option.city;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="City"
+                                                variant="outlined"
+                                                id="sellerCity"
+                                                name="sellerCity"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setsellercity(option.city);
+                                            setArea(option.zone);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="sellerlocationArea"
+                                        disableClearable
+                                        options={areaName}
+                                        getOptionLabel={(option) => {
+                                            return option.area;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Area"
+                                                variant="outlined"
+                                                id="sellerArea"
+                                                name="sellerArea"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setsellerarea(option.area);
+                                            setPlace(option.place);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="sellerlocationPlace"
+                                        disableClearable
+                                        options={placeName}
+                                        getOptionLabel={(option) => {
+                                            return option;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Place"
+                                                variant="outlined"
+                                                id="sellerPlace"
+                                                name="sellerPlace"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setsellerplace(option);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="homeAddress"
+                                        label="Home Address"
+                                        name="homeAddress"
+                                        autoComplete="Addresses"
+                                        type="text"
+                                        onChange={(event) => {
+                                            setSellerAddress(
+                                                event.target.value
+                                            );
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Divider
+                                orientation="vertical"
+                                flexItem
+                                variant="middle"
+                            ></Divider>
+                            <Grid
+                                container
+                                spacing={2}
+                                style={{
+                                    maxWidth: "49%",
+                                    alignSelf: "flex-start",
+                                }}
+                            >
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">
+                                        Bank Information:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Autocomplete
+                                        id="bankName"
+                                        disableClearable
+                                        options={bank}
+                                        getOptionLabel={(option) => {
+                                            return option.name;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Bank"
+                                                variant="outlined"
+                                                id="bankName"
+                                                name="bankName"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setbankname(option.name);
+                                            setbranch(option.branch);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Autocomplete
+                                        id="branchName"
+                                        disableClearable
+                                        options={branch}
+                                        getOptionLabel={(option) => {
+                                            return option;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Branch"
+                                                variant="outlined"
+                                                id="branchName"
+                                                name="branchName"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setbankbranch(option);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="bankAccountName"
+                                        label="Account Name"
+                                        name="bankAccountName"
+                                        type="text"
+                                        onChange={(event) => {
+                                            setbankAccountName(
+                                                event.target.value
+                                            );
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="bankAccountNumber"
+                                        label="Account Number"
+                                        name="bankAccountNumber"
+                                        type="number"
+                                        onChange={(event) => {
+                                            setbankAccountNumber(
+                                                event.target.value
+                                            );
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">
+                                        Shop Information:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="shopName"
+                                        label="Shop Name"
+                                        name="shopName"
+                                        type="text"
+                                        onChange={(event) => {
+                                            setshopName(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="shoplocationCity"
+                                        disableClearable
+                                        options={locations}
+                                        getOptionLabel={(option) => {
+                                            return option.city;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="City"
+                                                variant="outlined"
+                                                id="shopCity"
+                                                name="shopCity"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setshopcity(option.city);
+                                            setArea(option.zone);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="shoplocationArea"
+                                        disableClearable
+                                        options={areaName}
+                                        getOptionLabel={(option) => {
+                                            return option.area;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Area"
+                                                variant="outlined"
+                                                id="shopArea"
+                                                name="shopArea"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setshoparea(option.area);
+                                            setPlace(option.place);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Autocomplete
+                                        id="shoplocationPlace"
+                                        disableClearable
+                                        options={placeName}
+                                        getOptionLabel={(option) => {
+                                            return option;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Place"
+                                                variant="outlined"
+                                                id="shopPlace"
+                                                name="shopPlace"
+                                                fullWidth
+                                                required
+                                            />
+                                        )}
+                                        onChange={(event, option) => {
+                                            setshopplace(option);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="shopAreaPC"
+                                        label="Shop Area PC"
+                                        name="shopAreaPC"
+                                        type="number"
+                                        onChange={(event) => {
+                                            setshopPostalCode(
+                                                event.target.value
+                                            );
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                        <Container
+                            maxWidth="sm"
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: 30,
+                            }}
                         >
-                            <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Personal Information:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete
-                                    name="firstName"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    type="text"
-                                    label="First Name"
-                                    autoFocus
-                                    onChange={(event) => {
-                                        setFirstName(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    type="text"
-                                    autoComplete
-                                    onChange={(event) => {
-                                        setLastName(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="phoneNumber"
-                                    label="Phone Number : 01xxxxxxxxx"
-                                    name="phoneNumber"
-                                    type="tel"
-                                    autoComplete
-                                    onChange={(event) => {
-                                        setPhoneNumber(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="tradeLicenseNumber"
-                                    label="Trade License Number"
-                                    name="tradeLicenseNumber"
-                                    type="text"
-                                    onChange={(event) => {
-                                        setTradeLicense(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="nid"
-                                    label="NID Number"
-                                    name="nid"
-                                    type="number"
-                                    onChange={(event) => {
-                                        setNID(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="birthday"
-                                    label="Birthday"
-                                    name="birthday"
-                                    type="date"
-                                    defaultValue="1900-12-31"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    onChange={(event) => {
-                                        setBirthday(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Own Address:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="sellerlocationCity"
-                                    disableClearable
-                                    options={locations}
-                                    getOptionLabel={(option) => {
-                                        return option.city;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="City"
-                                            variant="outlined"
-                                            id="sellerCity"
-                                            name="sellerCity"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setsellercity(option.city);
-                                        setArea(option.zone);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="sellerlocationArea"
-                                    disableClearable
-                                    options={areaName}
-                                    getOptionLabel={(option) => {
-                                        return option.area;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Area"
-                                            variant="outlined"
-                                            id="sellerArea"
-                                            name="sellerArea"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setsellerarea(option.area);
-                                        setPlace(option.place);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="sellerlocationPlace"
-                                    disableClearable
-                                    options={placeName}
-                                    getOptionLabel={(option) => {
-                                        return option;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Place"
-                                            variant="outlined"
-                                            id="sellerPlace"
-                                            name="sellerPlace"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setsellerplace(option);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="homeAddress"
-                                    label="Home Address"
-                                    name="homeAddress"
-                                    autoComplete="Addresses"
-                                    type="text"
-                                    onChange={(event) => {
-                                        setSellerAddress(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Divider
-                            orientation="vertical"
-                            flexItem
-                            variant="middle"
-                        ></Divider>
-                        <Grid
-                            container
-                            spacing={2}
-                            style={{ maxWidth: "49%", alignSelf: "flex-start" }}
-                        >
-                            <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Bank Information:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Autocomplete
-                                    id="bankName"
-                                    disableClearable
-                                    options={bank}
-                                    getOptionLabel={(option) => {
-                                        return option.name;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Bank"
-                                            variant="outlined"
-                                            id="bankName"
-                                            name="bankName"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setbankname(option.name);
-                                        setbranch(option.branch);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Autocomplete
-                                    id="branchName"
-                                    disableClearable
-                                    options={branch}
-                                    getOptionLabel={(option) => {
-                                        return option;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Branch"
-                                            variant="outlined"
-                                            id="branchName"
-                                            name="branchName"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setbankbranch(option);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="bankAccountName"
-                                    label="Account Name"
-                                    name="bankAccountName"
-                                    type="text"
-                                    onChange={(event) => {
-                                        setbankAccountName(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="bankAccountNumber"
-                                    label="Account Number"
-                                    name="bankAccountNumber"
-                                    type="number"
-                                    onChange={(event) => {
-                                        setbankAccountNumber(
-                                            event.target.value
-                                        );
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Shop Information:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="shopName"
-                                    label="Shop Name"
-                                    name="shopName"
-                                    type="text"
-                                    onChange={(event) => {
-                                        setshopName(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="shoplocationCity"
-                                    disableClearable
-                                    options={locations}
-                                    getOptionLabel={(option) => {
-                                        return option.city;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="City"
-                                            variant="outlined"
-                                            id="shopCity"
-                                            name="shopCity"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setshopcity(option.city);
-                                        setArea(option.zone);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="shoplocationArea"
-                                    disableClearable
-                                    options={areaName}
-                                    getOptionLabel={(option) => {
-                                        return option.area;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Area"
-                                            variant="outlined"
-                                            id="shopArea"
-                                            name="shopArea"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setshoparea(option.area);
-                                        setPlace(option.place);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Autocomplete
-                                    id="shoplocationPlace"
-                                    disableClearable
-                                    options={placeName}
-                                    getOptionLabel={(option) => {
-                                        return option;
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Place"
-                                            variant="outlined"
-                                            id="shopPlace"
-                                            name="shopPlace"
-                                            fullWidth
-                                            required
-                                        />
-                                    )}
-                                    onChange={(event, option) => {
-                                        setshopplace(option);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="shopAreaPC"
-                                    label="Shop Area PC"
-                                    name="shopAreaPC"
-                                    type="number"
-                                    onChange={(event) => {
-                                        setshopPostalCode(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <Container
-                        maxWidth="sm"
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: 30,
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <Typography variant="h6">
-                                    Registration:
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    onChange={(event) => {
-                                        setEmail(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="password"
-                                    onChange={(event) => {
-                                        setPassword(event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">
+                                        Registration:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        name="email"
+                                        type="email"
+                                        autoComplete="email"
+                                        onChange={(event) => {
+                                            setEmail(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="password"
+                                        onChange={(event) => {
+                                            setPassword(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="retype-password"
+                                        label="Retype-Password"
+                                        type="password"
+                                        id="retype-password"
+                                        autoComplete="retype-password"
+                                        onChange={(event) => {
+                                            setRePassword(event.target.value);
+                                        }}
+                                    />
+                                </Grid>
+                                <Button
+                                    type="submit"
                                     fullWidth
                                     name="retype-password"
                                     label="Retype-Password"
@@ -644,10 +679,11 @@ export default function SignUp() {
                                     </Link>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </Container>
-                </form>
-            </div>
+                        </Container>
+                    </form>
+                </div>
+            )}
+
             <Box mt={5}>
                 <Copyright />
             </Box>
