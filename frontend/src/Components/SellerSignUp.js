@@ -199,7 +199,7 @@ export default function SignUp() {
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
-                                        autoComplete
+                                        autoComplete="first name"
                                         name="firstName"
                                         variant="outlined"
                                         required
@@ -222,7 +222,7 @@ export default function SignUp() {
                                         label="Last Name"
                                         name="lastName"
                                         type="text"
-                                        autoComplete
+                                        autoComplete="last name"
                                         onChange={(event) => {
                                             setLastName(event.target.value);
                                         }}
@@ -237,7 +237,7 @@ export default function SignUp() {
                                         label="Phone Number : 01xxxxxxxxx"
                                         name="phoneNumber"
                                         type="tel"
-                                        autoComplete
+                                        autoComplete="phone number"
                                         onChange={(event) => {
                                             setPhoneNumber(event.target.value);
                                         }}
@@ -660,7 +660,7 @@ export default function SignUp() {
                                     variant="contained"
                                     color="primary"
                                     className={classes.submit}
-                                    onclick={handleSignUp}
+                                    onClick={handleSignUp}
                                 >
                                     Sign Up
                                 </Button>

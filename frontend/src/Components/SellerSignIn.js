@@ -126,6 +126,7 @@ function SignIn() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
