@@ -602,6 +602,7 @@ export default function SignUp() {
                             maxWidth="sm"
                             style={{
                                 display: "flex",
+                                flexDirection: "column",
                                 justifyContent: "center",
                                 marginTop: 30,
                             }}
