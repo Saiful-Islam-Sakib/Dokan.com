@@ -61,16 +61,16 @@ export default function TemporaryDrawer() {
     };
 
     const handleCategorySelect = async (event) => {
-        //event.preventDefault();
         try {
             const res = await fetch(
                 "http://localhost:5000/dokan.com/products/consumerFood/flour"
             );
             const data = await res.json();
             console.log(data);
-            sessionStorage.setItem("products", JSON.stringify(data));
-            const a = JSON.parse(sessionStorage.getItem("products"));
-            console.log(a);
+
+            // sessionStorage.setItem("products", JSON.stringify(data));
+            // const a = JSON.parse(sessionStorage.getItem("products"));
+            // console.log(a);
 
             //history.push("/productList");
         } catch (err) {
