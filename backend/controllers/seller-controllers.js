@@ -67,7 +67,8 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        res.status(201).json({msg : 'Logged In'});    
+        existingSeller1.password = null;
+        res.status(201).json({msg : existingSeller1});    
     }
     if(phone){
         try{
@@ -81,7 +82,8 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        res.status(201).json({msg : 'Logged In'}); 
+        existingSeller2.password = null;
+        res.status(201).json({msg : existingSeller2}); 
     }
 };
 

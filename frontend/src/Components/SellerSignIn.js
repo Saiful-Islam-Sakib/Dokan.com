@@ -54,7 +54,59 @@ function SignIn() {
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
 
-    const handleSignIn = (event) => {
+    const handleSignIn = async event => {
+        event.preventDefault();
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(email.match(mailformat)){
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/seller/login",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password,
+                        }),
+                    }
+                );
+                const data = await res.json();
+                console.log(data);
+                if (data.msg.email === email || data.msg.phone === email) {
+                    console.log("Logged in as a seller");   
+                }else {
+                    setErrorStatus(true);
+                }
+            } catch (err) {
+                console.log(err);
+                setErrorStatus(true);
+            }
+        }else{
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/seller/login",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            phone: email,
+                            password: password,
+                        }),
+                    }
+                );
+                const data = await res.json();
+                console.log(data);
+                if (data.msg.email === email || data.msg.phone === email) {
+                    console.log("Logged in as a seller");   
+                }else {
+                    setErrorStatus(true);
+                }
+            } catch (err) {
+                console.log(err);
+                setErrorStatus(true);
+            }
+        }
+
         // history.push("/"); to redirect
         // er niche kaj korba
         //
