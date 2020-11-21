@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
     return (
@@ -49,10 +50,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
+    const history = useHistory();
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
+    const [rememberMe, setRememberMe] = React.useState(false);
 
     const handleSignIn = async (event) => {
         // you have to store data into redux store****************************************************************************************
@@ -75,6 +78,12 @@ function SignIn() {
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
                     console.log("Logged in as a seller");
+                    if (rememberMe) {
+                        localStorage.setItem("login", true);
+                    } else {
+                        sessionStorage.setItem("login", true);
+                    }
+                    history.push("/");
                 } else {
                     setErrorStatus(true);
                     setPassword("");
@@ -100,8 +109,15 @@ function SignIn() {
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
                     console.log("Logged in as a seller");
+                    if (rememberMe) {
+                        localStorage.setItem("login", true);
+                    } else {
+                        sessionStorage.setItem("login", true);
+                    }
+                    history.push("/");
                 } else {
                     setErrorStatus(true);
+                    setPassword("");
                 }
             } catch (err) {
                 console.log(err);
@@ -142,6 +158,7 @@ function SignIn() {
                         }}
                     />
                     <TextField
+                        error={errorStatus ? true : false}
                         variant="outlined"
                         margin="normal"
                         required
@@ -156,7 +173,15 @@ function SignIn() {
                         }}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={
+                            <Checkbox
+                                value="remember"
+                                color="primary"
+                                onChange={(event) => {
+                                    setRememberMe(event.target.checked);
+                                }}
+                            />
+                        }
                         label="Remember me"
                     />
                     <Button

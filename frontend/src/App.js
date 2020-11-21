@@ -10,10 +10,16 @@ import About from "./Components/AboutPage";
 import CheckOut from "./Components/Checkout/Checkout";
 import MyProfile from "./Components/UserProfile/UserProfile";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useHistory,
+} from "react-router-dom";
 import UserProfile from "./Components/UserProfile/UserProfile";
 
 function App() {
+    const history = useHistory();
     return (
         <Router>
             <div
@@ -35,22 +41,52 @@ function App() {
                         <About></About>
                     </Route>
                     <Route exact path="/signIn">
-                        <SignIn></SignIn>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <Body></Body>
+                        ) : (
+                            <SignIn />
+                        )}
                     </Route>
                     <Route exact path="/signUp">
-                        <SignUp></SignUp>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <Body></Body>
+                        ) : (
+                            <SignUp />
+                        )}
                     </Route>
                     <Route exact path="/sellerSignIn">
-                        <SellerSignIn></SellerSignIn>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <Body></Body>
+                        ) : (
+                            <SellerSignIn></SellerSignIn>
+                        )}
                     </Route>
                     <Route exact path="/sellerSignUp">
-                        <SellerSignUp></SellerSignUp>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <Body></Body>
+                        ) : (
+                            <SellerSignUp></SellerSignUp>
+                        )}
                     </Route>
                     <Route exact path="/checkout">
-                        <CheckOut></CheckOut>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <CheckOut></CheckOut>
+                        ) : (
+                            <Body></Body>
+                        )}
                     </Route>
                     <Route exact path="/UserProfile">
-                        <UserProfile></UserProfile>
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
+                            <UserProfile></UserProfile>
+                        ) : (
+                            <Body></Body>
+                        )}
                     </Route>
                 </Switch>
                 <Footer></Footer>
