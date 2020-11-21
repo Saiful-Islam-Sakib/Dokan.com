@@ -59,36 +59,71 @@ function SignIn() {
 
     const handleSignIn = async (event) => {
         event.preventDefault();
-        try {
-            const res = await fetch(
-                "http://localhost:5000/dokan.com/customer/login",
-                {
-                    method: "POST",
-                    headers: { "Content-type": "application/json" },
-                    body: JSON.stringify({
-                        email: email,
-                        phone: email,
-                        password: password,
-                    }),
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(email.match(mailformat)){
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/customer/login",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password,
+                        }),
+                    }
+                );
+                const data = await res.json();
+    
+                console.log(data);
+                if (data.msg.email === email || data.msg.phone === email) {
+                    if (rememberMe) {
+                        localStorage.setItem("login", true);
+                    } else {
+                        sessionStorage.setItem("login", true);
+                    }
+                    history.push("/");
+                }else {
+                    setErrorStatus(true);
+                    setPassword("");
                 }
-            );
-            const data = await res.json();
-
-            console.log(data);
-            if (data.msg.email === email || data.msg.phone === email) {
-                if (rememberMe) {
-                    localStorage.setItem("login", true);
-                } else {
-                    sessionStorage.setItem("login", true);
-                }
-                history.push("/");
-            } else {
+            } catch (err) {
+                console.log(err);
                 setErrorStatus(true);
-                setPassword("");
             }
-        } catch (err) {
-            console.log(err);
+        }else{
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/customer/login",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            phone: email,
+                            password: password,
+                        }),
+                    }
+                );
+                const data = await res.json();
+    
+                console.log(data);
+                if (data.msg.email === email || data.msg.phone === email) {
+                    if (rememberMe) {
+                        localStorage.setItem("login", true);
+                    } else {
+                        sessionStorage.setItem("login", true);
+                    }
+                    history.push("/");
+                }else {
+                    setErrorStatus(true);
+                    setPassword("");
+                }
+            } catch (err) {
+                console.log(err);
+                setErrorStatus(true);
+            }
         }
+
     };
 
     return (
@@ -131,6 +166,7 @@ function SignIn() {
                         name="password"
                         label="Password"
                         type="password"
+                        value={password}
                         id="password"
                         value={password}
                         autoComplete="password"
