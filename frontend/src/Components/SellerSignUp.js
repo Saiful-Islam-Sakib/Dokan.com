@@ -92,7 +92,7 @@ export default function SignUp() {
     const [phoneNumber, setPhoneNumber] = React.useState("");
     const [tradeLicense, setTradeLicense] = React.useState("");
     const [nid, setNID] = React.useState("");
-    const [birthday, setBirthday] = React.useState("");
+    const [birthday, setBirthday] = React.useState("2000-12-31");
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -279,7 +279,7 @@ export default function SignUp() {
                                         label="Birthday"
                                         name="birthday"
                                         type="date"
-                                        defaultValue="1900-12-31"
+                                        defaultValue={birthday}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
