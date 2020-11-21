@@ -12,6 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
+import flour1 from "../image/consumer/flour _ suji/teer_flour_maida.png";
 
 const useStyles = makeStyles({
     list: {
@@ -39,6 +40,7 @@ export default function TemporaryDrawer() {
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [open3, setOpen3] = React.useState(false);
+    const [open4, setOpen4] = React.useState(false);
 
     const [selectedCategory, setCategory] = React.useState("");
 
@@ -50,6 +52,19 @@ export default function TemporaryDrawer() {
     };
     const handleClick3 = () => {
         setOpen3(!open3);
+    };
+    const handleClick4 = () => {
+        setOpen4(!open4);
+    };
+
+    const handleCategorySelect = () => {
+        // selectedCategory
+        // etar moddhe Sub-category nam ta ase...
+        // ekhane oi sub-category ar shob product ashbe...
+        //
+        //
+        //
+        // productList.js a redirect korbe r shob product info pathabe...
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -74,7 +89,9 @@ export default function TemporaryDrawer() {
             <Divider></Divider>
             <List>
                 <ListItem button key="Consumer food" onClick={handleClick}>
-                    <ListItemText primary="Consumer food" />
+                    <ListItemText
+                        primary={<strong>{"Consumer food"}</strong>}
+                    />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
@@ -84,6 +101,7 @@ export default function TemporaryDrawer() {
                             onClick={() => {
                                 console.log("flour");
                                 setCategory("flour");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Flour" />
@@ -181,7 +199,7 @@ export default function TemporaryDrawer() {
                     </List>
                 </Collapse>
                 <ListItem button key="Toletries" onClick={handleClick2}>
-                    <ListItemText primary="Toletries" />
+                    <ListItemText primary={<strong>{"Toletries"}</strong>} />
                     {open2 ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open2} timeout="auto" unmountOnExit>
@@ -218,7 +236,9 @@ export default function TemporaryDrawer() {
                     </List>
                 </Collapse>
                 <ListItem button key={"Health & Care"} onClick={handleClick3}>
-                    <ListItemText primary={"Health & Care"} />
+                    <ListItemText
+                        primary={<strong>{"Health & Care"}</strong>}
+                    />
                     {open3 ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open3} timeout="auto" unmountOnExit>
@@ -276,6 +296,23 @@ export default function TemporaryDrawer() {
                             }}
                         >
                             <ListItemText primary="Face Mask" />
+                        </ListItem>
+                    </List>
+                </Collapse>
+                <ListItem button key={"Medicine"} onClick={handleClick4}>
+                    <ListItemText primary={<strong>{"Medicine"}</strong>} />
+                    {open4 ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open4} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem
+                            button
+                            onClick={() => {
+                                console.log("Napa");
+                                setCategory("Napa");
+                            }}
+                        >
+                            <ListItemText primary="Napa" />
                         </ListItem>
                     </List>
                 </Collapse>
