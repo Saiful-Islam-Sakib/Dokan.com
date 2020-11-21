@@ -56,8 +56,8 @@ const locations = [
     {
         city: "Dhaka",
         zone: [
-            { area: "Uttara", place: ["Sector 1", "Sector 2", "Sector 3"] },
-            { area: "Mirpur", place: ["Mirpur 1", "Mirpur 2", "Mirpur 3"] },
+            { area: "Uttara", place: ["Sector 4", "Sector 8", "Sector 10"] },
+            { area: "Mirpur", place: ["Sector 5", "Sector 8", "Sector 9"] },
             { area: "Bashundhara", place: ["Block A", "Block B", "Block C"] },
         ],
     },
@@ -114,39 +114,52 @@ export default function SignUp() {
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
   
 >>>>>>> edff179aa5faef3354380505c9dbfaf8769cd851
+=======
+
+>>>>>>> main
     const [signUpStatus, setSignUpStatus] = React.useState(false);
 
-    const handleSignUpSeller = async event => {
+    const handleSignUpSeller = async (event) => {
         event.preventDefault();
         if (password === rePassword) {
-            try{
-                const res = await fetch('http://localhost:5000/dokan.com/seller/signup',{
-                    method: 'POST',
-                    headers : {'Content-type' : 'application/json'},
-                    body: JSON.stringify({
-                        v_f_name : firstName,
-                        v_l_name : lastName,
-                        email : email,
-                        phone : phoneNumber,
-                        trade_lic_no : tradeLicense,
-                        birthday : birthday,
-                        password : password,
-                        nid :nid,
-                        v_city : sellerCity,
-                        v_area : sellerArea,
-                        v_address: sellerAddress,sh_name :shopName,
-                        sh_area: shopArea, sh_city : shopCity,
-                        sh_place : shopPlace, sh_area_pc :postalCode,
-                        bank:bankName,b_acc_no:accountNumber,
-                        b_acc:accountName,branch:bankBranch
-                    })
-                });
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/seller/signup",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            v_f_name: firstName,
+                            v_l_name: lastName,
+                            email: email,
+                            phone: phoneNumber,
+                            trade_lic_no: tradeLicense,
+                            birthday: birthday,
+                            password: password,
+                            nid: nid,
+                            v_city: sellerCity,
+                            v_area: sellerArea,
+                            v_address: sellerAddress,
+                            sh_name: shopName,
+                            sh_area: shopArea,
+                            sh_city: shopCity,
+                            sh_place: shopPlace,
+                            sh_area_pc: postalCode,
+                            bank: bankName,
+                            b_acc_no: accountNumber,
+                            b_acc: accountName,
+                            branch: bankBranch,
+                        }),
+                    }
+                );
                 const data = await res.json();
                 console.log(data);
+<<<<<<< HEAD
                 setSignUpStatus(true);
                 if(data.msg.email === email){
                     console.log('Successfully SignedUp as a seller');
@@ -161,6 +174,13 @@ export default function SignUp() {
             }catch(err){
 >>>>>>> edff179aa5faef3354380505c9dbfaf8769cd851
 >>>>>>> aabc629c7480439b5087da62db626e40b274f326
+=======
+                if (data.msg.email === email) {
+                    console.log("Successfully SignedUp as a seller");
+                    setSignUpStatus(true);
+                }
+            } catch (err) {
+>>>>>>> main
                 console.log(err);
             }
     }
@@ -607,6 +627,7 @@ export default function SignUp() {
                             maxWidth="sm"
                             style={{
                                 display: "flex",
+                                flexDirection: "column",
                                 justifyContent: "center",
                                 marginTop: 30,
                             }}
