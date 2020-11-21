@@ -140,9 +140,9 @@ export default function PrimarySearchAppBar() {
 
     const handleSignOut = () => {
         handleMenuClose();
-        if (localStorage.getItem("login") === true) {
+        if (localStorage.getItem("login") === "true") {
             localStorage.removeItem("login");
-        } else if (sessionStorage.getItem("login") === true) {
+        } else if (sessionStorage.getItem("login") === "true") {
             sessionStorage.removeItem("login");
         }
     };
@@ -150,8 +150,8 @@ export default function PrimarySearchAppBar() {
     const menuId = "primary-search-account-menu";
     const renderMenu = (
         <>
-            {localStorage.getItem("login") === true ||
-            sessionStorage.getItem("login") === true ? (
+            {localStorage.getItem("login") === "true" ||
+            sessionStorage.getItem("login") === "true" ? (
                 <Menu
                     anchorEl={anchorEl}
                     anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -176,8 +176,8 @@ export default function PrimarySearchAppBar() {
     const mobileMenuId = "primary-search-account-menu-mobile";
     const renderMobileMenu = (
         <>
-            {localStorage.getItem("login") === true ||
-            sessionStorage.getItem("login") === true ? (
+            {localStorage.getItem("login") === "true" ||
+            sessionStorage.getItem("login") === "true" ? (
                 <Menu
                     anchorEl={mobileMoreAnchorEl}
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -294,8 +294,8 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         {/* sign in kore felle sign in and Seller? option show korbe na */}
-                        {localStorage.getItem("login") === true ||
-                        sessionStorage.getItem("login") === true ? (
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
                             <></>
                         ) : (
                             <>
@@ -330,8 +330,8 @@ export default function PrimarySearchAppBar() {
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
-                        {localStorage.getItem("login") === true ||
-                        sessionStorage.getItem("login") === true ? (
+                        {localStorage.getItem("login") === "true" ||
+                        sessionStorage.getItem("login") === "true" ? (
                             <>
                                 <IconButton
                                     edge="end"
