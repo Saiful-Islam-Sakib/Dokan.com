@@ -113,9 +113,36 @@ export default function SignUp() {
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
 
-    const handleSignUp = () => {
+    const handleSignUp = async event => {
+        event.preventDefault();
+        if (password === rePassword) {
+            try{
+                const res = await fetch('http://localhost:5000/dokan.com/seller/signup',{
+                    method: 'POST',
+                    headers : {'Content-type' : 'application/json'},
+                    body: JSON.stringify({
+                        f_name : firstName, l_name : lastName ,
+                        email : email, phone : phoneNumber, trade_lic_no:tradeLicense,
+                        birthday : birthday,
+                        password : password,nid :nid,
+                        v_city : sellerCity, v_area : sellerArea,
+                        v_address: sellerAddress,sh_name :shopName,
+                        sh_area: shopArea, sh_city : shopCity,
+                        sh_place : shopPlace, sh_area_pc :postalCode,
+                        bank:bankName,b_acc_no:accountNumber,
+                        b_acc:accountName,branch:bankBranch
+                    })
+                });
+                const data = await res.json();
+                console.log(data);
+            }catch(err){
+                console.log(err);
+            }
+        }
+
         // history.push("/"); to redirect
         //ekhane data up hobe database
+
     };
 
     return (
