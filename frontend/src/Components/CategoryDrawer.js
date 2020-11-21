@@ -12,6 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
+import { useHistory } from "react-router-dom";
 //import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
@@ -33,6 +34,8 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
     const classes = useStyles();
+    const history = useHistory();
+
     const [state, setState] = React.useState({
         left: false,
     });
@@ -57,23 +60,22 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
-    const handleCategorySelect = async event => {
-        // selectedCategory
-        // etar moddhe Sub-category nam ta ase...
-        // ekhane oi sub-category ar shob product ashbe...
-        //
-        //
-        //
-        // productList.js a redirect korbe r shob product info pathabe...
-        event.preventDefault();
-        try{
-            const res = await fetch("http://localhost:5000/dokan.com/products/consumerFood/flour");
+    const handleCategorySelect = async (event) => {
+        //event.preventDefault();
+        try {
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/products/consumerFood/flour"
+            );
             const data = await res.json();
             console.log(data);
-        }catch(err){
+            sessionStorage.setItem("products", JSON.stringify(data));
+            const a = JSON.parse(sessionStorage.getItem("products"));
+            console.log(a);
+
+            //history.push("/productList");
+        } catch (err) {
             console.log("Error occured,cant get any product");
         }
-
     };
 
     const toggleDrawer = (anchor, open) => (event) => {

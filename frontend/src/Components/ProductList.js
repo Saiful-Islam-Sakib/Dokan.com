@@ -1,26 +1,16 @@
 import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
 import {
-    Button,
     Card,
-    CardActionArea,
-    CardContent,
-    CardMedia,
     Container,
-    Divider,
     FormControl,
-    InputBase,
     InputLabel,
     makeStyles,
     MenuItem,
-    OutlinedInput,
     Paper,
     Select,
-    TextField,
-    Typography,
 } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+import ProductCard from "./ProductCard";
 
 const useStyles = makeStyles({
     root: {
@@ -32,18 +22,24 @@ const useStyles = makeStyles({
     },
 });
 
-const innerCardStyle = makeStyles({
-    root: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        maxWidth: 180,
-        margin: 10,
-    },
-    media: {
-        height: 150,
-    },
-});
+function compareValues(key, order = "asc") {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            return 0;
+        }
+
+        const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+        const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return order === "desc" ? comparison * -1 : comparison;
+    };
+}
 
 const products = [
     {
@@ -1264,31 +1260,9 @@ const products = [
     },
 ];
 
-function compareValues(key, order = "asc") {
-    return function innerSort(a, b) {
-        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-            return 0;
-        }
-
-        const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
-        const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
-
-        let comparison = 0;
-        if (varA > varB) {
-            comparison = 1;
-        } else if (varA < varB) {
-            comparison = -1;
-        }
-        return order === "desc" ? comparison * -1 : comparison;
-    };
-}
-
 export default function ProductList() {
     const classes = useStyles();
-    const classes2 = innerCardStyle();
-
-    const [value, setValue] = React.useState(1);
-
+    
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [sort, setSort] = React.useState("");
@@ -1368,98 +1342,7 @@ export default function ProductList() {
                 <Paper>
                     <Card className={classes.root} variant="outlined">
                         {products.slice(start, end).map((product) => (
-                            <Card
-                                key={product.id}
-                                className={classes2.root}
-                                variant="outlined"
-                            >
-                                <CardActionArea
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                    }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        className={classes2.media}
-                                        image="https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
-                                        title="Contemplative Reptile"
-                                        style={{
-                                            maxHeight: "20vh",
-                                            objectFit: "fill",
-                                        }}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="h6" align="center">
-                                            {product.name}
-                                        </Typography>
-                                        <Typography
-                                            variant="caption"
-                                            component="p"
-                                            align="center"
-                                        >
-                                            {product.vendor}
-                                        </Typography>
-                                        <Typography align="center">
-                                            <Rating
-                                                size="small"
-                                                readOnly
-                                                name="customized-empty"
-                                                defaultValue={product.rating}
-                                                emptyIcon={
-                                                    <StarBorderIcon fontSize="inherit" />
-                                                }
-                                            />
-                                        </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            component="p"
-                                            align="center"
-                                        >
-                                            {product.price}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                                <Divider></Divider>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                    }}
-                                >
-                                    <Button
-                                        id="add"
-                                        onClick={() => {
-                                            setValue(value + 1);
-                                        }}
-                                    >
-                                        +
-                                    </Button>
-                                    <Divider orientation="vertical" />
-                                    <InputBase
-                                        value={value}
-                                        inputProps={{
-                                            "aria-label": "naked",
-                                            style: {
-                                                textAlign: "center",
-                                            },
-                                        }}
-                                    />
-                                    <Divider orientation="vertical" />
-                                    <Button
-                                        id="sub"
-                                        onClick={() => {
-                                            if (value > 1) {
-                                                setValue(value - 1);
-                                            }
-                                        }}
-                                    >
-                                        -
-                                    </Button>
-                                </div>
-                                <Divider></Divider>
-                                <Button>Add</Button>
-                            </Card>
+                            <ProductCard product={product}></ProductCard>
                         ))}
                     </Card>
                 </Paper>
