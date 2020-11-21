@@ -54,10 +54,11 @@ function SignIn() {
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
 
-    const handleSignIn = async event => {
+    const handleSignIn = async (event) => {
+        // you have to store data into redux store****************************************************************************************
         event.preventDefault();
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if(email.match(mailformat)){
+        if (email.match(mailformat)) {
             try {
                 const res = await fetch(
                     "http://localhost:5000/dokan.com/seller/login",
@@ -73,15 +74,16 @@ function SignIn() {
                 const data = await res.json();
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
-                    console.log("Logged in as a seller");   
-                }else {
+                    console.log("Logged in as a seller");
+                } else {
                     setErrorStatus(true);
+                    setPassword("");
                 }
             } catch (err) {
                 console.log(err);
                 setErrorStatus(true);
             }
-        }else{
+        } else {
             try {
                 const res = await fetch(
                     "http://localhost:5000/dokan.com/seller/login",
@@ -97,8 +99,8 @@ function SignIn() {
                 const data = await res.json();
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
-                    console.log("Logged in as a seller");   
-                }else {
+                    console.log("Logged in as a seller");
+                } else {
                     setErrorStatus(true);
                 }
             } catch (err) {
@@ -106,19 +108,6 @@ function SignIn() {
                 setErrorStatus(true);
             }
         }
-
-        // history.push("/"); to redirect
-        // er niche kaj korba
-        //
-        //
-        //
-        //
-        //
-        //
-        // for changes in error status
-        // if (response == "..."){
-        //     setErrorStatus(true);
-        // }
     };
 
     return (

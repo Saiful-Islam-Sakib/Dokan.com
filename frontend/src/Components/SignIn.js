@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useHistory } from "react-router-dom"; // react hook to redirect to any location
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
     return (
@@ -58,9 +58,10 @@ function SignIn() {
     const [rememberMe, setRememberMe] = React.useState(false);
 
     const handleSignIn = async (event) => {
+        // you have to store data into redux store****************************************************************************************
         event.preventDefault();
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if(email.match(mailformat)){
+        if (email.match(mailformat)) {
             try {
                 const res = await fetch(
                     "http://localhost:5000/dokan.com/customer/login",
@@ -74,7 +75,7 @@ function SignIn() {
                     }
                 );
                 const data = await res.json();
-    
+
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
                     if (rememberMe) {
@@ -83,7 +84,7 @@ function SignIn() {
                         sessionStorage.setItem("login", true);
                     }
                     history.push("/");
-                }else {
+                } else {
                     setErrorStatus(true);
                     setPassword("");
                 }
@@ -91,7 +92,7 @@ function SignIn() {
                 console.log(err);
                 setErrorStatus(true);
             }
-        }else{
+        } else {
             try {
                 const res = await fetch(
                     "http://localhost:5000/dokan.com/customer/login",
@@ -105,7 +106,7 @@ function SignIn() {
                     }
                 );
                 const data = await res.json();
-    
+
                 console.log(data);
                 if (data.msg.email === email || data.msg.phone === email) {
                     if (rememberMe) {
@@ -114,7 +115,7 @@ function SignIn() {
                         sessionStorage.setItem("login", true);
                     }
                     history.push("/");
-                }else {
+                } else {
                     setErrorStatus(true);
                     setPassword("");
                 }
@@ -123,7 +124,6 @@ function SignIn() {
                 setErrorStatus(true);
             }
         }
-
     };
 
     return (
