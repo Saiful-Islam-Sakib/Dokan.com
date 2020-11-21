@@ -113,7 +113,11 @@ export default function SignUp() {
     const [bankBranch, setbankbranch] = React.useState("");
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> edff179aa5faef3354380505c9dbfaf8769cd851
     const [signUpStatus, setSignUpStatus] = React.useState(false);
 
     const handleSignUpSeller = async event => {
@@ -146,8 +150,13 @@ export default function SignUp() {
                 setSignUpStatus(true);
                 if(data.msg.email === email){
                     console.log('Successfully SignedUp as a seller');
+                    setSignUpStatus(true);
                 }
+<<<<<<< HEAD
             }catch (err) {
+=======
+            }catch(err){
+>>>>>>> edff179aa5faef3354380505c9dbfaf8769cd851
                 console.log(err);
             }
     }
