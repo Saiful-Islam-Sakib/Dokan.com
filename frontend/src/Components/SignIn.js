@@ -168,6 +168,7 @@ function SignIn() {
                         type="password"
                         value={password}
                         id="password"
+                        value={password}
                         autoComplete="password"
                         onChange={(event) => {
                             setPassword(event.target.value);
