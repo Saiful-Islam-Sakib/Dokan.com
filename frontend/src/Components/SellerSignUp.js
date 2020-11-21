@@ -156,10 +156,11 @@ export default function SignUp() {
                     setSignUpStatus(true);
                 }
             } catch (err) {
+
                 console.log(err);
             }
-        }
-    };
+    }
+};
 
     return (
         <Container
