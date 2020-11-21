@@ -56,6 +56,16 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
+    const handleCategorySelect = () => {
+        // selectedCategory
+        // etar moddhe Sub-category nam ta ase...
+        // ekhane oi sub-category ar shob product ashbe...
+        //
+        //
+        //
+        // productList.js a redirect korbe r shob product info pathabe...
+    };
+
     const toggleDrawer = (anchor, open) => (event) => {
         if (
             event.type === "keydown" &&
