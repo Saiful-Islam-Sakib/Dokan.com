@@ -12,7 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
-import flour1 from "../image/consumer/flour _ suji/teer_flour_maida.png";
+import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
     list: {
