@@ -61,9 +61,9 @@ const addproduct = async(req,res,next) => {
         console.log(err);
         return res.json({msg: 'Invalid information'});
     }
-    const {p_id, name,brand,price,category,sub_category,tag,s_id,img } = req.body;
+    const {p_id, name,brand,price,category,sub_category,tag,s_id } = req.body;
     const createdprod = new product({
-        p_id, name,brand,price,category,sub_category,tag,s_id,img
+        p_id, name,brand,price,category,sub_category,tag,s_id
     });
     //dummy_product.push(createdprod);
     //console.log(createdprod);
@@ -123,8 +123,8 @@ const deleteproduct = async(req,res,next) => {
     res.status(200).json({msg : 'Product Deleted'});
 };
 
-const productbySubcat  = async (req,res,next) => {
-    const subcat = req.params.psubcat;
+const productSearch  = async (req,res,next) => {
+    const pname = req.params.pname;
     /*
     const dum_prod = dummy_product.filter(p => p.name === pname);
     if(dum_prod.length === 0){
@@ -132,10 +132,9 @@ const productbySubcat  = async (req,res,next) => {
     }*/
     let prod;
     try{
-        prod = await product.find({sub_category : subcat});
+        prod = await product.find({name : pname});
     }catch(err){
         const erro = new httpError('Something went wrong',500);
-        console.log(subcat);
         return next(erro);
     }
     res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
@@ -158,29 +157,8 @@ const prodSearchbyCategory = async(req ,res ,next) =>{
     //res.status(200).json(dum_product);
 };
 
-/*
-    const del = async(req,res,next) =>{
-        const id = req.params.id;
-        const sel = "5fb6ac4bd2011f14bc0d702f";
-        let user;
-        try{
-            user = await seller.findById(sel);
-        }catch(err){
-            console.log('err')
-        }
-        try{
-            await user.products.pull(id);
-            await user.save();
-        }catch(err){
-            console.log('err')
-        }
-        console.log(user);
-    }
-*/
 exports.getproductbyid = getproductbyid;
 exports.addproduct = addproduct;
 exports.deleteproduct = deleteproduct;
-exports.productbySubcat = productbySubcat;
+exports.productSearch = productSearch;
 exports.prodSearchbyCategory = prodSearchbyCategory;
-
-//exports.del = del;

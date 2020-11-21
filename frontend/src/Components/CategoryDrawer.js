@@ -12,7 +12,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
-//import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
+import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
     list: {
@@ -57,7 +57,7 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
-    const handleCategorySelect = async event => {
+    const handleCategorySelect = () => {
         // selectedCategory
         // etar moddhe Sub-category nam ta ase...
         // ekhane oi sub-category ar shob product ashbe...
@@ -65,15 +65,6 @@ export default function TemporaryDrawer() {
         //
         //
         // productList.js a redirect korbe r shob product info pathabe...
-        event.preventDefault();
-        try{
-            const res = await fetch("http://localhost:5000/dokan.com/products/consumerFood/flour");
-            const data = await res.json();
-            console.log(data);
-        }catch(err){
-            console.log("Error occured,cant get any product");
-        }
-
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
