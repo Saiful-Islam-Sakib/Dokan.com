@@ -115,9 +115,7 @@ export default function SignUp() {
 
     const handleSignUpSeller = async event => {
         event.preventDefault();
-        console.log('Here1');
         if (password === rePassword) {
-            console.log('Here2');
             try{
                 const res = await fetch('http://localhost:5000/dokan.com/seller/signup',{
                     method: 'POST',
