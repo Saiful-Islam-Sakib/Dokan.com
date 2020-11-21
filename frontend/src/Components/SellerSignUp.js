@@ -114,7 +114,8 @@ export default function SignUp() {
     const [accountName, setbankAccountName] = React.useState("");
     const [accountNumber, setbankAccountNumber] = React.useState("");
 
-<<<<<<< HEAD
+    const [signUpStatus, setSignUpStatus] = React.useState(false);
+
     const handleSignUpSeller = async event => {
         event.preventDefault();
         if (password === rePassword) {
@@ -142,55 +143,15 @@ export default function SignUp() {
                 });
                 const data = await res.json();
                 console.log(data);
+                setSignUpStatus(true);
                 if(data.msg.email === email){
                     console.log('Successfully SignedUp as a seller');
                 }
-            }catch(err){
-=======
-    const [signUpStatus, setSignUpStatus] = React.useState(false);
-
-    const handleSignUp = async (event) => {
-        event.preventDefault();
-        if (password === rePassword) {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/seller/signup",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            f_name: firstName,
-                            l_name: lastName,
-                            email: email,
-                            phone: phoneNumber,
-                            trade_lic_no: tradeLicense,
-                            birthday: birthday,
-                            password: password,
-                            nid: nid,
-                            v_city: sellerCity,
-                            v_area: sellerArea,
-                            v_address: sellerAddress,
-                            sh_name: shopName,
-                            sh_area: shopArea,
-                            sh_city: shopCity,
-                            sh_place: shopPlace,
-                            sh_area_pc: postalCode,
-                            bank: bankName,
-                            b_acc_no: accountNumber,
-                            b_acc: accountName,
-                            branch: bankBranch,
-                        }),
-                    }
-                );
-                const data = await res.json();
-                console.log(data);
-                setSignUpStatus(true);
-            } catch (err) {
->>>>>>> main
+            }catch (err) {
                 console.log(err);
             }
-        }
-    };
+    }
+};
 
     return (
         <Container
@@ -691,7 +652,6 @@ export default function SignUp() {
                                 <Button
                                     type="submit"
                                     fullWidth
-<<<<<<< HEAD
                                     name="retype-password"
                                     label="Retype-Password"
                                     type="password"
@@ -717,25 +677,6 @@ export default function SignUp() {
                                     <Link href="/sellerSignIn" variant="body2">
                                         Already have a Seller account? Sign in
                                     </Link>
-=======
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={handleSignUp}
-                                >
-                                    Sign Up
-                                </Button>
-                                <Grid container justify="flex-end">
-                                    <Grid item>
-                                        <Link
-                                            href="/sellerSignIn"
-                                            variant="body2"
-                                        >
-                                            Already have a Seller account? Sign
-                                            in
-                                        </Link>
-                                    </Grid>
->>>>>>> main
                                 </Grid>
                             </Grid>
                         </Container>
