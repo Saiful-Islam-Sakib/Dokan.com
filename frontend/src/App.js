@@ -8,18 +8,11 @@ import SellerSignIn from "./Components/SellerSignIn";
 import SellerSignUp from "./Components/SellerSignUp";
 import About from "./Components/AboutPage";
 import CheckOut from "./Components/Checkout/Checkout";
-import MyProfile from "./Components/UserProfile/UserProfile";
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useHistory,
-} from "react-router-dom";
 import UserProfile from "./Components/UserProfile/UserProfile";
+import ProductList from "./Components/ProductList";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-    const history = useHistory();
     return (
         <Router>
             <div
@@ -87,6 +80,11 @@ function App() {
                         ) : (
                             <Body></Body>
                         )}
+                    </Route>
+                    <Route exact path="/productList">
+                        <ProductList
+                            products={sessionStorage.getItem("products")}
+                        ></ProductList>
                     </Route>
                 </Switch>
                 <Footer></Footer>

@@ -12,7 +12,12 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
+<<<<<<< HEAD
 import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
+=======
+import { useHistory } from "react-router-dom";
+//import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
+>>>>>>> main
 
 const useStyles = makeStyles({
     list: {
@@ -33,6 +38,8 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
     const classes = useStyles();
+    const history = useHistory();
+
     const [state, setState] = React.useState({
         left: false,
     });
@@ -57,6 +64,7 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
+<<<<<<< HEAD
     const handleCategorySelect = () => {
         // selectedCategory
         // etar moddhe Sub-category nam ta ase...
@@ -65,6 +73,24 @@ export default function TemporaryDrawer() {
         //
         //
         // productList.js a redirect korbe r shob product info pathabe...
+=======
+    const handleCategorySelect = async (event) => {
+        try {
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/products/consumerFood/flour"
+            );
+            const data = await res.json();
+            console.log(data);
+
+            // sessionStorage.setItem("products", JSON.stringify(data));
+            // const a = JSON.parse(sessionStorage.getItem("products"));
+            // console.log(a);
+
+            //history.push("/productList");
+        } catch (err) {
+            console.log("Error occured,cant get any product");
+        }
+>>>>>>> main
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
