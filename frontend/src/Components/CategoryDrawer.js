@@ -12,12 +12,8 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
-<<<<<<< HEAD
-import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
-=======
 import { useHistory } from "react-router-dom";
 //import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
->>>>>>> main
 
 const useStyles = makeStyles({
     list: {
@@ -64,16 +60,6 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
-<<<<<<< HEAD
-    const handleCategorySelect = () => {
-        // selectedCategory
-        // etar moddhe Sub-category nam ta ase...
-        // ekhane oi sub-category ar shob product ashbe...
-        //
-        //
-        //
-        // productList.js a redirect korbe r shob product info pathabe...
-=======
     const handleCategorySelect = async (event) => {
         try {
             const res = await fetch(
@@ -90,7 +76,6 @@ export default function TemporaryDrawer() {
         } catch (err) {
             console.log("Error occured,cant get any product");
         }
->>>>>>> main
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
