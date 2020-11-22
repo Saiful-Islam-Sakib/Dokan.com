@@ -10,7 +10,8 @@ const productSchema = new mongo.Schema({
     sub_category: {type:String,required:true},
     tag : [{type:String,required:true}],
     s_id : {type: mongo.Types.ObjectId,required:true, ref : 'Seller'},
-    img : {type:String,required:true}
+    img : {type:String,required:true},
+    offer_price :{type:Number, default:''}
 });
 
 module.exports = mongo.model('Product',productSchema);
