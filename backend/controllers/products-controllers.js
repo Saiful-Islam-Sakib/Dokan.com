@@ -140,8 +140,38 @@ const productbySubcat  = async (req,res,next) => {
     }
     res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
 };
+
+const productbylocation = async(req,res,next) =>{
+    const {city,area,place} = req.body;
+    let locseller;
+    try{
+        locseller = await seller.find({sh_city : city , sh_area : area,sh_place : place});
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        console.log(subcat);
+        return next(erro);
+    }
+    const locsellerv2 = locseller.map(prod => prod.toObject({getters :true}));
+    const seller_id = locsellerv2.map(({id}) => ({id}));
+    let seller_id_arr  = seller_id.map(({id}) => id);
+    const i = seller_id_arr.length;
+    let prodbyloc = '';
+    for(j = 0 ; j < i; j++){
+        try{
+            prodbyloc += await product.find({s_id : seller_id_arr[j]})+',';
+        }catch(err){
+            console.log("Something gone wrong");
+            const erro = new httpError('Something went wrong',500);
+            return next(erro);
+        }
+    }
+    //console.log(prodbyloc);
+    //res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
+    res.status(200).json({msg : prodbyloc});
+};
+
 const prodSearchbyCategory = async(req ,res ,next) =>{
-    const p_cat = req.params.pcat;
+    const ploc = req.params.ploc;
     /*
     const dum_product = dummy_product.filter(p => p.category === p_cat);
     if(dum_product.length === 0){
@@ -182,5 +212,6 @@ exports.addproduct = addproduct;
 exports.deleteproduct = deleteproduct;
 exports.productbySubcat = productbySubcat;
 exports.prodSearchbyCategory = prodSearchbyCategory;
+exports.productbylocation = productbylocation;
 
 //exports.del = del;
