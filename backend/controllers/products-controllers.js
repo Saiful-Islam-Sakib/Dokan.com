@@ -151,6 +151,7 @@ const productbylocation = async(req,res,next) =>{
         console.log(subcat);
         return next(erro);
     }
+    //console.log(locseller);
     const locsellerv2 = locseller.map(prod => prod.toObject({getters :true}));
     const seller_id = locsellerv2.map(({id}) => ({id}));
     let seller_id_arr  = seller_id.map(({id}) => id);
