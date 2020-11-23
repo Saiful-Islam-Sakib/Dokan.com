@@ -14,9 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
-import { IconButton } from "@material-ui/core";
 
 function Copyright() {
     return (
@@ -57,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
-    const history = useHistory();
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -130,7 +127,6 @@ export default function SignUp() {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    autoComplete="fname"
                                     name="firstName"
                                     variant="outlined"
                                     required
@@ -193,7 +189,7 @@ export default function SignUp() {
                                     label="Birthday"
                                     name="birthday"
                                     type="date"
-                                    defaultValue="1900-12-31"
+                                    defaultValue="2000-12-31"
                                     autoComplete="Birthday"
                                     InputLabelProps={{
                                         shrink: true,

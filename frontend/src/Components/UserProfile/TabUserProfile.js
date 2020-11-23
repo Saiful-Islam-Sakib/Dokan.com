@@ -70,18 +70,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const userInformation = {
-    fname: "FirstName",
-    lname: "LastName",
-    birthday: "1996-04-19",
-    phoneNumber: "01122344567",
-    email: "asd@asd.com",
-    address: "155/b south kafrul",
-};
-
-export default function FullWidthTabs() {
+export default function FullWidthTabs({ userinfo }) {
     const classes = useStyles();
     const theme = useTheme();
+
     const [value, setValue] = React.useState(0);
     const [profileState, setProfileState] = React.useState(true);
 
@@ -137,7 +129,7 @@ export default function FullWidthTabs() {
                                             id="firstName"
                                             type="text"
                                             label="First Name"
-                                            defaultValue={userInformation.fname}
+                                            defaultValue={userinfo.f_name}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -152,7 +144,7 @@ export default function FullWidthTabs() {
                                             name="lastName"
                                             type="text"
                                             autoComplete="last-name"
-                                            defaultValue={userInformation.lname}
+                                            defaultValue={userinfo.l_name}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -166,13 +158,10 @@ export default function FullWidthTabs() {
                                             label="Birthday"
                                             name="birthday"
                                             type="date"
-                                            defaultValue="1900-12-31"
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
-                                            defaultValue={
-                                                userInformation.birthday
-                                            }
+                                            defaultValue={userinfo.birthday}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -187,9 +176,7 @@ export default function FullWidthTabs() {
                                             name="phoneNumber"
                                             type="tel"
                                             autoComplete="tel"
-                                            defaultValue={
-                                                userInformation.phoneNumber
-                                            }
+                                            defaultValue={userinfo.phone}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -203,9 +190,7 @@ export default function FullWidthTabs() {
                                             label="Primary Address"
                                             name="homeAddress"
                                             autoComplete="Address"
-                                            defaultValue={
-                                                userInformation.address
-                                            }
+                                            defaultValue={userinfo.address}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -220,7 +205,7 @@ export default function FullWidthTabs() {
                                             name="email"
                                             type="email"
                                             autoComplete="Email"
-                                            defaultValue={userInformation.email}
+                                            defaultValue={userinfo.email}
                                             disabled={
                                                 profileState ? true : false
                                             }
@@ -236,6 +221,11 @@ export default function FullWidthTabs() {
                                             type="password"
                                             id="newpassword"
                                             autoComplete="current-password"
+                                            helperText={
+                                                profileState
+                                                    ? ""
+                                                    : "** Enter Your Current Password to save the changes."
+                                            }
                                             disabled={
                                                 profileState ? true : false
                                             }

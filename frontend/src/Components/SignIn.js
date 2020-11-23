@@ -13,6 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { login } from "../Redux/Actions/index";
 
 function Copyright() {
     return (
@@ -50,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
     const classes = useStyles();
-    const history = useHistory(); //for redirection
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.auth);
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -58,71 +63,20 @@ function SignIn() {
     const [rememberMe, setRememberMe] = React.useState(false);
 
     const handleSignIn = async (event) => {
-        // you have to store data into redux store****************************************************************************************
         event.preventDefault();
-        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (email.match(mailformat)) {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/customer/login",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password,
-                        }),
-                    }
-                );
-                const data = await res.json();
 
-                console.log(data);
-                if (data.msg.email === email || data.msg.phone === email) {
-                    if (rememberMe) {
-                        localStorage.setItem("login", true);
-                    } else {
-                        sessionStorage.setItem("login", true);
-                    }
-                    history.push("/");
-                } else {
-                    setErrorStatus(true);
-                    setPassword("");
-                }
-            } catch (err) {
-                console.log(err);
-                setErrorStatus(true);
-            }
+        const user = {
+            email: email,
+            password: password,
+        };
+
+        dispatch(login(user));
+        console.log(auth.status);
+        if (auth.status) {
+            history.push("/");
         } else {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/customer/login",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            phone: email,
-                            password: password,
-                        }),
-                    }
-                );
-                const data = await res.json();
-
-                console.log(data);
-                if (data.msg.email === email || data.msg.phone === email) {
-                    if (rememberMe) {
-                        localStorage.setItem("login", true);
-                    } else {
-                        sessionStorage.setItem("login", true);
-                    }
-                    history.push("/");
-                } else {
-                    setErrorStatus(true);
-                    setPassword("");
-                }
-            } catch (err) {
-                console.log(err);
-                setErrorStatus(true);
-            }
+            setErrorStatus(true);
+            setPassword("");
         }
     };
 
@@ -168,7 +122,6 @@ function SignIn() {
                         type="password"
                         value={password}
                         id="password"
-                        value={password}
                         autoComplete="password"
                         onChange={(event) => {
                             setPassword(event.target.value);

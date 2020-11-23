@@ -12,6 +12,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { useHistory } from "react-router-dom";
 
 const innerCardStyle = makeStyles({
     root: {
@@ -28,24 +29,32 @@ const innerCardStyle = makeStyles({
 
 export default function ProductCard(props) {
     const classes2 = innerCardStyle();
+    const history = useHistory();
+
     const [value, setValue] = React.useState(1);
 
     return (
-        <Card
-            key={props.product.id}
-            className={classes2.root}
-            variant="outlined"
-        >
+        <Card className={classes2.root} variant="outlined">
             <CardActionArea
                 style={{
                     display: "flex",
                     flexDirection: "column",
                 }}
+                onClick={() => {
+                    sessionStorage.setItem(
+                        "selectedProduct",
+                        JSON.stringify(props.product)
+                    );
+
+                    history.push("/singleProduct");
+                }}
             >
                 <CardMedia
                     component="img"
                     className={classes2.media}
-                    image="https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
+                    image={
+                        "https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
+                    }
                     title="Contemplative Reptile"
                     style={{
                         maxHeight: "20vh",
@@ -53,11 +62,12 @@ export default function ProductCard(props) {
                     }}
                 />
                 <CardContent>
-                    <Typography variant="h6" align="center">
+                    <Typography variant="caption" align="center">
                         {props.product.name}
                     </Typography>
                     <Typography variant="caption" component="p" align="center">
-                        {props.product.vendor}
+                        {props.product.s_id}
+                        {/* fetch seller name from seller id => s_id */}
                     </Typography>
                     <Typography align="center">
                         <Rating

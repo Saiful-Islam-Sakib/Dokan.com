@@ -131,6 +131,15 @@ export default function PrimarySearchAppBar() {
 
     const onChangeSearchbar = (event) => {
         console.log(event.target.value);
+        // use this if you want to srearch as user types....
+    };
+
+    const onkeydownSearch = (event) => {
+        if (event.key == "Enter" && event.target.value.length > 0) {
+            console.log("Enter Pressed");
+            console.log(event.target.value);
+            // use this if you want to search when enter key pressed.
+        }
     };
 
     const handleMyProfile = () => {
@@ -208,6 +217,7 @@ export default function PrimarySearchAppBar() {
                         <p>Cart</p>
                     </MenuItem>
                     <Divider></Divider>
+                    <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                 </Menu>
             ) : (
                 <Menu
@@ -288,6 +298,7 @@ export default function PrimarySearchAppBar() {
                             }}
                             inputProps={{ "aria-label": "search" }}
                             onChange={onChangeSearchbar}
+                            onKeyDown={onkeydownSearch}
                             fullWidth
                         />
                     </div>
@@ -296,7 +307,19 @@ export default function PrimarySearchAppBar() {
                         {/* sign in kore felle sign in and Seller? option show korbe na */}
                         {localStorage.getItem("login") === "true" ||
                         sessionStorage.getItem("login") === "true" ? (
-                            <></>
+                            <>
+                                <IconButton aria-label="signIn" color="inherit">
+                                    <Typography>
+                                        <Link
+                                            className={classes.logoLink}
+                                            style={{ textDecoration: "none" }}
+                                            onClick={handleSignOut}
+                                        >
+                                            Sig Out
+                                        </Link>
+                                    </Typography>
+                                </IconButton>
+                            </>
                         ) : (
                             <>
                                 <IconButton aria-label="signIn" color="inherit">
@@ -341,10 +364,16 @@ export default function PrimarySearchAppBar() {
                                     onClick={handleProfileMenuOpen}
                                     color="inherit"
                                 >
-                                    {/* user name from redux sotre ***************************************************************** */}
-                                    <Typography variant="h6">
-                                        {"Sakib"}
+                                    <Typography variant="body1">
+                                        {JSON.parse(
+                                            localStorage.getItem("user")
+                                        ).f_name +
+                                            " " +
+                                            JSON.parse(
+                                                localStorage.getItem("user")
+                                            ).l_name}
                                     </Typography>
+                                    <AccountCircle />
                                 </IconButton>
                             </>
                         ) : (
