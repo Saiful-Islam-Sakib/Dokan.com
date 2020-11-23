@@ -45,7 +45,7 @@ export const login = (user) => {
             dispatch({
                 type: authConstants.LOGIN_FAILURE,
                 payload: {
-                    error: res.error,
+                    error: "error Sign In",
                 },
             });
         }

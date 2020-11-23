@@ -13,6 +13,7 @@ const initialState = {
         orders: [],
     },
     status: false,
+    cartCounter: 0,
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +25,16 @@ export default (state = initialState, action) => {
                 status: action.payload.status,
             };
             break;
+        case authConstants.CART_COUNTER:
+            state = {
+                ...state,
+                cartCounter: state.cartCounter + 1,
+            };
+        case authConstants.CART_SUBTRACT:
+            state = {
+                ...state,
+                cartCounter: state.cartCounter - 1,
+            };
         default:
             return state;
     }

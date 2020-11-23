@@ -41,10 +41,11 @@ function compareValues(key, order = "asc") {
     };
 }
 
-let products = JSON.parse(sessionStorage.getItem("products"));
-console.log(products);
+//let products = JSON.parse(sessionStorage.getItem("products"));
+//console.log(products);
 
 export default function ProductList() {
+    let products = JSON.parse(sessionStorage.getItem("products"));
     const classes = useStyles();
 
     const [page, setPage] = React.useState(0);
