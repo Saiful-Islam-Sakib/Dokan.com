@@ -85,16 +85,16 @@ function App() {
                         )}
                     </Route>
                     <Route exact path="/productList">
-<<<<<<< HEAD
+
                         <ProductList
                             products={sessionStorage.getItem("products")}
                         ></ProductList>
-=======
+
                         <ProductList></ProductList>
                     </Route>
                     <Route exact path="/singleProduct">
                         <SignleProduct></SignleProduct>
-    ff1ee5c58d99a069250b5b7050f759eb4e1ef95d
+                    ff1ee5c58d99a069250b5b7050f759eb4e1ef95d
                     </Route>
                 </Switch>
                 <Footer></Footer>
