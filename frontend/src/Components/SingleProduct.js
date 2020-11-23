@@ -133,11 +133,11 @@ export default function SingleProduct() {
                                     </Link>
                                 </Typography>
                                 <div style={{ display: "flex" }}>
-                                    <Typography variant="h6">
-                                        4.4
-                                        {/* rating thik korte hobe rating field nai database a  */}
-                                        {selectedProduct.rating}
-                                    </Typography>
+                                    {/* <Typography variant="h6"> */}
+                                    {/* 4.4 */}
+                                    {/* rating thik korte hobe rating field nai database a  */}
+                                    {/* {selectedProduct.rating} */}
+                                    {/* </Typography> */}
                                     <div
                                         style={{
                                             display: "flex",
@@ -146,10 +146,11 @@ export default function SingleProduct() {
                                     ></div>
                                     <Rating
                                         name="read-only"
-                                        value={4} // avg of star that rounds automatically
+                                        //value={selectedProduct.rating} // avg of star that rounds automatically
+                                        value={4.4}
                                         readOnly
-                                        size="large"
-                                        max="1"
+                                        precision={0.5}
+                                        max={5}
                                     />
                                 </div>
                                 <div style={{ marginBottom: 10 }}>
@@ -162,7 +163,7 @@ export default function SingleProduct() {
                                     <br />
                                 </Typography>
                                 <Typography variant="h6" component="h2">
-                                    Price : ${selectedProduct.price}
+                                    Price : {selectedProduct.price + " tk"}
                                 </Typography>
                             </CardContent>
                             <CardContent style={{ display: "flex" }}>

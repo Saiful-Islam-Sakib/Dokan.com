@@ -24,6 +24,8 @@ const innerCardStyle = makeStyles({
     },
     media: {
         height: 150,
+        maxHeight: "20vh",
+        objectFit: "fill",
     },
 });
 
@@ -52,14 +54,8 @@ export default function ProductCard(props) {
                 <CardMedia
                     component="img"
                     className={classes2.media}
-                    image={
-                        "https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
-                    }
-                    title="Contemplative Reptile"
-                    style={{
-                        maxHeight: "20vh",
-                        objectFit: "fill",
-                    }}
+                    image={props.product.img}
+                    title={props.product.name}
                 />
                 <CardContent>
                     <Typography variant="caption" align="center">

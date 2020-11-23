@@ -14,6 +14,7 @@ const initialState = {
     },
     status: false,
     cartCounter: 0,
+    cartProduct: [],
 };
 
 export default (state = initialState, action) => {
