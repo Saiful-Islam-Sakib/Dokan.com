@@ -10,6 +10,8 @@ import About from "./Components/AboutPage";
 import CheckOut from "./Components/Checkout/Checkout";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import ProductList from "./Components/ProductList";
+import SignleProduct from "./Components/SingleProduct";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -82,9 +84,10 @@ function App() {
                         )}
                     </Route>
                     <Route exact path="/productList">
-                        <ProductList
-                            products={sessionStorage.getItem("products")}
-                        ></ProductList>
+                        <ProductList></ProductList>
+                    </Route>
+                    <Route exact path="/singleProduct">
+                        <SignleProduct></SignleProduct>
                     </Route>
                 </Switch>
                 <Footer></Footer>

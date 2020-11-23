@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserProfile() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+
     const classes = useStyles();
 
     return (
@@ -46,31 +49,32 @@ export default function UserProfile() {
                     <CardContent className={classes.cardContainer}>
                         <Typography variant="h5">
                             <NameIcon></NameIcon>
-                            <strong> Name: </strong> name{"name"}
+                            <strong> Name: </strong>{" "}
+                            {user.f_name + " " + user.l_name}
                         </Typography>
                         <Divider></Divider>
                         <Typography variant="h5">
                             <EmailIcon></EmailIcon>
                             <strong> Email: </strong>
-                            {"email@email.com"}
+                            {user.email}
                         </Typography>
                         <Divider></Divider>
                         <Typography variant="h5">
                             <PhoneNumberIcon></PhoneNumberIcon>
                             <strong> Phone Number: </strong>
-                            {"01011011010"}
+                            {user.phone}
                         </Typography>
                         <Divider></Divider>
                         <Typography variant="h5">
                             <AddressIcon></AddressIcon>
                             <strong> Primary Address: </strong>
-                            {"111a asdasdasd asdas dasdas dasd"}
+                            {user.address}
                         </Typography>
                         <Divider></Divider>
                     </CardContent>
                 </Card>
                 <div style={{ marginBottom: "1%" }}></div>
-                <TabUserProfile></TabUserProfile>
+                <TabUserProfile userinfo={user}></TabUserProfile>
             </Container>
         </div>
     );

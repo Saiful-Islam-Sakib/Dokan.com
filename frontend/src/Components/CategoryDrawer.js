@@ -66,15 +66,12 @@ export default function TemporaryDrawer() {
                 "http://localhost:5000/dokan.com/products/consumerFood/flour"
             );
             const data = await res.json();
-            console.log(data);
 
-            // sessionStorage.setItem("products", JSON.stringify(data));
-            // const a = JSON.parse(sessionStorage.getItem("products"));
-            // console.log(a);
+            sessionStorage.setItem("products", JSON.stringify(data.product));
 
-            //history.push("/productList");
+            history.push("/productList");
         } catch (err) {
-            console.log("Error occured,cant get any product");
+            console.log("Error occured, cant get any product");
         }
     };
 
