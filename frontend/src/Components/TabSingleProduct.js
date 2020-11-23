@@ -68,7 +68,7 @@ export default function FullWidthTabs() {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
-    const [RatingValue, setRatingValue] = React.useState(5);
+    const [RatingValue, setRatingValue] = React.useState(4);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -104,7 +104,7 @@ export default function FullWidthTabs() {
                     </Typography>
                     <form>
                         <TextField
-                            id="reviewText"
+                            id="commentText"
                             placeholder="empty"
                             required
                             fullWidth

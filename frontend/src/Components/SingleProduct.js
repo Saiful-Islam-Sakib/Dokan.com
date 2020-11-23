@@ -3,7 +3,6 @@ import {
     Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
     Container,
@@ -13,9 +12,6 @@ import {
     makeStyles,
     OutlinedInput,
     Typography,
-    Paper,
-    Tabs,
-    Tab,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import TabSingleProduct from "./TabSingleProduct";
@@ -45,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
         objectFit: "fill",
     },
 }));
+
+let selectedProduct = JSON.parse(sessionStorage.getItem("selectedProduct"));
+console.log(selectedProduct);
 
 export default function SingleProduct() {
     const classes = useStyles();
@@ -123,18 +122,22 @@ export default function SingleProduct() {
                                     color="textSecondary"
                                     style={{ fontSize: 12 }}
                                 >
-                                    Category
+                                    {selectedProduct.category}
                                 </Typography>
                                 <Typography variant="h5" component="h2">
-                                    Full Name of a product
+                                    {selectedProduct.name}
                                 </Typography>
                                 <Typography color="textSecondary" gutterBottom>
                                     <Link href="#vendor" color="inherit">
-                                        by : Vendor Name
+                                        by : {selectedProduct.s_id}
                                     </Link>
                                 </Typography>
                                 <div style={{ display: "flex" }}>
-                                    <Typography variant="h6">4.4</Typography>
+                                    <Typography variant="h6">
+                                        4.4
+                                        {/* rating thik korte hobe rating field nai database a  */}
+                                        {selectedProduct.rating}
+                                    </Typography>
                                     <div
                                         style={{
                                             display: "flex",
@@ -154,13 +157,15 @@ export default function SingleProduct() {
                                 </div>
                                 <Typography variant="body2" component="p">
                                     product details
+                                    {/* product details thik kora lagbe, product detals field nai database a */}
+                                    {selectedProduct.productDetails}
                                     <br />
                                 </Typography>
                                 <Typography variant="h6" component="h2">
-                                    Price : $100
+                                    Price : ${selectedProduct.price}
                                 </Typography>
                             </CardContent>
-                            <CardActions>
+                            <CardContent style={{ display: "flex" }}>
                                 <Button
                                     id="add"
                                     variant="outlined"
@@ -192,7 +197,7 @@ export default function SingleProduct() {
                                 >
                                     -
                                 </Button>
-                            </CardActions>
+                            </CardContent>
                             <CardContent>
                                 <Button
                                     variant="contained"

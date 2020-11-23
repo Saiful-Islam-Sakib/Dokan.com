@@ -17,6 +17,8 @@ router.delete('/sell1/deleteProd/:pid',productControllers.deleteproduct); // Thi
 
 router.get('/consumerFood/:psubcat',productControllers.productbySubcat);
 
+router.post('/ploc',productControllers.productbylocation)
+
 //router.get('/searchbycategory/:pcat',productControllers.prodSearchbyCategory);
 
 //router.delete('/sp/:id',productControllers.del);
