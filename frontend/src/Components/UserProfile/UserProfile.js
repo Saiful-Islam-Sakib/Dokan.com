@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserProfile() {
-    let user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
+let user = JSON.parse(localStorage.getItem("user"));
+console.log(user);
 
+export default function UserProfile() {
     const classes = useStyles();
 
     return (

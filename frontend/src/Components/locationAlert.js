@@ -97,6 +97,7 @@ export default function CustomizedDialogs() {
     };
     const handleClose = () => {
         if (city.length > 0 && area.length > 0 && place.length > 0) {
+            // ekhane products fetch kore anba ***************************************************************************************************************
             setOpen(false);
             seterror(false);
         } else {
