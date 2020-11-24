@@ -156,19 +156,29 @@ const productbylocation = async(req,res,next) =>{
     const seller_id = locsellerv2.map(({id}) => ({id}));
     let seller_id_arr  = seller_id.map(({id}) => id);
     const i = seller_id_arr.length;
-    let prodbyloc = '';
+    let prod;
+    let add = false;
+    let prodbyloc;
     for(j = 0 ; j < i; j++){
         try{
-            prodbyloc += await product.find({s_id : seller_id_arr[j]})+',';
+            prod = await product.find({s_id : seller_id_arr[j]});
+            if(add === true && prod.length > 0){
+                prodbyloc = prodbyloc.concat(prod);
+            }
+            else if(prod.length > 0){
+                prodbyloc = prod;
+                add = true;
+            }else{
+                add = false;
+            }
         }catch(err){
             console.log("Something gone wrong");
             const erro = new httpError('Something went wrong',500);
             return next(erro);
         }
     }
-    //console.log(prodbyloc);
-    //res.status(200).json({product : prod.map(prod => prod.toObject({getters :true}))});
-    res.status(200).json({msg : prodbyloc});
+    res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
+    //res.status(200).json({msg : prodbyloc});
 };
 
 const prodSearchbyCategory = async(req ,res ,next) =>{
