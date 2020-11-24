@@ -63,11 +63,28 @@ export default function TemporaryDrawer() {
     const handleCategorySelect = async (event) => {
         try {
             const res = await fetch(
-                "http://localhost:5000/dokan.com/products/consumerFood/flour"
+                "http://localhost:5000/dokan.com/products/ploc",{
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            city : eikhane_city_ene_dao,
+                            area: eikhane_area_ene_dao,
+                            place: eikhane_place_ene_daa
+                            /*
+                            
+                                city    area     place er value ene dao
+                            
+                            */ 
+                        }),
+                }
             );
             const data = await res.json();
-
+          
             console.log(data);
+
+            // sessionStorage.setItem("products", JSON.stringify(data));
+            // const a = JSON.parse(sessionStorage.getItem("products"));
+            // console.log(a);
 
             sessionStorage.setItem("products", JSON.stringify(data.product));
 

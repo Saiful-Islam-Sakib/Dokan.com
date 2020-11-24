@@ -2,7 +2,6 @@ const mongo = require('mongoose');
 const uniqueVali = require('mongoose-unique-validator');
 
 const customerSchema = new mongo.Schema({
-    //c_id : {type : String, required: true},
     f_name : {type : String, required: true},
     l_name : {type : String, required: true},
     email : {type : String ,required: true, unique:true},
