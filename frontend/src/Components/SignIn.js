@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { login } from "../Redux/Actions/index";
 
@@ -55,14 +55,13 @@ function SignIn() {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth);
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorStatus, setErrorStatus] = React.useState(false);
     const [rememberMe, setRememberMe] = React.useState(false);
 
-    const handleSignIn = async (event) => {
+    const handleSignIn = (event) => {
         event.preventDefault();
 
         const user = {
@@ -71,10 +70,10 @@ function SignIn() {
         };
 
         dispatch(login(user));
-        console.log(auth.status);
-        if (auth.status) {
-            history.push("/");
-        } else {
+
+        history.push("/");
+
+        if (!localStorage.getItem("login")) {
             setErrorStatus(true);
             setPassword("");
         }

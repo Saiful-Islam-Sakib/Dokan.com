@@ -79,7 +79,7 @@ export default function TemporaryDrawer() {
                 }
             );
             const data = await res.json();
-
+          
             console.log(data);
 
             // sessionStorage.setItem("products", JSON.stringify(data));
