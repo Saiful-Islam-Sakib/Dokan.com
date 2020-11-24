@@ -19,6 +19,7 @@ import CartList from "./CartList";
 import { Breadcrumbs } from "@material-ui/core";
 import LocationAlart from "./locationAlert";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -103,6 +104,8 @@ const secondHeaderStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const secondHeaderClass = secondHeaderStyles();
+
+    const fullStore = useSelector((store) => store.auth);
 
     const history = useHistory();
 
@@ -230,6 +233,15 @@ export default function PrimarySearchAppBar() {
                     onClose={handleMobileMenuClose}
                 >
                     <MenuItem>
+                        <IconButton aria-label="cart" color="inherit">
+                            <Badge badgeContent={1} color="secondary">
+                                <CartList></CartList>
+                            </Badge>
+                        </IconButton>
+                        <p>Cart</p>
+                    </MenuItem>
+                    <Divider></Divider>
+                    <MenuItem>
                         <IconButton aria-label="signIn" color="inherit">
                             <Typography>
                                 <Link
@@ -349,7 +361,15 @@ export default function PrimarySearchAppBar() {
                             </>
                         )}
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge
+                                badgeContent={fullStore.quantity?.reduce(
+                                    function (a, b) {
+                                        return a + b;
+                                    },
+                                    0
+                                )}
+                                color="secondary"
+                            >
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>

@@ -10,25 +10,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { useSelector } from "react-redux";
+import CartProduct from "./CartProduct";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
         backgroundColor: theme.palette.background.default,
     },
-    quantityNumber: {
-        minWidth: 20,
-        maxWidth: 50,
-        maxHeight: 30,
-    },
 }));
 
 export default function AlertDialog() {
+    const fullStore = useSelector((store) => store.auth);
+
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
@@ -47,6 +43,8 @@ export default function AlertDialog() {
             </Button>
             <Dialog
                 open={open}
+                fullWidth={true}
+                maxWidth="md"
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
@@ -55,12 +53,46 @@ export default function AlertDialog() {
                     <List>
                         <ListItem>
                             <ListItemText
+                                disableTypography={true}
                                 primary="Total Product"
-                                secondary="1"
+                                secondary={
+                                    <Typography>
+                                        {"=> " +
+                                            fullStore.quantity?.reduce(
+                                                function (a, b) {
+                                                    return a + b;
+                                                },
+                                                0
+                                            )}
+                                    </Typography>
+                                }
                             />
+                            <Divider
+                                variant="middle"
+                                orientation="vertical"
+                                flexItem="true"
+                            ></Divider>
                             <ListItemText
+                                disableTypography={true}
                                 primary="Total Amount"
-                                secondary="$100"
+                                secondary={
+                                    <Typography>
+                                        {"=> " +
+                                            fullStore.quantity?.reduce(
+                                                function (r, a, i) {
+                                                    return (
+                                                        r +
+                                                        a *
+                                                            fullStore.cart[i][
+                                                                "price"
+                                                            ]
+                                                    );
+                                                },
+                                                0
+                                            ) +
+                                            " tk"}
+                                    </Typography>
+                                }
                             />
                         </ListItem>
                     </List>
@@ -69,33 +101,16 @@ export default function AlertDialog() {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <List className={classes.root}>
-                            <ListItem>
-                                <ListItemAvatar>
-                                    <Avatar
-                                        variant="rounded"
-                                        alt="productImage"
-                                        src="#image"
-                                    ></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="Rice 1 asdasd asas dasdas dasd asd  dasd"
-                                    secondary="$100"
-                                    style={{ marginRight: "1rem" }}
-                                />
-                                <TextField
-                                    id="filled-disabled"
-                                    type="number"
-                                    defaultValue="1"
-                                    inputProps={{
-                                        min: "1",
-                                        style: { textAlign: "center" },
-                                    }}
-                                    className={classes.quantityNumber}
-                                />
-                                <Button>
-                                    <DeleteIcon></DeleteIcon>
-                                </Button>
-                            </ListItem>
+                            {fullStore.cart.map((product, index) => (
+                                <>
+                                    <CartProduct
+                                        product={product}
+                                        quantity={fullStore.quantity[index]}
+                                        key={index}
+                                    ></CartProduct>
+                                    <Divider variant="middle"></Divider>
+                                </>
+                            ))}
                         </List>
                     </DialogContentText>
                 </DialogContent>
