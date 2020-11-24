@@ -6,6 +6,7 @@ const customerRoutes = require('./routes/customer-routes');
 const orderRoutes = require('./routes/order-routes');
 const productRoutes = require('./routes/products-routes');
 const sellerRoutes = require('./routes/seller-routes');
+const commentRoutes = require('./routes/comment-routes');
 
 const httpError = require('./models/http-errors');
 
@@ -29,6 +30,9 @@ app.use('/dokan.com/order/seller',orderRoutes);
 app.use('/dokan.com/products',productRoutes);
 
 app.use('/dokan.com/seller',sellerRoutes);
+
+app.use('/dokan.com',commentRoutes);
+
 
 //app.post('/dokan.com/newCustomer', customerData.createCustomer);
 
