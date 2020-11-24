@@ -5,8 +5,6 @@ const { check } = require('express-validator');
 const router = express.Router();
 
 
-router.get('/:cid', customerController.getcusinfobyid);
-
 router.post('/signup',
     [check('f_name').not().isEmpty() ,check('l_name').not().isEmpty(),check('email').normalizeEmail().isEmail(),
     check('phone').isLength({min: 11}),check('phone').isLength({max :11}),check('gender').not().isEmpty(),check('birthday').not().isEmpty(),
@@ -29,5 +27,10 @@ router.post('/login',
 router.patch('/changePassword/:cid', 
     [check('prevPassword').isLength({min:6}),check('newPassword').isLength({min:6})],
     customerController.changePassword);
+
+
+
+router.get('/customerdetails/:id',customerController.customerinfo);
+
 
 module.exports = router;

@@ -14,7 +14,6 @@ import { Provider } from "react-redux";
 import store from "./Redux/Store/index";
 
 window.store = store;
-ff1ee5c58d99a069250b5b7050f759eb4e1ef95d
 
 ReactDOM.render(
     <Provider store={store}>

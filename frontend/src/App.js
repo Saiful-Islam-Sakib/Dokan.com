@@ -12,7 +12,6 @@ import UserProfile from "./Components/UserProfile/UserProfile";
 import ProductList from "./Components/ProductList";
 import SignleProduct from "./Components/SingleProduct";
 
-ff1ee5c58d99a069250b5b7050f759eb4e1ef95d
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -94,7 +93,6 @@ function App() {
                     </Route>
                     <Route exact path="/singleProduct">
                         <SignleProduct></SignleProduct>
-                    ff1ee5c58d99a069250b5b7050f759eb4e1ef95d
                     </Route>
                 </Switch>
                 <Footer></Footer>

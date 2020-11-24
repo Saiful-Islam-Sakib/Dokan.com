@@ -1,7 +1,8 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const customer = require('../models/customer-model');
-const { findById } = require('../models/customer-model');
+const mongo = require('mongoose');
+
 
 let dummy_customer = [
     {
@@ -22,19 +23,19 @@ let dummy_customer = [
     }
 ];
 
-const getcusinfobyid = async (req,res,next) =>{
-    const cus_id = req.params.cid;
-    let cus_info; 
+const customerinfo = async (req,res,next) =>{
+    const userid = req.params.id;
+    let customerinfo;
     try{
-       cus_info = await customer.findById(cus_id);
+        customerinfo = await customer.findById(userid).populate('orders');
     }catch(err){
-        const erro = new httpError('Something went wrong,could not find customer information',500);
+        const erro = new httpError('Somthing went wrong',422);
         return next(erro);
     }
-    if (!cus_info){
-        throw new httpError('Could not find Customer.',404);
+    if(!customerinfo || customerinfo.orders.length === 0){
+        throw new httpError('User not exist',404);
     }
-    res.json({cus_info : cus_info.toObject({getters : true})});
+    res.status(200).json({msg: customerinfo.orders.map(orders => orders.toObject({getters :true}))});
 };
 
 const customerSignup = async (req,res,next) => {
@@ -194,7 +195,7 @@ const customerLogin = async(req,res,next) => {
     }
 };
 
-exports.getcusinfobyid = getcusinfobyid;
+exports.customerinfo = customerinfo;
 exports.customerSignup = customerSignup;
 exports.updatecustomer = updatecustomer;
 exports.deletecustomer = deletecustomer;
