@@ -7,33 +7,34 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 
+import i0 from "../image/slider/0.jpg";
+import i1 from "../image/slider/1.jpeg";
+import i2 from "../image/slider/2.jpg";
+import i3 from "../image/slider/3.jpg";
+import i4 from "../image/slider/4.jpg";
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const tutorialSteps = [
     {
         label: "Add Banner 1",
-        imgPath:
-            "https://image.freepik.com/free-photo/indian-spices-herbs-black-table_84485-703.jpg",
+        imgPath: i0,
     },
     {
         label: "Add Banner 2",
-        imgPath:
-            "https://image.freepik.com/free-photo/top-view-food-frame-wooden-background_23-2148723496.jpg",
+        imgPath: i1,
     },
     {
         label: "Add Banner 3",
-        imgPath:
-            "https://image.freepik.com/free-photo/top-view-circular-food-frame_23-2148723455.jpg",
+        imgPath: i2,
     },
     {
         label: "Add Banner 4",
-        imgPath:
-            "https://image.freepik.com/free-photo/small-plant-near-various-cosmetics-bottles_23-2147787958.jpg",
+        imgPath: i3,
     },
     {
         label: "Add Banner 5",
-        imgPath:
-            "https://image.freepik.com/free-photo/grandmother-hands-old-woman-with-flour-shape-heart-with-flour-dark-black-table-food-recipe-menu-background-place-text-long-banner-format_114941-92.jpg",
+        imgPath: i4,
     },
 ];
 

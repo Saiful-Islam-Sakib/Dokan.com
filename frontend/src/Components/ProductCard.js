@@ -13,6 +13,7 @@ import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const innerCardStyle = makeStyles({
     root: {
@@ -24,14 +25,29 @@ const innerCardStyle = makeStyles({
     },
     media: {
         height: 150,
+        maxHeight: "20vh",
+        objectFit: "fill",
     },
 });
 
 export default function ProductCard(props) {
     const classes2 = innerCardStyle();
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    //const fullStore = useSelector((store) => store.auth);
+    //console.log(fullStore);
 
     const [value, setValue] = React.useState(1);
+
+    const handleAddToCart = (event) => {
+        dispatch({
+            type: "ADD_TO_CART",
+            item: props.product,
+            quantity: value,
+        });
+        setValue(1);
+    };
 
     return (
         <Card className={classes2.root} variant="outlined">
@@ -52,14 +68,8 @@ export default function ProductCard(props) {
                 <CardMedia
                     component="img"
                     className={classes2.media}
-                    image={
-                        "https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
-                    }
-                    title="Contemplative Reptile"
-                    style={{
-                        maxHeight: "20vh",
-                        objectFit: "fill",
-                    }}
+                    image={props.product.img}
+                    title={props.product.name}
                 />
                 <CardContent>
                     <Typography variant="caption" align="center">
@@ -125,7 +135,7 @@ export default function ProductCard(props) {
                 </Button>
             </div>
             <Divider></Divider>
-            <Button>Add</Button>
+            <Button onClick={handleAddToCart}>Add</Button>
         </Card>
     );
 }

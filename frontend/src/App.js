@@ -84,11 +84,6 @@ function App() {
                         )}
                     </Route>
                     <Route exact path="/productList">
-
-                        <ProductList
-                            products={sessionStorage.getItem("products")}
-                        ></ProductList>
-
                         <ProductList></ProductList>
                     </Route>
                     <Route exact path="/singleProduct">
