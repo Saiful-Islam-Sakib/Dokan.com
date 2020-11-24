@@ -14,7 +14,6 @@ export default function CartProduct(props) {
     const dispatch = useDispatch();
 
     const handleCartProductDelete = () => {
-        // deleting a specific product from a cart ....
         dispatch({
             type: "REMOVE_FROM_CART",
             id: props.product.id,

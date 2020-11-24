@@ -116,7 +116,12 @@ export default function AlertDialog() {
                 </DialogContent>
                 <Divider></Divider>
                 <DialogActions>
-                    <Button color="primary" variant="outlined" href="/checkout">
+                    <Button
+                        disabled={fullStore.cart.length > 0 ? false : true}
+                        color="primary"
+                        variant="outlined"
+                        href="/checkout"
+                    >
                         Checkout
                     </Button>
                     <Button onClick={handleClose} color="primary" autoFocus>

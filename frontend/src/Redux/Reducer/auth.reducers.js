@@ -29,12 +29,12 @@ export default (state = initialState, action) => {
             };
 
         case "ADD_TO_CART":
-            const serial = state.cart.findIndex(
+            let serial = state.cart.findIndex(
                 (signleProduct) => signleProduct.id === action.item.id
             );
 
             if (serial >= 0) {
-                const newq = [...state.quantity];
+                let newq = [...state.quantity];
                 newq[serial] = newq[serial] + action.quantity;
                 return {
                     ...state,
@@ -50,22 +50,17 @@ export default (state = initialState, action) => {
             }
 
         case "REMOVE_FROM_CART":
-            const index = state.cart.findIndex(
+            let index = state.cart.findIndex(
                 (signleProduct) => signleProduct.id === action.id
             );
 
             let newCart = [...state.cart];
             let newQuantity = [...state.quantity];
 
-            console.log(index);
-            console.log(newCart);
-
             if (index >= 0) {
                 newCart.splice(index, 1);
                 newQuantity.splice(index, 1);
             }
-
-            console.log(newCart);
 
             return {
                 ...state,
