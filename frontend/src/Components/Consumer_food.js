@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import SmallCard from "./SmallCard";
@@ -22,9 +22,16 @@ const useStyles = makeStyles({
 
 export default function OutlinedCard() {
     const classes = useStyles();
+
     const fullStore = useSelector((store) => store.auth);
     const dispatch = useDispatch();
     const history = useHistory();
+
+    useEffect(() => {
+        dispatch({
+            type: "CONSUMER_CAT",
+        });
+    }, []);
 
     return (
         <div style={{ marginBottom: 50 }}>
@@ -33,13 +40,9 @@ export default function OutlinedCard() {
             </Typography>
             <Card>
                 <Card className={classes.root} variant="outlined">
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
+                    {fullStore.consumerCat?.map((product, index) => (
+                        <SmallCard product={product} key={index}></SmallCard>
+                    ))}
                 </Card>
                 <CardActions
                     style={{
@@ -59,7 +62,9 @@ export default function OutlinedCard() {
                                 product: selectedCategoryProducts,
                             });
 
-                            history.push("/productList");
+                            if (selectedCategoryProducts.length > 0) {
+                                history.push("/productList");
+                            }
                         }}
                     >
                         more

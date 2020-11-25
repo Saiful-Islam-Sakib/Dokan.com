@@ -19,11 +19,13 @@ function App() {
         <Router>
             <div
                 className="App"
-                style={{
-                    //backgroundImage: `linear-gradient(to left, gray, white, gray)`,
-                    //backgroundImage: `linear-gradient(white 50%, #131921)`,
-                    //backgroundImage: `linear-gradient(white 50%, pink, red)`,
-                }}
+                style={
+                    {
+                        //backgroundImage: `linear-gradient(to left, gray, white, gray)`,
+                        //backgroundImage: `linear-gradient(white 50%, #131921)`,
+                        //backgroundImage: `linear-gradient(white 50%, pink, red)`,
+                    }
+                }
             >
                 <Header />
                 <Switch>
@@ -66,20 +68,22 @@ function App() {
                         )}
                     </Route>
                     <Route exact path="/checkout">
-                        {localStorage.getItem("login") === "true" ||
+                        {/* {localStorage.getItem("login") === "true" ||
                         sessionStorage.getItem("login") === "true" ? (
                             <CheckOut></CheckOut>
                         ) : (
                             <Body></Body>
-                        )}
+                        )} */}
+                        <CheckOut></CheckOut>
                     </Route>
                     <Route exact path="/UserProfile">
-                        {localStorage.getItem("login") === "true" ||
+                        {/* {localStorage.getItem("login") === "true" ||
                         sessionStorage.getItem("login") === "true" ? (
                             <UserProfile></UserProfile>
                         ) : (
                             <Body></Body>
-                        )}
+                        )} */}
+                        <UserProfile></UserProfile>
                     </Route>
                     <Route exact path="/productList">
                         <ProductList></ProductList>

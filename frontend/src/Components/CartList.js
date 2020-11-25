@@ -14,6 +14,7 @@ import Divider from "@material-ui/core/Divider";
 import { useSelector } from "react-redux";
 import CartProduct from "./CartProduct";
 import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AlertDialog() {
     const fullStore = useSelector((store) => store.auth);
+    const history = useHistory();
 
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -120,7 +122,10 @@ export default function AlertDialog() {
                         disabled={fullStore.cart.length > 0 ? false : true}
                         color="primary"
                         variant="outlined"
-                        href="/checkout"
+                        onClick={() => {
+                            setOpen(false);
+                            history.push("/checkout");
+                        }}
                     >
                         Checkout
                     </Button>

@@ -18,6 +18,9 @@ const initialState = {
     quantity: [],
     selectedSubCatProduct: [],
     selectedProduct: [],
+    consumerCat: [],
+    healthCareCat: [],
+    toiletriesCat: [],
 };
 
 export default (state = initialState, action) => {
@@ -79,6 +82,41 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 selectedProduct: action.product,
+            };
+
+        case "CONSUMER_CAT":
+            let selectedCategoryProducts = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            )
+                ?.filter((p) => p.category == "consumerFood")
+                .slice(0, 7);
+
+            return {
+                ...state,
+                consumerCat: selectedCategoryProducts,
+            };
+        case "HEALTH_CARE_CAT":
+            return {
+                ...state,
+                healthCareCat: action.product,
+            };
+        case "TOILETRIES_CAT":
+            return {
+                ...state,
+                toiletriesCat: action.product,
+            };
+        case "SEARCH":
+            let searchForName = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            )?.filter((p) => p.name.toLowerCase().includes(action.searchFor));
+
+            let searchForTag = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            )?.filter((p) => p.tag.toLowerCase().includes(action.searchFor));
+
+            return {
+                ...state,
+                //selectedSubCatProduct: searchFor,
             };
         default:
             return state;

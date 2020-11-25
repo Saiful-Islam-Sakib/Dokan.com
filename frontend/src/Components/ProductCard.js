@@ -57,6 +57,8 @@ export default function ProductCard(props) {
                     flexDirection: "column",
                 }}
                 onClick={() => {
+                    // ekhane *************************************************************************************************************
+
                     dispatch({
                         type: "SELECTED_PRODUCT",
                         product: props.product,

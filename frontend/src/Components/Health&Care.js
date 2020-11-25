@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import SmallCard from "./SmallCard";
@@ -26,6 +26,12 @@ export default function OutlinedCard() {
     const history = useHistory();
     const classes = useStyles();
 
+    useEffect(() => {
+        dispatch({
+            type: "HEALTH_CARE_CAT",
+        });
+    }, []);
+
     return (
         <div style={{ marginBottom: 50 }}>
             <Typography variant="h5" gutterBottom component="p">
@@ -33,14 +39,9 @@ export default function OutlinedCard() {
             </Typography>
             <Card>
                 <Card className={classes.root} variant="outlined">
-                    {/* 7 ta eliment show hobe er beshi na */}
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
+                    {fullStore.healthCareCat?.map((product, index) => (
+                        <SmallCard product={product} key={index}></SmallCard>
+                    ))}
                 </Card>
                 <CardActions
                     style={{
@@ -60,7 +61,9 @@ export default function OutlinedCard() {
                                 product: selectedCategoryProducts,
                             });
 
-                            history.push("/productList");
+                            if (selectedCategoryProducts.length > 0) {
+                                history.push("/productList");
+                            }
                         }}
                     >
                         more
