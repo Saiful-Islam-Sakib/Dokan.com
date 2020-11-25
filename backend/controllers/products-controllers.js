@@ -44,7 +44,7 @@ const getproductbyid = async (req,res,next) =>{
     const prod_id = req.params.pid;
     let prod_info;
     try{
-        prod_info = await product.findById(prod_id);
+        prod_info = await product.findById(prod_id).populate('comments');
     }catch(err){
         const erro = new httpError('Sorry, something went wrong',500);
         return next(erro);
@@ -52,7 +52,7 @@ const getproductbyid = async (req,res,next) =>{
     if (!prod_info){
         throw new httpError('Could not find the provided Product.',404);
     }
-    res.json({prod_info});
+    res.json({data : prod_info.toObject({getters : true})});
 };
 
 const addproduct = async(req,res,next) => {
