@@ -19,6 +19,7 @@ import TabSingleProduct from "./TabSingleProduct";
 import i1 from "../image/fresh_chinigura.png";
 import i2 from "../image/miniket_rice.png";
 import i3 from "../image/Najirshail_rice.png";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-let selectedProduct = JSON.parse(sessionStorage.getItem("selectedProduct"));
-console.log(selectedProduct);
-
 export default function SingleProduct() {
     const classes = useStyles();
+    const fullStore = useSelector((state) => state.auth);
+
+    const selectedProduct = fullStore.selectedProduct;
+
     const [value, setValue] = React.useState(1);
     const [selectedImage, setImage] = React.useState(i1);
 

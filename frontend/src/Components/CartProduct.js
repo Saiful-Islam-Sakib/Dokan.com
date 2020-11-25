@@ -39,7 +39,6 @@ export default function CartProduct(props) {
                 style={{ marginRight: "1rem" }}
             />
             <TextField
-                disabled
                 id="quantity field"
                 type="number"
                 defaultValue={props.quantity}

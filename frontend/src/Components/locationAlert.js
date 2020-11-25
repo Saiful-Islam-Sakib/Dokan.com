@@ -62,7 +62,10 @@ const locations = [
         city: "Dhaka",
         zone: [
             { area: "Uttara", place: ["Sector 4", "Sector 8", "Sector 10"] },
-            { area: "Mirpur", place: ["Sector 5", "Sector 8", "Sector 9"] },
+            {
+                area: "Mirpur",
+                place: ["Sector 5", "Sector 8", "Sector 9"],
+            },
             { area: "Bashundhara", place: ["Block A", "Block B", "Block C"] },
         ],
     },
@@ -83,6 +86,7 @@ export default function CustomizedDialogs() {
             ? false
             : true
     );
+
     const [areaName, setArea] = React.useState([]);
     const [placeName, setPlace] = React.useState([]);
 
@@ -95,9 +99,29 @@ export default function CustomizedDialogs() {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    const handleClose = () => {
-        if (city.length > 0 && area.length > 0 && place.length > 0) {
-            // ekhane products fetch kore anba ***************************************************************************************************************
+
+    const handleClose = async (event) => {
+        const res = await fetch(
+            "http://localhost:5000/dokan.com/products/ploc",
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    city: city,
+                    area: area,
+                    place: place,
+                }),
+            }
+        );
+        const data = await res.json();
+
+        if (
+            city.length > 0 &&
+            area.length > 0 &&
+            place.length > 0 &&
+            res.status == 200
+        ) {
+            sessionStorage.setItem("allProduct", JSON.stringify(data.product));
             setOpen(false);
             seterror(false);
         } else {

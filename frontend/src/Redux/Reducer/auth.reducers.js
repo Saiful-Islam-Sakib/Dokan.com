@@ -16,6 +16,8 @@ const initialState = {
     status: false,
     cart: [],
     quantity: [],
+    selectedSubCatProduct: [],
+    selectedProduct: {},
 };
 
 export default (state = initialState, action) => {
@@ -66,6 +68,17 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: newCart,
                 quantity: newQuantity,
+            };
+        case "SELECTED_SUB_CAT_PRODUCT":
+            sessionStorage.setItem("products", JSON.stringify(action.product));
+            return {
+                ...state,
+                selectedSubCatProduct: action.product,
+            };
+        case "SELECTED_PRODUCT":
+            return {
+                ...state,
+                selectedProduct: action.product,
             };
         default:
             return state;

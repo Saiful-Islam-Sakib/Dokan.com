@@ -427,13 +427,13 @@ export default function PrimarySearchAppBar() {
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link href="/">Home</Link>
                         <Link href="/about">About</Link>
-                    </Breadcrumbs>
+                    {/* </Breadcrumbs>
                     <Divider
                         orientation="vertical"
                         flexItem
                         variant="middle"
                     ></Divider>
-                    <Breadcrumbs aria-label="breadcrumb">
+                    <Breadcrumbs aria-label="breadcrumb"> */}
                         <Link href="/consumerfood">Consumer_Food</Link>
                         <Link href="/toiletries">Toiletries</Link>
                         <Link href="/healthandcare">{"Health_&_care"}</Link>

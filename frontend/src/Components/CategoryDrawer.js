@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -13,6 +13,7 @@ import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 //import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
@@ -35,6 +36,7 @@ const useStyles = makeStyles({
 export default function TemporaryDrawer() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [state, setState] = React.useState({
         left: false,
@@ -60,38 +62,25 @@ export default function TemporaryDrawer() {
         setOpen4(!open4);
     };
 
-    const handleCategorySelect = async (event) => {
-        try {
-            const res = await fetch(
-                "http://localhost:5000/dokan.com/products/ploc",{
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            city : eikhane_city_ene_dao,
-                            area: eikhane_area_ene_dao,
-                            place: eikhane_place_ene_daa
-                            /*
-                            
-                                city    area     place er value ene dao
-                            
-                            */ 
-                        }),
-                }
-            );
-            const data = await res.json();
-          
-            console.log(data);
+    useEffect(() => {
+        if (sessionStorage.getItem("allProduct")) {
+            let selectedSubCategoryProducts = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            ).filter((p) => p.sub_category == selectedCategory);
 
-            // sessionStorage.setItem("products", JSON.stringify(data));
-            // const a = JSON.parse(sessionStorage.getItem("products"));
-            // console.log(a);
+            dispatch({
+                type: "SELECTED_SUB_CAT_PRODUCT",
+                product: selectedSubCategoryProducts,
+            });
 
-            sessionStorage.setItem("products", JSON.stringify(data.product));
-
-            history.push("/productList");
-        } catch (err) {
-            console.log("Error occured, cant get any product");
+            // console.log(JSON.parse(sessionStorage.getItem("products")));
+            // console.log(selectedCategory);
+            //console.log(selectedSubCategoryProducts);
         }
+    }, [selectedCategory]);
+
+    const handleCategorySelect = () => {
+        history.push("/productList");
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -126,7 +115,6 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("flour");
                                 setCategory("flour");
                                 handleCategorySelect();
                             }}
@@ -136,8 +124,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("rice");
                                 setCategory("rice");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Rice" />
@@ -145,8 +133,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("oil");
                                 setCategory("oil");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Oil" />
@@ -154,8 +142,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("milk");
                                 setCategory("milk");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Milk" />
@@ -163,8 +151,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("spicePickle");
                                 setCategory("spicePickle");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary={"Spices & Pickles"} />
@@ -172,8 +160,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("salt");
                                 setCategory("salt");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Salt" />
@@ -181,8 +169,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("sugar");
                                 setCategory("sugar");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Sugar" />
@@ -190,8 +178,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("onionGarlicPotato");
                                 setCategory("onionGarlicPotato");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Onion-Garlic-Potato" />
@@ -199,8 +187,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("tea");
                                 setCategory("tea");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Tea" />
@@ -208,8 +196,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("chocolate");
                                 setCategory("chocolate");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Chocolate" />
@@ -217,8 +205,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("snacks");
                                 setCategory("snacks");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Snacks" />
@@ -226,8 +214,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("cookingBaking");
                                 setCategory("cookingBaking");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary={"Cooking & Baking"} />
@@ -243,8 +231,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("washroomToletries");
                                 setCategory("washroomToletries");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Washroom Toiletries" />
@@ -252,8 +240,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("homeKitchenToiletries");
                                 setCategory("homeKitchenToiletries");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary={"Home & Kitchen"} />
@@ -261,8 +249,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("airFreshener");
                                 setCategory("airFreshener");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Air Freshener" />
@@ -280,8 +268,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("toothbrush");
                                 setCategory("toothbrush");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Toothbrush" />
@@ -289,8 +277,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("toothpaste");
                                 setCategory("toothpaste");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Toothpaste" />
@@ -298,8 +286,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("soap");
                                 setCategory("soap");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Soap" />
@@ -307,8 +295,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("shampoo");
                                 setCategory("shampoo");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Shampoo" />
@@ -316,8 +304,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("skinCare");
                                 setCategory("skinCare");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Skin-care" />
@@ -325,8 +313,8 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("faceMask");
                                 setCategory("faceMask");
+                                handleCategorySelect();
                             }}
                         >
                             <ListItemText primary="Face Mask" />
@@ -342,7 +330,6 @@ export default function TemporaryDrawer() {
                         <ListItem
                             button
                             onClick={() => {
-                                console.log("Napa");
                                 setCategory("Napa");
                             }}
                         >

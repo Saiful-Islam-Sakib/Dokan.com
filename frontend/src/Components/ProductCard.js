@@ -13,7 +13,7 @@ import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const innerCardStyle = makeStyles({
     root: {
@@ -57,10 +57,10 @@ export default function ProductCard(props) {
                     flexDirection: "column",
                 }}
                 onClick={() => {
-                    sessionStorage.setItem(
-                        "selectedProduct",
-                        JSON.stringify(props.product)
-                    );
+                    dispatch({
+                        type: "SELECTED_PRODUCT",
+                        product: props.product,
+                    });
 
                     history.push("/singleProduct");
                 }}
