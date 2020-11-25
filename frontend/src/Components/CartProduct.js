@@ -1,6 +1,7 @@
 import {
     Avatar,
     Button,
+    InputBase,
     ListItem,
     ListItemAvatar,
     ListItemText,
@@ -38,19 +39,14 @@ export default function CartProduct(props) {
                 primary={props.product.s_id}
                 style={{ marginRight: "1rem" }}
             />
-            <TextField
-                disabled
-                id="quantity field"
-                type="number"
-                defaultValue={props.quantity}
+            <InputBase
+                defaultValue={1}
+                value={props.quantity}
                 inputProps={{
-                    min: "1",
-                    style: { textAlign: "center" },
-                }}
-                style={{
-                    minWidth: 20,
-                    maxWidth: 50,
-                    maxHeight: 30,
+                    "aria-label": "naked",
+                    style: {
+                        textAlign: "center",
+                    },
                 }}
             />
             <Button onClick={handleCartProductDelete}>

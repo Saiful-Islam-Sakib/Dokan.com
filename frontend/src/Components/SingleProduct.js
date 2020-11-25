@@ -8,6 +8,7 @@ import {
     Container,
     Divider,
     Grid,
+    InputBase,
     Link,
     makeStyles,
     OutlinedInput,
@@ -15,10 +16,7 @@ import {
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import TabSingleProduct from "./TabSingleProduct";
-
-import i1 from "../image/fresh_chinigura.png";
-import i2 from "../image/miniket_rice.png";
-import i3 from "../image/Najirshail_rice.png";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,13 +40,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-let selectedProduct = JSON.parse(sessionStorage.getItem("selectedProduct"));
-console.log(selectedProduct);
-
 export default function SingleProduct() {
     const classes = useStyles();
+    const fullStore = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    const selectedProduct = fullStore.selectedProduct;
+
     const [value, setValue] = React.useState(1);
-    const [selectedImage, setImage] = React.useState(i1);
+    const [selectedImage, setImage] = React.useState(
+        selectedProduct.img.slice(2, selectedProduct.img.length)
+    );
 
     const handleChange = () => (event) => {
         setValue(event.target.value);
@@ -65,9 +67,17 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={i1}
+                                        image={selectedProduct.img.slice(
+                                            2,
+                                            selectedProduct.img.length
+                                        )}
                                         onClick={() => {
-                                            setImage(i1);
+                                            setImage(
+                                                selectedProduct.img.slice(
+                                                    2,
+                                                    selectedProduct.img.length
+                                                )
+                                            );
                                         }}
                                     />
                                 </CardContent>
@@ -79,9 +89,17 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={i2}
+                                        image={selectedProduct.img.slice(
+                                            2,
+                                            selectedProduct.img.length
+                                        )}
                                         onClick={() => {
-                                            setImage(i2);
+                                            setImage(
+                                                selectedProduct.img.slice(
+                                                    2,
+                                                    selectedProduct.img.length
+                                                )
+                                            );
                                         }}
                                     />
                                 </CardContent>
@@ -93,9 +111,17 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={i3}
+                                        image={selectedProduct.img.slice(
+                                            2,
+                                            selectedProduct.img.length
+                                        )}
                                         onClick={() => {
-                                            setImage(i3);
+                                            setImage(
+                                                selectedProduct.img.slice(
+                                                    2,
+                                                    selectedProduct.img.length
+                                                )
+                                            );
                                         }}
                                     />
                                 </CardContent>
@@ -133,11 +159,16 @@ export default function SingleProduct() {
                                     </Link>
                                 </Typography>
                                 <div style={{ display: "flex" }}>
-                                    {/* <Typography variant="h6"> */}
-                                    {/* 4.4 */}
-                                    {/* rating thik korte hobe rating field nai database a  */}
-                                    {/* {selectedProduct.rating} */}
-                                    {/* </Typography> */}
+                                    {/* this is not normal rating rather than average rating */}
+                                    <Typography
+                                        variant="inherit"
+                                        component="h3"
+                                    >
+                                        {selectedProduct.rating
+                                            ? selectedProduct.rating
+                                            : 0}
+                                    </Typography>
+
                                     <div
                                         style={{
                                             display: "flex",
@@ -147,7 +178,11 @@ export default function SingleProduct() {
                                     <Rating
                                         name="read-only"
                                         //value={selectedProduct.rating} // avg of star that rounds automatically
-                                        value={4.4}
+                                        value={
+                                            selectedProduct.rating
+                                                ? selectedProduct.rating
+                                                : 0
+                                        }
                                         readOnly
                                         precision={0.5}
                                         max={5}
@@ -157,16 +192,21 @@ export default function SingleProduct() {
                                     <Divider></Divider>
                                 </div>
                                 <Typography variant="body2" component="p">
-                                    product details
-                                    {/* product details thik kora lagbe, product detals field nai database a */}
-                                    {selectedProduct.productDetails}
-                                    <br />
+                                    {selectedProduct.productDetails
+                                        ? selectedProduct.productDetails
+                                        : selectedProduct.name}
                                 </Typography>
+                                <div style={{ marginBottom: 10 }}></div>
                                 <Typography variant="h6" component="h2">
                                     Price : {selectedProduct.price + " tk"}
                                 </Typography>
                             </CardContent>
-                            <CardContent style={{ display: "flex" }}>
+                            <CardContent
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
                                 <Button
                                     id="add"
                                     variant="outlined"
@@ -176,17 +216,25 @@ export default function SingleProduct() {
                                 >
                                     +
                                 </Button>
-                                <OutlinedInput
-                                    id="outlined-adornment-amount"
-                                    defaultValue={1}
-                                    type="number"
-                                    inputProps={{
-                                        min: 1,
-                                        style: { textAlign: "center" },
+                                <div
+                                    style={{
+                                        padding: 0,
+                                        margin: 0,
+                                        border: "1px solid gray",
+                                        borderRadius: "5px",
                                     }}
-                                    value={value}
-                                    onChange={handleChange()}
-                                />
+                                >
+                                    <InputBase
+                                        defaultValue={1}
+                                        value={value}
+                                        inputProps={{
+                                            "aria-label": "naked",
+                                            style: {
+                                                textAlign: "center",
+                                            },
+                                        }}
+                                    />
+                                </div>
                                 <Button
                                     id="sub"
                                     variant="outlined"
@@ -205,6 +253,14 @@ export default function SingleProduct() {
                                     fullWidth
                                     type="submit"
                                     color="primary"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: "ADD_TO_CART",
+                                            item: selectedProduct,
+                                            quantity: value,
+                                        });
+                                        setValue(1);
+                                    }}
                                 >
                                     Add to Cart
                                 </Button>
@@ -213,6 +269,7 @@ export default function SingleProduct() {
                     </Grid>
                 </Grid>
             </div>
+            {/* pass commnt of the product using props to TabSingleProduct */}
             <TabSingleProduct></TabSingleProduct>
         </Container>
     );

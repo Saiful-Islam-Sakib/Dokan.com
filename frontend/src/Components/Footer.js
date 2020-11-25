@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         alignItems: "center",
         minHeight: 60,
-        marginTop: "20%",
+        marginTop: 200,
     },
 }));
 

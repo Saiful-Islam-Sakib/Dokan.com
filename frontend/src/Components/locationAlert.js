@@ -12,6 +12,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import { useHistory } from "react-router-dom";
 
 const styles = (theme) => ({
     root: {
@@ -62,20 +63,25 @@ const locations = [
         city: "Dhaka",
         zone: [
             { area: "Uttara", place: ["Sector 4", "Sector 8", "Sector 10"] },
-            { area: "Mirpur", place: ["Sector 5", "Sector 8", "Sector 9"] },
+            {
+                area: "Mirpur",
+                place: ["Sector 5", "Sector 8", "Sector 9"],
+            },
             { area: "Bashundhara", place: ["Block A", "Block B", "Block C"] },
         ],
     },
-    { city: "Chittagong", area: {}, place: {} },
-    { city: "Rajshahi", area: {}, place: {} },
-    { city: "Sylhet", area: {}, place: {} },
-    { city: "Khulna", area: {}, place: {} },
-    { city: "Barishal", area: {}, place: {} },
-    { city: "Mymensingh", area: {}, place: {} },
-    { city: "Rangpur", area: {}, place: {} },
+    // { city: "Chittagong", area: {}, place: {} },
+    // { city: "Rajshahi", area: {}, place: {} },
+    // { city: "Sylhet", area: {}, place: {} },
+    // { city: "Khulna", area: {}, place: {} },
+    // { city: "Barishal", area: {}, place: {} },
+    // { city: "Mymensingh", area: {}, place: {} },
+    // { city: "Rangpur", area: {}, place: {} },
 ];
 
 export default function CustomizedDialogs() {
+    const history = useHistory();
+
     const [open, setOpen] = React.useState(
         sessionStorage.city !== undefined &&
             sessionStorage.area !== undefined &&
@@ -83,6 +89,7 @@ export default function CustomizedDialogs() {
             ? false
             : true
     );
+
     const [areaName, setArea] = React.useState([]);
     const [placeName, setPlace] = React.useState([]);
 
@@ -95,11 +102,33 @@ export default function CustomizedDialogs() {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    const handleClose = () => {
-        if (city.length > 0 && area.length > 0 && place.length > 0) {
-            // ekhane products fetch kore anba ***************************************************************************************************************
+
+    const handleClose = async (event) => {
+        const res = await fetch(
+            "http://localhost:5000/dokan.com/products/ploc",
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    city: city,
+                    area: area,
+                    place: place,
+                }),
+            }
+        );
+        const data = await res.json();
+
+        if (
+            city.length > 0 &&
+            area.length > 0 &&
+            place.length > 0 &&
+            res.status == 200
+        ) {
+            sessionStorage.setItem("allProduct", JSON.stringify(data.product));
             setOpen(false);
             seterror(false);
+
+            history.push("/");
         } else {
             seterror(true);
         }

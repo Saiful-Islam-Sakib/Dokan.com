@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import SmallCard from "./SmallCard";
 import { Button, CardActions, Typography } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -19,7 +21,16 @@ const useStyles = makeStyles({
 });
 
 export default function OutlinedCard() {
+    const fullStore = useSelector((store) => store.auth);
+    const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
+
+    useEffect(() => {
+        dispatch({
+            type: "HEALTH_CARE_CAT",
+        });
+    }, []);
 
     return (
         <div style={{ marginBottom: 50 }}>
@@ -28,14 +39,9 @@ export default function OutlinedCard() {
             </Typography>
             <Card>
                 <Card className={classes.root} variant="outlined">
-                    {/* 7 ta eliment show hobe er beshi na */}
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
-                    <SmallCard></SmallCard>
+                    {fullStore.healthCareCat?.map((product, index) => (
+                        <SmallCard product={product} key={index}></SmallCard>
+                    ))}
                 </Card>
                 <CardActions
                     style={{
@@ -43,7 +49,25 @@ export default function OutlinedCard() {
                         justifyContent: "flex-end",
                     }}
                 >
-                    <Button size="small">more</Button>
+                    <Button
+                        size="small"
+                        onclick={() => {
+                            let selectedCategoryProducts = JSON.parse(
+                                sessionStorage.getItem("allProduct")
+                            ).filter((p) => p.category == "healthCare");
+
+                            dispatch({
+                                type: "SELECTED_SUB_CAT_PRODUCT",
+                                product: selectedCategoryProducts,
+                            });
+
+                            if (selectedCategoryProducts.length > 0) {
+                                history.push("/productList");
+                            }
+                        }}
+                    >
+                        more
+                    </Button>
                 </CardActions>
             </Card>
         </div>

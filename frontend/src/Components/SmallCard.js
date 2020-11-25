@@ -5,34 +5,49 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const innerCardStyle = makeStyles({
     root: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
-        maxWidth: 345,
+        maxWidth: 150,
         margin: 10,
     },
     media: {
         height: 150,
+        objectFit: "fill",
     },
 });
 
-export default function SmallCard() {
+export default function SmallCard({ product }) {
     const classes2 = innerCardStyle();
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleSmallCard = () => {
+        dispatch({
+            type: "SELECTED_PRODUCT",
+            product: product,
+        });
+
+        history.push("/singleProduct");
+    };
 
     return (
         <Card className={classes2.root} variant="outlined">
-            <CardActionArea>
+            <CardActionArea onClick={handleSmallCard}>
                 <CardMedia
+                    component="img"
                     className={classes2.media}
-                    image="https://image.freepik.com/free-vector/reusable-fabric-eco-friendly-bag-with-groceries-inside-bread-tomatoes-pumpkin_1268-15177.jpg"
+                    image={product.img}
                     title="Contemplative Reptile"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="caption" align="center">
-                        name of the product
+                        {product.name}
                     </Typography>
                     <Typography
                         variant="body2"
@@ -40,7 +55,7 @@ export default function SmallCard() {
                         component="p"
                         align="center"
                     >
-                        $100
+                        {product.price + " tk"}
                     </Typography>
                 </CardContent>
             </CardActionArea>
