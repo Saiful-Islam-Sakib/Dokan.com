@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import SmallCard from "./SmallCard";
 import { Button, CardActions, Typography } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -20,6 +22,10 @@ const useStyles = makeStyles({
 
 export default function OutlinedCard() {
     const classes = useStyles();
+    const fullStore = useSelector((store) => store.auth);
+    const dispatch = useDispatch();
+
+    const history = useHistory();
 
     return (
         <div style={{ marginBottom: 50 }}>
@@ -42,7 +48,23 @@ export default function OutlinedCard() {
                         justifyContent: "flex-end",
                     }}
                 >
-                    <Button size="small">more</Button>
+                    <Button
+                        size="small"
+                        onClick={() => {
+                            let selectedCategoryProducts = JSON.parse(
+                                sessionStorage.getItem("allProduct")
+                            ).filter((p) => p.category == "toiletries");
+
+                            dispatch({
+                                type: "SELECTED_SUB_CAT_PRODUCT",
+                                product: selectedCategoryProducts,
+                            });
+
+                            history.push("/productList");
+                        }}
+                    >
+                        more
+                    </Button>
                 </CardActions>
             </Card>
         </div>

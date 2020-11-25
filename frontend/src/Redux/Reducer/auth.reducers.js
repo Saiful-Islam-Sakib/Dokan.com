@@ -17,7 +17,7 @@ const initialState = {
     cart: [],
     quantity: [],
     selectedSubCatProduct: [],
-    selectedProduct: {},
+    selectedProduct: [],
 };
 
 export default (state = initialState, action) => {

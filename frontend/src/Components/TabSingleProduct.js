@@ -137,30 +137,7 @@ export default function FullWidthTabs() {
                                 <CardMedia
                                     className={classes.userAvatar}
                                     component="img"
-                                    image={avater}
-                                    title="Contemplative Reptile"
-                                />
-                            </CardContent>
-                        </Card>
-                        <Card style={{ flexGrow: 1 }}>
-                            <CardContent>
-                                <Typography variant="h5" component="h2">
-                                    User Name
-                                </Typography>
-                                <Typography variant="body2" component="p">
-                                    feel free to comment about anything of this
-                                    product................
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Box>
-                    <Box style={{ display: "flex", marginBottom: 16 }}>
-                        <Card style={{ marginRight: 16 }}>
-                            <CardContent>
-                                <CardMedia
-                                    className={classes.userAvatar}
-                                    component="img"
-                                    image={avater}
+                                    image={"/image/avater/1.png"}
                                     title="Contemplative Reptile"
                                 />
                             </CardContent>

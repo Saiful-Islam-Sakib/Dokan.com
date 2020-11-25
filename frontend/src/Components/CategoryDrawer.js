@@ -72,10 +72,6 @@ export default function TemporaryDrawer() {
                 type: "SELECTED_SUB_CAT_PRODUCT",
                 product: selectedSubCategoryProducts,
             });
-
-            // console.log(JSON.parse(sessionStorage.getItem("products")));
-            // console.log(selectedCategory);
-            //console.log(selectedSubCategoryProducts);
         }
     }, [selectedCategory]);
 

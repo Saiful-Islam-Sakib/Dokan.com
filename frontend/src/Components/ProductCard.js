@@ -68,7 +68,7 @@ export default function ProductCard(props) {
                 <CardMedia
                     component="img"
                     className={classes2.media}
-                    image={props.product.img}
+                    image={props.product.img.slice(2, props.product.img.length)}
                     title={props.product.name}
                 />
                 <CardContent>
@@ -94,7 +94,7 @@ export default function ProductCard(props) {
                         component="p"
                         align="center"
                     >
-                        {props.product.price}
+                        {props.product.price + " tk"}
                     </Typography>
                 </CardContent>
             </CardActionArea>

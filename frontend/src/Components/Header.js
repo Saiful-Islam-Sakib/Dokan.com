@@ -19,7 +19,7 @@ import CartList from "./CartList";
 import { Breadcrumbs } from "@material-ui/core";
 import LocationAlart from "./locationAlert";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     headerBackground: {
@@ -106,6 +106,7 @@ export default function PrimarySearchAppBar() {
     const secondHeaderClass = secondHeaderStyles();
 
     const fullStore = useSelector((store) => store.auth);
+    const dispatch = useDispatch();
 
     const history = useHistory();
 
@@ -427,16 +428,57 @@ export default function PrimarySearchAppBar() {
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link href="/">Home</Link>
                         <Link href="/about">About</Link>
-                    {/* </Breadcrumbs>
-                    <Divider
-                        orientation="vertical"
-                        flexItem
-                        variant="middle"
-                    ></Divider>
-                    <Breadcrumbs aria-label="breadcrumb"> */}
-                        <Link href="/consumerfood">Consumer_Food</Link>
-                        <Link href="/toiletries">Toiletries</Link>
-                        <Link href="/healthandcare">{"Health_&_care"}</Link>
+                        <Link
+                            href="#consumerFood"
+                            onClick={() => {
+                                let selectedCategoryProducts = JSON.parse(
+                                    sessionStorage.getItem("allProduct")
+                                ).filter((p) => p.category == "consumerFood");
+
+                                dispatch({
+                                    type: "SELECTED_SUB_CAT_PRODUCT",
+                                    product: selectedCategoryProducts,
+                                });
+
+                                history.push("/productList");
+                            }}
+                        >
+                            Consumer_Food
+                        </Link>
+                        <Link
+                            href="#toiletries"
+                            onClick={() => {
+                                let selectedCategoryProducts = JSON.parse(
+                                    sessionStorage.getItem("allProduct")
+                                ).filter((p) => p.category == "toiletries");
+
+                                dispatch({
+                                    type: "SELECTED_SUB_CAT_PRODUCT",
+                                    product: selectedCategoryProducts,
+                                });
+
+                                history.push("/productList");
+                            }}
+                        >
+                            Toiletries
+                        </Link>
+                        <Link
+                            href="#healthCare"
+                            onClick={() => {
+                                let selectedCategoryProducts = JSON.parse(
+                                    sessionStorage.getItem("allProduct")
+                                ).filter((p) => p.category == "healthCare");
+
+                                dispatch({
+                                    type: "SELECTED_SUB_CAT_PRODUCT",
+                                    product: selectedCategoryProducts,
+                                });
+
+                                history.push("/productList");
+                            }}
+                        >
+                            {"Health_&_care"}
+                        </Link>
                     </Breadcrumbs>
                 </Typography>
                 <Divider
@@ -447,7 +489,6 @@ export default function PrimarySearchAppBar() {
                     <LocationAlart></LocationAlart>
                 </Typography>
             </AppBar>
-            {/* <div style={{ height: 150, background: "#131921" }}></div> */}
             <div style={{ height: 150 }}></div>
             {renderMobileMenu}
             {renderMenu}
