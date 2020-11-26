@@ -167,6 +167,7 @@ export default function PrimarySearchAppBar() {
         } else if (sessionStorage.getItem("login") === "true") {
             sessionStorage.removeItem("login");
         }
+        window.location.reload(false);
     };
 
     const menuId = "primary-search-account-menu";

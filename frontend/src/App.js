@@ -68,13 +68,12 @@ function App() {
                         )}
                     </Route>
                     <Route exact path="/checkout">
-                        {/* {localStorage.getItem("login") === "true" ||
+                        {localStorage.getItem("login") === "true" ||
                         sessionStorage.getItem("login") === "true" ? (
                             <CheckOut></CheckOut>
                         ) : (
-                            <Body></Body>
-                        )} */}
-                        <CheckOut></CheckOut>
+                            <SignIn />
+                        )}
                     </Route>
                     <Route exact path="/UserProfile">
                         {/* {localStorage.getItem("login") === "true" ||
