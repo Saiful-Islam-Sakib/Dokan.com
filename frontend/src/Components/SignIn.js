@@ -14,7 +14,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { login } from "../Redux/Actions/index";
 
 function Copyright() {
@@ -61,7 +60,7 @@ function SignIn() {
     const [errorStatus, setErrorStatus] = React.useState(false);
     const [rememberMe, setRememberMe] = React.useState(false);
 
-    const handleSignIn = (event) => {
+    const handleSignIn = async (event) => {
         event.preventDefault();
 
         const user = {
@@ -69,14 +68,53 @@ function SignIn() {
             password: password,
         };
 
-        dispatch(login(user));
+        var res = "";
+        const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (user.email.match(mailformat)) {
+            res = await fetch(
+                "http://localhost:5000/dokan.com/customer/login",
+                {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({
+                        email: user.email,
+                        password: user.password,
+                    }),
+                }
+            );
+        } else {
+            res = await fetch(
+                "http://localhost:5000/dokan.com/customer/login",
+                {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({
+                        phone: user.email,
+                        password: user.password,
+                    }),
+                }
+            );
+        }
 
-        history.push("/");
+        if (res.status === 201) {
+            const data = await res.json();
+            dispatch({
+                type: "LOGIN_REQUEST",
+                payload: {
+                    user: data.msg,
+                    status: true,
+                },
+            });
+            localStorage.setItem("user", JSON.stringify(data.msg));
+            localStorage.setItem("login", true);
 
-        if (!localStorage.getItem("login")) {
+            history.push("/");
+        } else {
             setErrorStatus(true);
             setPassword("");
         }
+
+        window.location.reload(false);
     };
 
     return (

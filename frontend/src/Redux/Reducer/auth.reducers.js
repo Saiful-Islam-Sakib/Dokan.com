@@ -2,7 +2,6 @@
 import { authConstants } from "../Actions/Constants";
 
 const initialState = {
-    _init: "###   My Store   ##",
     user: {
         f_name: "",
         l_name: "",
@@ -21,11 +20,17 @@ const initialState = {
     consumerCat: [],
     healthCareCat: [],
     toiletriesCat: [],
+    searchCategory: "",
+    comment: [],
 };
 
 export default (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
+        case "SAVE_CURRENT_REDUX_STATE":
+            return {
+                ...state,
+            };
         case authConstants.LOGIN_REQUEST:
             return {
                 ...state,
@@ -79,9 +84,15 @@ export default (state = initialState, action) => {
                 selectedSubCatProduct: action.product,
             };
         case "SELECTED_PRODUCT":
+            let sortedComments = action.comment;
+            sortedComments.sort(function (a, b) {
+                return new Date(b.date) - new Date(a.date);
+            });
+
             return {
                 ...state,
                 selectedProduct: action.product,
+                comment: sortedComments,
             };
 
         case "CONSUMER_CAT":
@@ -105,6 +116,11 @@ export default (state = initialState, action) => {
                 ...state,
                 toiletriesCat: action.product,
             };
+        case "SEARCH_CATEGORY":
+            return {
+                ...state,
+                searchCategory: action.searchCategory,
+            };
         case "SEARCH":
             let searchForName = JSON.parse(
                 sessionStorage.getItem("allProduct")
@@ -112,11 +128,48 @@ export default (state = initialState, action) => {
 
             let searchForTag = JSON.parse(
                 sessionStorage.getItem("allProduct")
-            )?.filter((p) => p.tag.toLowerCase().includes(action.searchFor));
+            )?.filter((p) =>
+                p.tag.some((t) => t.toLowerCase().includes(action.searchFor))
+            );
+
+            let finalResult = searchForName.concat(searchForTag);
+            finalResult = [
+                ...new Map(
+                    finalResult.map((item) => [item["id"], item])
+                ).values(),
+            ];
+
+            if (state.searchCategory == "All") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult,
+                };
+            } else if (state.searchCategory == "consumerFood") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "consumerFood"
+                    ),
+                };
+            } else if (state.searchCategory == "toiletries") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "toiletries"
+                    ),
+                };
+            } else if (state.searchCategory == "healthCare") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "healthCare"
+                    ),
+                };
+            }
 
             return {
                 ...state,
-                //selectedSubCatProduct: searchFor,
+                selectedSubCatProduct: finalResult,
             };
         default:
             return state;

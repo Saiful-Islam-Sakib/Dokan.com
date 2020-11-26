@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputBase from "@material-ui/core/InputBase";
+import { useDispatch } from "react-redux";
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -28,7 +29,7 @@ const BootstrapInput = withStyles((theme) => ({
             '"Apple Color Emoji"',
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
-        ].join(",")
+        ].join(","),
     },
 }))(InputBase);
 
@@ -40,10 +41,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedSelects() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
     const [categories, setCategory] = React.useState("All");
+
+    useEffect(() => {
+        dispatch({
+            type: "SEARCH_CATEGORY",
+            searchCategory: categories,
+        });
+    }, [categories]);
+
     const handleChange = (event) => {
         setCategory(event.target.value);
     };
+
     return (
         <div>
             <FormControl className={classes.margin}>
@@ -58,8 +70,8 @@ export default function CustomizedSelects() {
                 >
                     <MenuItem value={"All"}>All</MenuItem>
                     <MenuItem value={"consumerFood"}>Consumer food</MenuItem>
-                    <MenuItem value={"toletries"}>Toletries</MenuItem>
-                    <MenuItem value={"health&Care"}>Health & Care</MenuItem>
+                    <MenuItem value={"toiletries"}>Toletries</MenuItem>
+                    <MenuItem value={"healthCare"}>{"Health & Care"}</MenuItem>
                 </Select>
             </FormControl>
         </div>
