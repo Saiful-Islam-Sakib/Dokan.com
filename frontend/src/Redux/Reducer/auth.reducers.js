@@ -175,6 +175,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 cart: [],
+                quantity: [],
             };
         default:
             return state;

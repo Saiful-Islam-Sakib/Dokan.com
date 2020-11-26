@@ -8,7 +8,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddressForm from "./AddressForm";
 import Review from "./Review";
 
@@ -77,6 +77,7 @@ function getStepContent(step) {
 
 export default function Checkout() {
     const classes = useStyles();
+    const fullStore = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const [activeStep, setActiveStep] = React.useState(0);
@@ -84,12 +85,21 @@ export default function Checkout() {
     const handleNext = () => {
         setActiveStep(activeStep + 1);
 
-        if (activeStep == 2) {
-            /// checkout ar kaj ekhane ********************************akhono kaj baki ase**************************main function ta likhe comment kore raikho*****************************
+        if (activeStep + 1 == 2) {
+            let userId = JSON.parse(localStorage.getItem("user"))._id;
+            let quantity = fullStore.quantity;
+            let productName = fullStore.cart.map((p) => p.name);
+            let productId = fullStore.cart.map((p) => p.id);
+            let amount = fullStore.cart
+                .map((p) => p.price)
+                .map((p, index) => fullStore.quantity[index] * p);
 
-            dispatch({
-                type: "CHECKOUT",
-            });
+            // ekhane kaj kora lagbe.......kono probelm hoile comment kore rakho.....
+            // just console log kore raikho......
+
+            // dispatch({
+            //     type: "CHECKOUT",
+            // });
         }
     };
 

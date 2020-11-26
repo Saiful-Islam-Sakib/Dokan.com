@@ -134,8 +134,6 @@ export default function PrimarySearchAppBar() {
     };
 
     const onChangeSearchbar = (event) => {
-        //console.log(event.target.value);
-        // use this if you want to srearch as user types....
         dispatch({
             type: "SEARCH",
             searchFor: event.target.value.toLowerCase(),
@@ -164,9 +162,14 @@ export default function PrimarySearchAppBar() {
         handleMenuClose();
         if (localStorage.getItem("login") === "true") {
             localStorage.removeItem("login");
+            localStorage.removeItem("user");
         } else if (sessionStorage.getItem("login") === "true") {
             sessionStorage.removeItem("login");
+            sessionStorage.removeItem("user");
         }
+
+        history.push("/");
+
         window.location.reload(false);
     };
 
@@ -297,9 +300,12 @@ export default function PrimarySearchAppBar() {
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
                         <Link
-                            href="/"
+                            href="#logo"
                             className={classes.logoLink}
                             style={{ textDecoration: "none" }}
+                            onClick={() => {
+                                history.push("/");
+                            }}
                         >
                             Dokan.com
                         </Link>
