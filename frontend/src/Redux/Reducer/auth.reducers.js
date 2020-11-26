@@ -22,6 +22,7 @@ const initialState = {
     healthCareCat: [],
     toiletriesCat: [],
     searchCategory: "",
+    comment: [],
 };
 
 export default (state = initialState, action) => {
@@ -80,9 +81,15 @@ export default (state = initialState, action) => {
                 selectedSubCatProduct: action.product,
             };
         case "SELECTED_PRODUCT":
+            let sortedComments = action.comment;
+            sortedComments.sort(function (a, b) {
+                return new Date(b.date) - new Date(a.date);
+            });
+
             return {
                 ...state,
                 selectedProduct: action.product,
+                comment: sortedComments,
             };
 
         case "CONSUMER_CAT":

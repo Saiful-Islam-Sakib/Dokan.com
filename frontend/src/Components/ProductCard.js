@@ -35,9 +35,6 @@ export default function ProductCard(props) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    //const fullStore = useSelector((store) => store.auth);
-    //console.log(fullStore);
-
     const [value, setValue] = React.useState(1);
 
     const handleAddToCart = (event) => {
@@ -56,22 +53,24 @@ export default function ProductCard(props) {
                     display: "flex",
                     flexDirection: "column",
                 }}
-                onClick={async event => {
-                    // ekhane *************************************************************************************************************
+                onClick={async (event) => {
                     event.preventDefault();
-                    const pid = props.product.id;
-                    try{
-                        const res = await fetch('http://localhost:5000/dokan.com/products/productdetails/'+pid);
+
+                    try {
+                        const res = await fetch(
+                            "http://localhost:5000/dokan.com/products/productdetails/" +
+                                props.product.id
+                        );
                         const data = await res.json();
-                        console.log(data);
-                    }catch(err){
+
+                        dispatch({
+                            type: "SELECTED_PRODUCT",
+                            product: props.product,
+                            comment: data.data.comments,
+                        });
+                    } catch (err) {
                         console.log(err);
                     }
-
-                    dispatch({
-                        type: "SELECTED_PRODUCT",
-                        product: props.product,
-                    });
 
                     history.push("/singleProduct");
                 }}
@@ -87,8 +86,7 @@ export default function ProductCard(props) {
                         {props.product.name}
                     </Typography>
                     <Typography variant="caption" component="p" align="center">
-                        {props.product.s_id}
-                        {/* fetch seller name from seller id => s_id */}
+                        {props.product.shop_name}
                     </Typography>
                     <Typography align="center">
                         <Rating

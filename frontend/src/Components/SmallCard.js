@@ -27,11 +27,24 @@ export default function SmallCard({ product }) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const handleSmallCard = () => {
-        dispatch({
-            type: "SELECTED_PRODUCT",
-            product: product,
-        });
+    const handleSmallCard = async (event) => {
+        event.preventDefault();
+
+        try {
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/products/productdetails/" +
+                    product.id
+            );
+            const data = await res.json();
+
+            dispatch({
+                type: "SELECTED_PRODUCT",
+                product: product,
+                comment: data.data.comments,
+            });
+        } catch (err) {
+            console.log(err);
+        }
 
         history.push("/singleProduct");
     };

@@ -49,7 +49,7 @@ export default function SingleProduct() {
 
     const [value, setValue] = React.useState(1);
     const [selectedImage, setImage] = React.useState(
-        selectedProduct.img.slice(2, selectedProduct.img.length)
+        selectedProduct.img?.slice(2, selectedProduct.img.length)
     );
 
     const handleChange = () => (event) => {
@@ -269,7 +269,7 @@ export default function SingleProduct() {
                     </Grid>
                 </Grid>
             </div>
-            {/* pass commnt of the product using props to TabSingleProduct */}
+
             <TabSingleProduct></TabSingleProduct>
         </Container>
     );

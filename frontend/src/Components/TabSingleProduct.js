@@ -8,16 +8,11 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
-import {
-    Button,
-    Card,
-    CardContent,
-    CardMedia,
-    OutlinedInput,
-    TextField,
-} from "@material-ui/core";
+import { Button, OutlinedInput, TextField } from "@material-ui/core";
 
 import avater from "../image/fresh_chinigura.png";
+import { useSelector } from "react-redux";
+import SingleComment from "./SingleComment";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -57,16 +52,14 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         width: "100%",
     },
-    userAvatar: {
-        maxHeight: 100,
-        maxWidth: 100,
-        objectFit: "fill",
-    },
 }));
 
 export default function FullWidthTabs() {
     const classes = useStyles();
     const theme = useTheme();
+
+    const fullStore = useSelector((state) => state.auth);
+
     const [value, setValue] = React.useState(0);
     const [RatingValue, setRatingValue] = React.useState(4);
 
@@ -131,29 +124,12 @@ export default function FullWidthTabs() {
 
                     <div style={{ margin: 16 }}></div>
 
-                    <Box style={{ display: "flex", marginBottom: 16 }}>
-                        <Card style={{ marginRight: 16 }}>
-                            <CardContent>
-                                <CardMedia
-                                    className={classes.userAvatar}
-                                    component="img"
-                                    image={"/image/avater/1.png"}
-                                    title="Contemplative Reptile"
-                                />
-                            </CardContent>
-                        </Card>
-                        <Card style={{ flexGrow: 1 }}>
-                            <CardContent>
-                                <Typography variant="h5" component="h2">
-                                    User Name
-                                </Typography>
-                                <Typography variant="body2" component="p">
-                                    feel free to comment about anything of this
-                                    product................
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Box>
+                    {fullStore.comment?.map((comment, index) => (
+                        <SingleComment
+                            key={index}
+                            comment={comment}
+                        ></SingleComment>
+                    ))}
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     <Typography component="legend" style={{ marginBottom: 8 }}>
