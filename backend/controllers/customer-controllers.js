@@ -242,6 +242,22 @@ const commentOnproduct = async(req,res,next) =>{
     res.status(201).json({data : 'Your comment was posted'});
 };
 
+const Search = async(req,res,next) =>{
+    const name = req.params.name;
+    let result;
+    try{
+        //result = await product.find({name : {$regex : name , $options: "si" }});
+        //result = await product.aggregate([{$match : { name : name }}]);
+        //result = await product.aggregate([{$regexMatch: { input: "$name", regex: /shaad/ ,options:"i"}}]);
+        //result = await product.aggregate().match({name : name}).pipeline();
+        console.log('here');
+    }catch(err){
+        const erro = new httpError('Something went wrong',403);
+        return next(erro);
+    }
+    res.status(201).json({msg : result}); 
+};
+
 exports.customerinfo = customerinfo;
 exports.customerSignup = customerSignup;
 exports.updatecustomer = updatecustomer;
@@ -249,3 +265,4 @@ exports.deletecustomer = deletecustomer;
 exports.customerLogin = customerLogin;
 exports.changePassword = changePassword;
 exports.commentOnproduct = commentOnproduct;
+exports.Search = Search;
