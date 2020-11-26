@@ -36,4 +36,6 @@ router.get('/customerdetails/:id',customerController.customerinfo);
 router.post('/product/comment',[check('body').not().isEmpty(),check('body').isLength({min:3})],customerController.commentOnproduct);
 
 
+router.get('/Search/:name',customerController.Search);
+
 module.exports = router;
