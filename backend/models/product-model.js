@@ -11,7 +11,8 @@ const productSchema = new mongo.Schema({
     tag : [{type:String,required:true}],
     s_id : {type: mongo.Types.ObjectId,required:true, ref : 'Seller'},
     img : {type:String,required:true},
-    offer_price :{type:Number, default:''}
+    offer_price :{type:Number, default:''},
+    comments:[{type:mongo.Types.ObjectId, ref: 'Comment'}]
 });
 
 module.exports = mongo.model('Product',productSchema);

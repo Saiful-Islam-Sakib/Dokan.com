@@ -1,6 +1,8 @@
 const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const customer = require('../models/customer-model');
+const product = require('../models/product-model');
+const comment = require('../models/comment-model');
 const mongo = require('mongoose');
 
 
@@ -195,9 +197,55 @@ const customerLogin = async(req,res,next) => {
     }
 };
 
+const commentOnproduct = async(req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Something wrong in Comment',422);
+    }
+    const {p_id,user_id,body} = req.body;
+    let productexist;
+    try{
+        productexist = await product.findById(p_id);
+    }catch(err){
+        const erro = new httpError('Something went wrong on product',404);
+        return next(erro);
+    }
+    if(!productexist){
+        const erro = new httpError('Product not exist',500);
+        return next(erro);
+    }
+    let customerexist;
+    try{
+        customerexist = await customer.findById(user_id);
+    }catch(err){
+        const erro = new httpError('Something went wrong on customer',404);
+        return next(erro);
+    }
+    if(!customerexist){
+        const erro = new httpError('Customer not exist',500);
+        return next(erro);
+    }
+    const name = customerexist.f_name + ' '+ customerexist.l_name;
+    const createNewComment = new comment({p_id,user_id,name,body});
+    try{
+        const session = await mongo.startSession();
+        session.startTransaction();
+        await createNewComment.save({session: session});
+        productexist.comments.push(createNewComment);
+        await productexist.save({session: session});
+        await session.commitTransaction();
+    }catch(err){
+        const erro = new httpError('Could not comment on product',403);
+        return next(erro);
+    }
+    res.status(201).json({data : 'Your comment was posted'});
+};
+
 exports.customerinfo = customerinfo;
 exports.customerSignup = customerSignup;
 exports.updatecustomer = updatecustomer;
 exports.deletecustomer = deletecustomer;
 exports.customerLogin = customerLogin;
 exports.changePassword = changePassword;
+exports.commentOnproduct = commentOnproduct;

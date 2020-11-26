@@ -56,8 +56,17 @@ export default function ProductCard(props) {
                     display: "flex",
                     flexDirection: "column",
                 }}
-                onClick={() => {
+                onClick={async event => {
                     // ekhane *************************************************************************************************************
+                    event.preventDefault();
+                    const pid = props.product.id;
+                    try{
+                        const res = await fetch('http://localhost:5000/dokan.com/products/productdetails/'+pid);
+                        const data = await res.json();
+                        console.log(data);
+                    }catch(err){
+                        console.log(err);
+                    }
 
                     dispatch({
                         type: "SELECTED_PRODUCT",
