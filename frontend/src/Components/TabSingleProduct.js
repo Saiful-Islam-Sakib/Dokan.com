@@ -78,7 +78,7 @@ export default function FullWidthTabs() {
         // comment sending functionality hear......
 
         // comment box: commentBox
-        // user id : fullStore.user._id
+        // user id : JSON.parse(localStorage.getItem("user"))._id
         // product id: fullStore.selectedProduct
     };
 
