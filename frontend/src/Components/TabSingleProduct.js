@@ -62,6 +62,7 @@ export default function FullWidthTabs() {
 
     const [value, setValue] = React.useState(0);
     const [RatingValue, setRatingValue] = React.useState(4);
+    const [commentBox, setCommentBox] = React.useState("");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -69,6 +70,13 @@ export default function FullWidthTabs() {
 
     const handleChangeIndex = (index) => {
         setValue(index);
+    };
+
+    const handleCommentSend = (event) => {
+        event.preventDefault();
+
+        // comment sending functionality hear......
+
     };
 
     return (
@@ -105,6 +113,9 @@ export default function FullWidthTabs() {
                             rows={5}
                             variant="outlined"
                             style={{ marginBottom: 8 }}
+                            onChange={(event) => {
+                                setCommentBox(event.target.value);
+                            }}
                         />
                         <div
                             style={{
@@ -116,6 +127,7 @@ export default function FullWidthTabs() {
                                 variant="contained"
                                 type="submit"
                                 color="primary"
+                                onClick={handleCommentSend}
                             >
                                 Send
                             </Button>
