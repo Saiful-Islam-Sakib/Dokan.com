@@ -134,22 +134,24 @@ export default function PrimarySearchAppBar() {
     };
 
     const onChangeSearchbar = (event) => {
-        console.log(event.target.value);
+        //console.log(event.target.value);
         // use this if you want to srearch as user types....
+        dispatch({
+            type: "SEARCH",
+            searchFor: event.target.value.toLowerCase(),
+        });
     };
 
     const onkeydownSearch = (event) => {
         if (event.key == "Enter" && event.target.value.length > 0) {
             console.log("Search : " + event.target.value);
 
-            if (event.target.value.length > 0) {
-                dispatch({
-                    type: "SEARCH",
-                    searchFor: event.target.value.toLowerCase(),
-                });
+            dispatch({
+                type: "SEARCH",
+                searchFor: event.target.value.toLowerCase(),
+            });
 
-                history.push("/ProductList");
-            }
+            history.push("/ProductList");
         }
     };
 

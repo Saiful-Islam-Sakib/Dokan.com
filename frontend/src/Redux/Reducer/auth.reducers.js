@@ -21,6 +21,7 @@ const initialState = {
     consumerCat: [],
     healthCareCat: [],
     toiletriesCat: [],
+    searchCategory: "",
 };
 
 export default (state = initialState, action) => {
@@ -105,6 +106,11 @@ export default (state = initialState, action) => {
                 ...state,
                 toiletriesCat: action.product,
             };
+        case "SEARCH_CATEGORY":
+            return {
+                ...state,
+                searchCategory: action.searchCategory,
+            };
         case "SEARCH":
             let searchForName = JSON.parse(
                 sessionStorage.getItem("allProduct")
@@ -112,11 +118,48 @@ export default (state = initialState, action) => {
 
             let searchForTag = JSON.parse(
                 sessionStorage.getItem("allProduct")
-            )?.filter((p) => p.tag.toLowerCase().includes(action.searchFor));
+            )?.filter((p) =>
+                p.tag.some((t) => t.toLowerCase().includes(action.searchFor))
+            );
+
+            let finalResult = searchForName.concat(searchForTag);
+            finalResult = [
+                ...new Map(
+                    finalResult.map((item) => [item["id"], item])
+                ).values(),
+            ];
+
+            if (state.searchCategory == "All") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult,
+                };
+            } else if (state.searchCategory == "consumerFood") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "consumerFood"
+                    ),
+                };
+            } else if (state.searchCategory == "toiletries") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "toiletries"
+                    ),
+                };
+            } else if (state.searchCategory == "healthCare") {
+                return {
+                    ...state,
+                    selectedSubCatProduct: finalResult.filter(
+                        (p) => p.category == "healthCare"
+                    ),
+                };
+            }
 
             return {
                 ...state,
-                //selectedSubCatProduct: searchFor,
+                selectedSubCatProduct: finalResult,
             };
         default:
             return state;

@@ -132,6 +132,8 @@ export default function CustomizedDialogs() {
         } else {
             seterror(true);
         }
+
+        window.location.reload(false);
     };
 
     return (

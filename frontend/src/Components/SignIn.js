@@ -14,7 +14,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { login } from "../Redux/Actions/index";
 
 function Copyright() {
@@ -70,7 +69,7 @@ function SignIn() {
         };
 
         dispatch(login(user));
-
+        window.location.reload(false);
         history.push("/");
 
         if (!localStorage.getItem("login")) {
