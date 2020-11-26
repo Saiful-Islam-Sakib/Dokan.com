@@ -171,6 +171,11 @@ export default (state = initialState, action) => {
                 ...state,
                 selectedSubCatProduct: finalResult,
             };
+        case "CHECKOUT":
+            return {
+                ...state,
+                cart: [],
+            };
         default:
             return state;
     }
