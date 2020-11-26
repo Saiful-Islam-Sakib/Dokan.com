@@ -8,6 +8,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import { useDispatch } from "react-redux";
 import AddressForm from "./AddressForm";
 import Review from "./Review";
 
@@ -76,10 +77,20 @@ function getStepContent(step) {
 
 export default function Checkout() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
+
+        if (activeStep == 2) {
+            /// checkout ar kaj ekhane ********************************akhono kaj baki ase**************************main function ta likhe comment kore raikho*****************************
+
+            dispatch({
+                type: "CHECKOUT",
+            });
+        }
     };
 
     const handleBack = () => {
