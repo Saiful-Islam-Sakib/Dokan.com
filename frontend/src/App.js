@@ -13,6 +13,7 @@ import ProductList from "./Components/ProductList";
 import SignleProduct from "./Components/SingleProduct";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ContactUs from "./Components/ContactUs";
 
 function App() {
     return (
@@ -89,6 +90,9 @@ function App() {
                     </Route>
                     <Route exact path="/singleProduct">
                         <SignleProduct></SignleProduct>
+                    </Route>
+                    <Route exact path="/contactUs">
+                        <ContactUs></ContactUs>
                     </Route>
                 </Switch>
                 <Footer></Footer>

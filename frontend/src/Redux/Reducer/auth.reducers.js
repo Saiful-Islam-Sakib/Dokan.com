@@ -2,7 +2,6 @@
 import { authConstants } from "../Actions/Constants";
 
 const initialState = {
-    _init: "###   My Store   ##",
     user: {
         f_name: "",
         l_name: "",
@@ -28,6 +27,10 @@ const initialState = {
 export default (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
+        case "SAVE_CURRENT_REDUX_STATE":
+            return {
+                ...state,
+            };
         case authConstants.LOGIN_REQUEST:
             return {
                 ...state,

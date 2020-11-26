@@ -67,7 +67,7 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={selectedProduct.img.slice(
+                                        image={selectedProduct.img?.slice(
                                             2,
                                             selectedProduct.img.length
                                         )}
@@ -89,7 +89,7 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={selectedProduct.img.slice(
+                                        image={selectedProduct.img?.slice(
                                             2,
                                             selectedProduct.img.length
                                         )}
@@ -111,7 +111,7 @@ export default function SingleProduct() {
                                     <CardMedia
                                         component="img"
                                         className={classes.cardMedia}
-                                        image={selectedProduct.img.slice(
+                                        image={selectedProduct.img?.slice(
                                             2,
                                             selectedProduct.img.length
                                         )}
