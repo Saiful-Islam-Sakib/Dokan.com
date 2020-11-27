@@ -76,12 +76,15 @@ export default function FullWidthTabs() {
         event.preventDefault();
 
         // comment sending functionality hear......
+
         try{
             const res = await fetch('http://localhost:5000/dokan.com/customer/product/comment',{
                 method: 'POST', headers : {'Content-Type' : 'application/json'},
                 body :JSON.stringify(
                     {
-                        p_id = 'eikhane product id',user_id = 'eikhane customer id',body = 'eikhane comment er ta'
+                        p_id : fullStore.selectedProduct,
+                        user_id : JSON.parse(localStorage.getItem("user"))._id,
+                        body : commentBox
                     }
                 )
             });
@@ -89,6 +92,12 @@ export default function FullWidthTabs() {
         }catch(err){
             console.log(err);
         }
+
+
+        // comment box: commentBox
+        // user id : JSON.parse(localStorage.getItem("user"))._id
+        // product id: fullStore.selectedProduct
+
     };
 
     return (

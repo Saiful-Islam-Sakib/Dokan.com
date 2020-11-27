@@ -117,23 +117,24 @@ export default function CustomizedDialogs() {
             }
         );
         const data = await res.json();
-
+        
         if (
             city.length > 0 &&
             area.length > 0 &&
             place.length > 0 &&
-            res.status == 200
+            res.status === 200
         ) {
             sessionStorage.setItem("allProduct", JSON.stringify(data.product));
             setOpen(false);
             seterror(false);
 
             history.push("/");
+            window.location.reload(false);
         } else {
             seterror(true);
         }
 
-        window.location.reload(false);
+        //window.location.reload(false);
     };
 
     return (

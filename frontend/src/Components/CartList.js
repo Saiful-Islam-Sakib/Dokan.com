@@ -124,7 +124,11 @@ export default function AlertDialog() {
                         variant="outlined"
                         onClick={() => {
                             setOpen(false);
-                            history.push("/checkout");
+                            if (localStorage.getItem("user")?.length > 0) {
+                                history.push("/checkout");
+                            } else {
+                                history.push("/signIn");
+                            }
                         }}
                     >
                         Checkout

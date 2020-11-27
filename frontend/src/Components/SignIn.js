@@ -113,8 +113,6 @@ function SignIn() {
             setErrorStatus(true);
             setPassword("");
         }
-
-        window.location.reload(false);
     };
 
     return (
