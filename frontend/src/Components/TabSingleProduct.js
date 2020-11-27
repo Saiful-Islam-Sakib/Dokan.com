@@ -72,11 +72,23 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
-    const handleCommentSend = (event) => {
+    const handleCommentSend = async event => {
         event.preventDefault();
 
         // comment sending functionality hear......
-
+        try{
+            const res = await fetch('http://localhost:5000/dokan.com/customer/product/comment',{
+                method: 'POST', headers : {'Content-Type' : 'application/json'},
+                body :JSON.stringify(
+                    {
+                        p_id = 'eikhane product id',user_id = 'eikhane customer id',body = 'eikhane comment er ta'
+                    }
+                )
+            });
+            const resonse = await res.json();
+        }catch(err){
+            console.log(err);
+        }
     };
 
     return (
