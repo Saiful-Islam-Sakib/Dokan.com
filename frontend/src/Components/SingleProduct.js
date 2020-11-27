@@ -155,7 +155,7 @@ export default function SingleProduct() {
                                 </Typography>
                                 <Typography color="textSecondary" gutterBottom>
                                     <Link href="#vendor" color="inherit">
-                                        by : {selectedProduct.s_id}
+                                        by : {selectedProduct.shop_name}
                                     </Link>
                                 </Typography>
                                 <div style={{ display: "flex" }}>
