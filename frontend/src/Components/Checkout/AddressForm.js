@@ -43,6 +43,12 @@ export default function AddressForm() {
                         label="Address"
                         fullWidth
                         autoComplete="shipping-address"
+                        onChange={(event) => {
+                            localStorage.setItem(
+                                "deliveryAddress",
+                                event.target.value
+                            );
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -56,10 +62,15 @@ export default function AddressForm() {
                                     if (defaultAddress) {
                                         setDefaultAddress(false);
                                     } else {
+                                        localStorage.setItem(
+                                            "deliveryAddress",
+                                            JSON.parse(
+                                                localStorage.getItem("user")
+                                            ).address
+                                        );
                                         setDefaultAddress(true);
                                     }
                                 }}
-                                // here we have to right a onclick function that will set the address as the default one
                             />
                         }
                         label="Use default address"

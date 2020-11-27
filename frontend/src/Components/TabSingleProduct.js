@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import Rating from "@material-ui/lab/Rating";
 import { Button, OutlinedInput, TextField } from "@material-ui/core";
 
 import avater from "../image/fresh_chinigura.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SingleComment from "./SingleComment";
 
 function TabPanel(props) {
@@ -59,10 +59,14 @@ export default function FullWidthTabs() {
     const theme = useTheme();
 
     const fullStore = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     const [value, setValue] = React.useState(0);
     const [RatingValue, setRatingValue] = React.useState(4);
     const [commentBox, setCommentBox] = React.useState("");
+    const [error, setError] = React.useState(false);
+    const [errormsg, setErrorMsg] = React.useState("");
+    const [reloadComment, setReloadComment] = React.useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -72,32 +76,64 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
-    const handleCommentSend = async event => {
-        event.preventDefault();
+    useEffect(() => {
+        async function fetchComment() {
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/products/productdetails/" +
+                        fullStore.selectedProduct.id
+                );
+                const data = await res.json();
 
-        // comment sending functionality hear......
-
-        try{
-            const res = await fetch('http://localhost:5000/dokan.com/customer/product/comment',{
-                method: 'POST', headers : {'Content-Type' : 'application/json'},
-                body :JSON.stringify(
-                    {
-                        p_id : fullStore.selectedProduct,
-                        user_id : JSON.parse(localStorage.getItem("user"))._id,
-                        body : commentBox
-                    }
-                )
-            });
-            const resonse = await res.json();
-        }catch(err){
-            console.log(err);
+                dispatch({
+                    type: "SELECTED_PRODUCT",
+                    product: fullStore.selectedProduct,
+                    comment: data.data.comments,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
+        fetchComment();
+        setReloadComment(false);
+    }, [reloadComment]);
 
+    const handleCommentSend = async (event) => {
+        setCommentBox("");
+        event.preventDefault();
+        if (JSON.parse(localStorage.getItem("user")) != null) {
+            if (commentBox.length >= 3) {
+                try {
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/customer/product/comment",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                p_id: fullStore.selectedProduct,
+                                user_id: JSON.parse(
+                                    localStorage.getItem("user")
+                                )._id,
+                                body: commentBox,
+                            }),
+                        }
+                    );
+                    const response = await res.json();
+                } catch (err) {
+                    console.log(err);
+                }
 
-        // comment box: commentBox
-        // user id : JSON.parse(localStorage.getItem("user"))._id
-        // product id: fullStore.selectedProduct
-
+                setError(false);
+                setErrorMsg("Comment Placed");
+                setReloadComment(true);
+            } else {
+                setError(true);
+                setErrorMsg("Incorrect Entry: try more than 3 letter");
+            }
+        } else {
+            setError(true);
+            setErrorMsg("Log In First");
+        }
     };
 
     return (
@@ -126,12 +162,14 @@ export default function FullWidthTabs() {
                     </Typography>
                     <form>
                         <TextField
+                            error={error}
                             id="commentText"
                             placeholder="empty"
                             required
                             fullWidth
                             multiline
                             rows={5}
+                            helperText={errormsg}
                             variant="outlined"
                             style={{ marginBottom: 8 }}
                             onChange={(event) => {

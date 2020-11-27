@@ -93,6 +93,7 @@ export default function Checkout() {
             let amount = fullStore.cart
                 .map((p) => p.price)
                 .map((p, index) => fullStore.quantity[index] * p);
+            let delveryAddress = localStorage.getItem("deliveryAddress");
 
             // ekhane kaj kora lagbe.......kono probelm hoile comment kore rakho.....
             // just console log kore raikho......
