@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -63,6 +63,8 @@ export default function FullWidthTabs() {
     const [value, setValue] = React.useState(0);
     const [RatingValue, setRatingValue] = React.useState(4);
     const [commentBox, setCommentBox] = React.useState("");
+    const [error, setError] = React.useState(false);
+    const [errormsg, setErrorMsg] = React.useState("");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -72,32 +74,41 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
-    const handleCommentSend = async event => {
+    const handleCommentSend = async (event) => {
         event.preventDefault();
+        if (JSON.parse(localStorage.getItem("user")) != null) {
+            if (commentBox.length >= 3) {
+                try {
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/customer/product/comment",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                p_id: fullStore.selectedProduct,
+                                user_id: JSON.parse(
+                                    localStorage.getItem("user")
+                                )._id,
+                                body: commentBox,
+                            }),
+                        }
+                    );
+                    const response = await res.json();
+                    console.log(response.status);
+                } catch (err) {
+                    console.log(err);
+                }
 
-        // comment sending functionality hear......
-
-        try{
-            const res = await fetch('http://localhost:5000/dokan.com/customer/product/comment',{
-                method: 'POST', headers : {'Content-Type' : 'application/json'},
-                body :JSON.stringify(
-                    {
-                        p_id : fullStore.selectedProduct,
-                        user_id : JSON.parse(localStorage.getItem("user"))._id,
-                        body : commentBox
-                    }
-                )
-            });
-            const resonse = await res.json();
-        }catch(err){
-            console.log(err);
+                setError(false);
+                setErrorMsg("Comment Placed");
+            } else {
+                setError(true);
+                setErrorMsg("Incorrect Entry: try more than 3 letter");
+            }
+        } else {
+            setError(true);
+            setErrorMsg("Log In First");
         }
-
-
-        // comment box: commentBox
-        // user id : JSON.parse(localStorage.getItem("user"))._id
-        // product id: fullStore.selectedProduct
-
     };
 
     return (
@@ -126,12 +137,14 @@ export default function FullWidthTabs() {
                     </Typography>
                     <form>
                         <TextField
+                            error={error}
                             id="commentText"
                             placeholder="empty"
                             required
                             fullWidth
                             multiline
                             rows={5}
+                            helperText={errormsg}
                             variant="outlined"
                             style={{ marginBottom: 8 }}
                             onChange={(event) => {
