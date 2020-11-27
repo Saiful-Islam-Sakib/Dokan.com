@@ -11,7 +11,7 @@ import Rating from "@material-ui/lab/Rating";
 import { Button, OutlinedInput, TextField } from "@material-ui/core";
 
 import avater from "../image/fresh_chinigura.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SingleComment from "./SingleComment";
 
 function TabPanel(props) {
@@ -59,12 +59,14 @@ export default function FullWidthTabs() {
     const theme = useTheme();
 
     const fullStore = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     const [value, setValue] = React.useState(0);
     const [RatingValue, setRatingValue] = React.useState(4);
     const [commentBox, setCommentBox] = React.useState("");
     const [error, setError] = React.useState(false);
     const [errormsg, setErrorMsg] = React.useState("");
+    const [reloadComment, setReloadComment] = React.useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -74,7 +76,30 @@ export default function FullWidthTabs() {
         setValue(index);
     };
 
+    useEffect(() => {
+        async function fetchComment() {
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/products/productdetails/" +
+                        fullStore.selectedProduct.id
+                );
+                const data = await res.json();
+
+                dispatch({
+                    type: "SELECTED_PRODUCT",
+                    product: fullStore.selectedProduct,
+                    comment: data.data.comments,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchComment();
+        setReloadComment(false);
+    }, [reloadComment]);
+
     const handleCommentSend = async (event) => {
+        setCommentBox("");
         event.preventDefault();
         if (JSON.parse(localStorage.getItem("user")) != null) {
             if (commentBox.length >= 3) {
@@ -94,13 +119,13 @@ export default function FullWidthTabs() {
                         }
                     );
                     const response = await res.json();
-                    console.log(response.status);
                 } catch (err) {
                     console.log(err);
                 }
 
                 setError(false);
                 setErrorMsg("Comment Placed");
+                setReloadComment(true);
             } else {
                 setError(true);
                 setErrorMsg("Incorrect Entry: try more than 3 letter");
