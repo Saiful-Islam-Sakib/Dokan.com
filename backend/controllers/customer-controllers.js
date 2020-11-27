@@ -5,7 +5,6 @@ const product = require('../models/product-model');
 const comment = require('../models/comment-model');
 const mongo = require('mongoose');
 
-
 let dummy_customer = [
     {
         c_id : 'cus1',
