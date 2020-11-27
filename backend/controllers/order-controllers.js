@@ -25,7 +25,7 @@ const createNewOrder = async (req,res,next) =>{
         throw new httpError('Something wrong in Order',422);
     }
     //const cus_id = req.body.cid;
-    const {p_id,p_name,quantity,total_amount,c_id,order_confirmation,order_delivered,delivery_address} = req.body;
+    const {p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,delivery_address} = req.body;
 
     // const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
     let customerexist;
@@ -87,7 +87,7 @@ const createNewOrder = async (req,res,next) =>{
         }
     }
     //dummy_order.push(createdorder);
-    res.status(201).json({msg : 'Your Order has been placed'});
+    res.status(201).json({data : 'Your Order has been placed'});
 };
 
 const getOrderbyid = async (req,res,next) =>{

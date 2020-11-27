@@ -102,7 +102,7 @@ export default function FullWidthTabs() {
         setCommentBox("");
         event.preventDefault();
         if (JSON.parse(localStorage.getItem("user")) != null) {
-            if (commentBox.length >= 3) {
+            if (commentBox.length >= 2) {
                 try {
                     const res = await fetch(
                         "http://localhost:5000/dokan.com/customer/product/comment",
