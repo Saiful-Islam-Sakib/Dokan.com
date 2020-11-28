@@ -11,6 +11,7 @@ const orderSchema = new mongo.Schema({
     order_delivered: {type: Boolean , default:false},
     s_id : {type: mongo.Types.ObjectId , required: true,ref:'Seller'},
     date : {type: Date , default : Date.now()},
+    shop_name :{type :String, required:true},
     delivery_address : {type:String, required : true}
 });
 
