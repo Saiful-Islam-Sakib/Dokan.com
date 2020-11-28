@@ -35,6 +35,9 @@ router.get('/customerdetails/:id',customerController.customerinfo);
 
 router.post('/product/comment',[check('body').not().isEmpty(),check('body').isLength({min:2})],customerController.commentOnproduct);
 
+router.post('/rateProduct',[check('p_id').not().isEmpty(),check('s_id').not().isEmpty(),
+    check('rating').not().isEmpty(),check('rating').isLength({max:1})],
+    customerController.rateproduct);
 
 router.get('/Search/:name',customerController.Search);
 

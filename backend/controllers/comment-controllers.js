@@ -17,17 +17,28 @@ const getprodutComments = async (req,res,next) =>{
 };
 
 const test = async (req,res,next) =>{
-    const {lol,p_id} = req.body;
-    console.log('now its here');
-    console.log(typeof lol);
-    console.log(typeof p_id);
-    //console.log(p_id);
-    let all = p_id.length;
-    for(i = 0 ; i < all ; i++){
-        console.log(p_id[i]);
-        console.log(typeof p_id[i]);
+    const c_id = req.params.cid;
+    const p_id = '5fba5b06a8d478291cad85ab';
+    let checkproduct_ordered;
+    let doe;
+    try{
+        checkproduct_ordered = await customer.findById(c_id).populate('orders');
+    }catch(err){
+        const erro = new httpError('You can not rate this product',403);
+        return next(erro);
     }
-    res.status(200).json({msg: all});
+    doe = checkproduct_ordered.orders;
+    //console.log(doe);
+    const v1 = doe.map(order => order.toObject({getters:true}));
+    const v2 = v1.map(({p_id}) => ({p_id}));
+    const v3 = v2.map(({p_id}) => p_id);
+    console.log(v3);
+
+    const found = v3.find(item => p_id);
+    if(!found){
+        console.log(found);
+    }
+    res.status(200).json({msg: v1});
 };
 
 
