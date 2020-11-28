@@ -64,17 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Shipping address", "Review your order"];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <Review />;
-        default:
-            throw new Error("Unknown step");
-    }
-}
-
 export default function Checkout() {
     const classes = useStyles();
     const fullStore = useSelector((state) => state.auth);
@@ -82,9 +71,22 @@ export default function Checkout() {
 
     const [activeStep, setActiveStep] = React.useState(0);
 
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <AddressForm />;
+            case 1:
+                return <Review />;
+            default:
+                throw new Error("Unknown step");
+        }
+    }
+
     const handleNext = async (event) => {
         event.preventDefault();
-        setActiveStep(activeStep + 1);
+        if (localStorage.getItem("deliveryAddress") != null) {
+            setActiveStep(activeStep + 1);
+        }
 
         if (activeStep + 1 == 2) {
             let userId = JSON.parse(localStorage.getItem("user"))._id;
@@ -110,11 +112,13 @@ export default function Checkout() {
                         }),
                     }
                 );
-                //const response = await res.json();
+
                 if (res.status == 201) {
                     dispatch({
                         type: "CHECKOUT",
                     });
+
+                    localStorage.removeItem("deliveryAddress");
                 }
             } catch (err) {
                 console.log(err);
@@ -124,6 +128,7 @@ export default function Checkout() {
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        localStorage.removeItem("deliveryAddress");
     };
 
     return (
@@ -151,8 +156,8 @@ export default function Checkout() {
                                     Thank you for your order.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your order number is. We will send you an
-                                    update when your order has shipped.
+                                    Your orders are placed. We will send you
+                                    updates these orders.
                                 </Typography>
                                 <div style={{ marginBottom: "15%" }}></div>
                             </React.Fragment>
@@ -172,7 +177,6 @@ export default function Checkout() {
                                         variant="contained"
                                         color="primary"
                                         onClick={handleNext}
-                                        //add another on click to place an order like if (true) then handleNext else handlePlaceOrder
                                         className={classes.button}
                                     >
                                         {activeStep === steps.length - 1
