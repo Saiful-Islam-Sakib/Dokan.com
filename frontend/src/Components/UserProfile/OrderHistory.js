@@ -56,13 +56,8 @@ export default function ControlledAccordions() {
                     id="panel1bh-header"
                 >
                     <Typography className={classes.heading}>
-                        Order date: 29/01/1996
+                        {"Order date: 29/01/1996"}
                     </Typography>
-                    {/* <div style={{ display: "flex", flexGrow: 1 }}></div> */}
-                    {/* <Typography className={classes.secondaryHeading}>
-                        29/01/1996
-                    </Typography>
-                    <div style={{ display: "flex", flexGrow: 1 }}></div> */}
                 </AccordionSummary>
                 <AccordionDetails>
                     <List className={classes.root}>
@@ -80,58 +75,13 @@ export default function ControlledAccordions() {
                                     src="#image"
                                 ></Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary="Rice 1 asdasd asas dasdas dasd asd dasd" />
-                            <ListItemText secondary="1" />
-                            <ListItemText secondary="$100" />
-                        </ListItem>
-                        {/* increase list item to have multiple products in a single order */}
-                    </List>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion
-                expanded={expanded === "panel2"}
-                onChange={handleChange("panel2")}
-            >
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                >
-                    <Typography className={classes.heading}>
-                        Order Id: #654321789
-                        {/* order id */}
-                    </Typography>
-                    <div style={{ display: "flex", flexGrow: 1 }}></div>
-                    <Typography className={classes.secondaryHeading}>
-                        29/01/1996
-                        {/* order date  */}
-                    </Typography>
-                    <div style={{ display: "flex", flexGrow: 1 }}></div>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <List className={classes.root}>
-                        <ListItem
-                            style={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                background: "#ECEFF1",
-                            }}
-                        >
-                            <ListItemAvatar>
-                                <Avatar
-                                    variant="rounded"
-                                    alt="productImage"
-                                    src="#image"
-                                ></Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary="Rice 1 asdasd asas dasdas dasd asd dasd" />
-                            <ListItemText secondary="1" />
-                            <ListItemText secondary="$100" />
+                            <ListItemText primary={"Product Name"} />
+                            <ListItemText secondary={"product quantity"} />
+                            <ListItemText secondary={"Product Price"} />
                         </ListItem>
                     </List>
                 </AccordionDetails>
             </Accordion>
-            {/* increase acordion to increase number of orders */}
         </div>
     );
 }
