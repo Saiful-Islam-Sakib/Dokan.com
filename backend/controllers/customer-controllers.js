@@ -3,7 +3,7 @@ const {validationResult} = require('express-validator');
 const customer = require('../models/customer-model');
 const product = require('../models/product-model');
 const comment = require('../models/comment-model');
-const rating = require('../models/rating-model');
+const rating_model = require('../models/rating-model');
 const mongo = require('mongoose');
 
 let dummy_customer = [
@@ -269,14 +269,36 @@ const rateproduct = async(req,res,next) =>{
         cus = await customer.findById(c_id);
         prod = await product.findById(p_id);
     }catch(err){
-        const erro = new httpError('Something went wrong',403);
+        const erro = new httpError('Something went wrong 1',403);
         return next(erro);
     }
-    const addrating = new rating({p_id,c_id,rating});
+    console.log(typeof prod.rating);
+    let prevRating = parseFloat(prod.rating);
+    let preRateCount = parseFloat(prod.rating_count);
+    let total = parseInt(prevRating*preRateCount);
+    let newtotal = total + parseFloat(rating);
+    let newRateCount = preRateCount + 1;
+    let newRatingofProduct = newtotal/newRateCount;
+    prod.rating = newRatingofProduct;
+    prod.rating_count = newRateCount;
+    const addrating = new rating_model({p_id,c_id,rating});
+    console.log(prevRating+' '+preRateCount+' '+total+' '+newtotal+
+    ' '+newRateCount+' '+newRatingofProduct);
     try{
-
+        console.log('here 3');
+        const sess = await mongo.startSession();
+        sess.startTransaction();
+        console.log('here 4');
+        await addrating.save({session : sess});
+        console.log('here 5');
+        cus.rated.push(addrating);
+        await cus.save({session :sess});
+        console.log('here');
+        await prod.save({session :sess});
+        console.log('here 2');
+        await sess.commitTransaction();
     }catch(err){
-        const erro = new httpError('Something went wrong',403);
+        const erro = new httpError('Something went wrong 2',403);
         return next(erro);
     }
     res.status(201).json({data : 'Product Rated'})

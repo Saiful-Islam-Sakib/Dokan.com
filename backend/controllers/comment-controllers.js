@@ -21,7 +21,7 @@ const test = async (req,res,next) =>{
     const p_id = '5fba5b06a8d478291cad85ab';
     let checkproduct_ordered;
     let doe;
-    try{
+    /*try{
         checkproduct_ordered = await customer.findById(c_id).populate('orders');
         const fun = async(req,res,next) =>{
             console.log("Yes bro done");
@@ -30,7 +30,7 @@ const test = async (req,res,next) =>{
     }catch(err){
         const erro = new httpError('You can not rate this product',403);
         return next(erro);
-    }
+    }*/
     doe = checkproduct_ordered.orders;
     //console.log(doe);
     const v1 = doe.map(order => order.toObject({getters:true}));
