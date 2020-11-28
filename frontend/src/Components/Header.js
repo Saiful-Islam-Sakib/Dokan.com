@@ -149,6 +149,7 @@ export default function PrimarySearchAppBar() {
     const onkeydownSearch = (event) => {
         if (event.key == "Enter" && event.target.value.length > 0) {
             console.log("Search : " + event.target.value);
+
             dispatch({
                 type: "UPDATE_PRODUCT",
             });
@@ -236,7 +237,15 @@ export default function PrimarySearchAppBar() {
                     <Divider></Divider>
                     <MenuItem>
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge
+                                badgeContent={fullStore.quantity?.reduce(
+                                    function (a, b) {
+                                        return a + b;
+                                    },
+                                    0
+                                )}
+                                color="secondary"
+                            >
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
@@ -257,7 +266,15 @@ export default function PrimarySearchAppBar() {
                 >
                     <MenuItem>
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge
+                                badgeContent={fullStore.quantity?.reduce(
+                                    function (a, b) {
+                                        return a + b;
+                                    },
+                                    0
+                                )}
+                                color="secondary"
+                            >
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
