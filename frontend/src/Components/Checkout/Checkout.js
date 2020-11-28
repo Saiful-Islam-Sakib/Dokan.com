@@ -110,9 +110,8 @@ export default function Checkout() {
                         }),
                     }
                 );
-                const response = await res.json();
-                console.log(response);
-                if (response.status == 201) {
+                //const response = await res.json();
+                if (res.status == 201) {
                     dispatch({
                         type: "CHECKOUT",
                     });
@@ -152,9 +151,8 @@ export default function Checkout() {
                                     Thank you for your order.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your order number is {"#2001539"}. We will
-                                    send you an update when your order has
-                                    shipped.
+                                    Your order number is. We will send you an
+                                    update when your order has shipped.
                                 </Typography>
                                 <div style={{ marginBottom: "15%" }}></div>
                             </React.Fragment>
