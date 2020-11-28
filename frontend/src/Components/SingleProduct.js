@@ -165,7 +165,9 @@ export default function SingleProduct() {
                                         component="h3"
                                     >
                                         {selectedProduct.rating
-                                            ? selectedProduct.rating
+                                            ? selectedProduct.rating.toPrecision(
+                                                  2
+                                              ) + "/5"
                                             : 0}
                                     </Typography>
 
