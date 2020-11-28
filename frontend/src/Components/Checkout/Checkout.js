@@ -105,7 +105,7 @@ export default function Checkout() {
             // });
             try {
                 const res = await fetch(
-                    "http://localhost:5000/dokan.com/customer/product/comment",
+                    "http://localhost:5000/dokan.com/order/customer/newOrder",
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },

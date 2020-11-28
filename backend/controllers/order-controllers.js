@@ -155,20 +155,14 @@ const deleteOrder = async (req,res,next) => {
         return res.json({msg : 'Your order is already confirmed'});
     }
     try{
-        //await orderinfo.remove();
-        //console.log('here3');
         const session = await mongo.startSession();
-        //console.log('here2');
         session.startTransaction();
-        //console.log('here');
         await orderinfo.remove({session : session});
-        //console.log('1');
         orderinfo.c_id.orders.pull(orderinfo);
-        //console.log('2');
         await orderinfo.c_id.save({session : session});
-        //console.log('3');
+        orderinfo.s_id.orders.pull(orderinfo);
+        await orderinfo.s_id.save({session: session});
         await session.commitTransaction();
-        //console.log('4');
     }catch(err){
         const erro = new httpError('Something went wrong',500);
         return next(erro);
