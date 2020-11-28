@@ -257,13 +257,22 @@ const rateproduct = async(req,res,next) =>{
         return next(erro);
     }
     let allorder = checkproduct_ordered.orders;
-    const v1 = allorder.map(order => order.toObject({getters:true}));
-    const v2 = v1.map(({p_id}) => ({p_id}));
-    const v3 = v2.map(({p_id}) => p_id);
-    const found = v3.find(item => p_id);
-    if(!found){
-        throw new httpError('You have not orderd this product yet',500);
+    let found;
+    if(allorder.length > 0){
+        const v1 = allorder.map(order => order.toObject({getters:true}));
+        const v2 = v1.map(({p_id}) => ({p_id}));
+        const v3 = v2.map(({p_id}) => p_id);
+        found = v3.find(item => p_id);
     }
+    if(!found){
+        const erro = new httpError('You have not ordered this product',500);
+        return next(erro);
+    }
+    let prevRateinfo,modifyrating;
+    try{
+        prevRateinfo = await rating_model.find({p_id : p_id, c_id : c_id});
+        modifyrating = prevRateinfo[0];
+    }catch(err){}
     let cus,prod;
     try{
         cus = await customer.findById(c_id);
@@ -272,18 +281,62 @@ const rateproduct = async(req,res,next) =>{
         const erro = new httpError('Something went wrong 1',403);
         return next(erro);
     }
-    console.log(typeof prod.rating);
-    let prevRating = parseFloat(prod.rating);
-    let preRateCount = parseFloat(prod.rating_count);
-    let total = parseInt(prevRating*preRateCount);
-    let newtotal = total + parseFloat(rating);
-    let newRateCount = preRateCount + 1;
-    let newRatingofProduct = newtotal/newRateCount;
+    let prevRating,preRateCount,total,newtotal,newRateCount,newRatingofProduct,ifRatingExist,val = 0;
+    prevRating = parseFloat(prod.rating);
+    preRateCount = parseInt(prod.rating_count);
+    total = parseInt(prevRating*preRateCount);
+    if(modifyrating){
+        ifRatingExist = modifyrating.rating;
+        total = total - parseFloat(ifRatingExist);
+        preRateCount = preRateCount - 1;
+        val = 1;
+        modifyrating.rating = rating;
+        try{
+            await modifyrating.save();
+        }catch(err){
+            const erro = new httpError('Something went wrong',403);
+            return next(erro);
+        }
+        /*
+        ifRatingExist = prevRateinfo.rating;
+        newtotal = total - parseFloat(ifRatingExist);
+        preRateCount = preRateCount - 1;
+        val = 1;
+        
+        try{
+            const ses = await mongo.startSession();
+            ses.startTransaction();
+            console.log('Not yet')
+            await prevRateinfo.remove({session : ses});
+            console.log('Not yet 1')
+            prevRateinfo.c_id.rated.pull(prevRateinfo);
+            console.log('Not yet 2')
+            await prevRateinfo.c_id.save({session : ses});
+            await ses.commitTransaction();
+        }catch(err){
+            const erro = new httpError('Something went wrong 12',403);
+            return next(erro);
+        } */
+    }
+    newtotal = total + parseFloat(rating);
+    newRateCount = preRateCount + 1;
+    newRatingofProduct = newtotal/newRateCount;
+    
     prod.rating = newRatingofProduct;
-    prod.rating_count = newRateCount;
-    const addrating = new rating_model({p_id,c_id,rating});
-    console.log(prevRating+' '+preRateCount+' '+total+' '+newtotal+
-    ' '+newRateCount+' '+newRatingofProduct);
+    if(val === 1){
+        try{
+            await prod.save();
+        }catch(err){
+            const erro = new httpError('Something went wrong',403);
+            return next(erro);
+        }
+    }else{
+        prod.rating = newRatingofProduct;
+        prod.rating_count = newRateCount;
+        const addrating = new rating_model({p_id,c_id,rating});
+    /*
+        console.log(prevRating+' '+preRateCount+' '+total+' '+newtotal+
+        ' '+newRateCount+' '+newRatingofProduct); */
     try{
         console.log('here 3');
         const sess = await mongo.startSession();
@@ -300,6 +353,7 @@ const rateproduct = async(req,res,next) =>{
     }catch(err){
         const erro = new httpError('Something went wrong 2',403);
         return next(erro);
+        }
     }
     res.status(201).json({data : 'Product Rated'})
 };
