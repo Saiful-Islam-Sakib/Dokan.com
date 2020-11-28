@@ -62,7 +62,7 @@ export default function FullWidthTabs() {
     const dispatch = useDispatch();
 
     const [value, setValue] = React.useState(0);
-    const [RatingValue, setRatingValue] = React.useState(4);
+    const [RatingValue, setRatingValue] = React.useState(0);
     const [commentBox, setCommentBox] = React.useState("");
     const [error, setError] = React.useState(false);
     const [errormsg, setErrorMsg] = React.useState("");
@@ -135,7 +135,14 @@ export default function FullWidthTabs() {
             setErrorMsg("Log In First");
         }
     };
+    const handleRateProduct = async (event) => {
+        event.preventDefault();
 
+        let numberOfStar = RatingValue;
+        let productId = fullStore.selectedProduct.id;
+        let userId = JSON.parse(localStorage.getItem("user"))._id;
+        // rating functionality here ................................................................................
+    };
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -217,7 +224,12 @@ export default function FullWidthTabs() {
                         <div style={{ marginBottom: 8 }}></div>
                         <OutlinedInput
                             id="reviewerName"
-                            value={"Name"}
+                            value={
+                                JSON.parse(localStorage.getItem("user"))
+                                    .f_name +
+                                " " +
+                                JSON.parse(localStorage.getItem("user")).l_name
+                            }
                             readOnly
                             fullWidth
                             multiline
@@ -226,6 +238,7 @@ export default function FullWidthTabs() {
                         <TextField
                             id="reviewText"
                             placeholder="empty"
+                            disabled
                             fullWidth
                             multiline
                             rows={8}
@@ -242,6 +255,7 @@ export default function FullWidthTabs() {
                                 variant="contained"
                                 type="submit"
                                 color="primary"
+                                onClick={handleRateProduct}
                             >
                                 Send
                             </Button>
