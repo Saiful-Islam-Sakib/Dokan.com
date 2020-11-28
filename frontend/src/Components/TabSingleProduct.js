@@ -103,7 +103,7 @@ export default function FullWidthTabs() {
         event.preventDefault();
         if (JSON.parse(localStorage.getItem("user")) != null) {
             if (commentBox.length >= 2) {
-                try {
+                try{
                     const res = await fetch(
                         "http://localhost:5000/dokan.com/customer/product/comment",
                         {
@@ -142,6 +142,23 @@ export default function FullWidthTabs() {
         let productId = fullStore.selectedProduct.id;
         let userId = JSON.parse(localStorage.getItem("user"))._id;
         // rating functionality here ................................................................................
+        try{
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/customer/product/comment",
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        p_id: fullStore.selectedProduct.id,
+                        c_id: JSON.parse(localStorage.getItem("user"))._id,
+                        rating : numberOfStar
+                    }),
+                }
+            );
+            const response = await res.json();
+        } catch (err) {
+            console.log(err);
+        }
     };
     return (
         <div className={classes.root}>
