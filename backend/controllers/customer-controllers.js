@@ -3,6 +3,7 @@ const {validationResult} = require('express-validator');
 const customer = require('../models/customer-model');
 const product = require('../models/product-model');
 const comment = require('../models/comment-model');
+const rating = require('../models/rating-model');
 const mongo = require('mongoose');
 
 let dummy_customer = [
@@ -262,7 +263,22 @@ const rateproduct = async(req,res,next) =>{
     const found = v3.find(item => p_id);
     if(!found){
         throw new httpError('You have not orderd this product yet',500);
-    } 
+    }
+    let cus,prod;
+    try{
+        cus = await customer.findById(c_id);
+        prod = await product.findById(p_id);
+    }catch(err){
+        const erro = new httpError('Something went wrong',403);
+        return next(erro);
+    }
+    const addrating = new rating({p_id,c_id,rating});
+    try{
+
+    }catch(err){
+        const erro = new httpError('Something went wrong',403);
+        return next(erro);
+    }
     res.status(201).json({data : 'Product Rated'})
 };
 
