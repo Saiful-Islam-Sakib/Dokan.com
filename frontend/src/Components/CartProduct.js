@@ -36,7 +36,7 @@ export default function CartProduct(props) {
                 style={{ marginRight: "1rem" }}
             />
             <ListItemText
-                primary={props.product.s_id}
+                primary={props.product.shop_name}
                 style={{ marginRight: "1rem" }}
             />
             <InputBase
