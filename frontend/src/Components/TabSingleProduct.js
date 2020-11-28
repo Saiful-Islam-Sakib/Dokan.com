@@ -87,7 +87,7 @@ export default function FullWidthTabs() {
 
                 dispatch({
                     type: "SELECTED_PRODUCT",
-                    product: fullStore.selectedProduct,
+                    product: data.data,
                     comment: data.data.comments,
                 });
             } catch (error) {
