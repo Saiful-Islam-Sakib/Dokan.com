@@ -64,8 +64,8 @@ const createNewOrder = async (req,res,next) =>{
             const erro = new httpError('Could not find product',500);
             return next(erro);
         }
-        const pname = productexist.name;
-        const createdorder = new order ({p_id : p_id[i], p_name : pname[i],
+        let pname = productexist.name;
+        const createdorder = new order ({p_id : p_id[i], p_name : pname,
             quantity : quantity[i], total_amount : total_amount[i],
             c_id,
             order_confirmation,order_delivered,
