@@ -5,7 +5,6 @@ const product = require('../models/product-model');
 const comment = require('../models/comment-model');
 const mongo = require('mongoose');
 
-
 let dummy_customer = [
     {
         c_id : 'cus1',
@@ -242,6 +241,31 @@ const commentOnproduct = async(req,res,next) =>{
     res.status(201).json({data : 'Your comment was posted'});
 };
 
+const rateproduct = async(req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Something wrong in Rating',422);
+    }
+    const {p_id,c_id,rating} = req.body;
+    let checkproduct_ordered;
+    try{
+        checkproduct_ordered = await customer.findById(c_id).populate('orders');
+    }catch(err){
+        const erro = new httpError('You can not rate this product',403);
+        return next(erro);
+    }
+    let allorder = checkproduct_ordered.orders;
+    const v1 = allorder.map(order => order.toObject({getters:true}));
+    const v2 = v1.map(({p_id}) => ({p_id}));
+    const v3 = v2.map(({p_id}) => p_id);
+    const found = v3.find(item => p_id);
+    if(!found){
+        throw new httpError('You have not orderd this product yet',500);
+    } 
+    res.status(201).json({data : 'Product Rated'})
+};
+
 const Search = async(req,res,next) =>{
     const name = req.params.name;
     let result;
@@ -266,3 +290,4 @@ exports.customerLogin = customerLogin;
 exports.changePassword = changePassword;
 exports.commentOnproduct = commentOnproduct;
 exports.Search = Search;
+exports.rateproduct = rateproduct;

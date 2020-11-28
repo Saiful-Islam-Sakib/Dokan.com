@@ -23,7 +23,8 @@ const sellerSchema = new mongo.Schema({
     sh_area : {type:String,required:true},
     sh_place : {type:String,required:true},
     sh_area_pc : {type:String,required:true},
-    products: [{type: mongo.Types.ObjectId, require: true, ref: 'Product'}]
+    products: [{type: mongo.Types.ObjectId, require: true, ref: 'Product'}],
+    orders: [{type: mongo.Types.ObjectId,require:true ,ref:'Order'}]
 });
 sellerSchema.plugin(uniqueVali);
 

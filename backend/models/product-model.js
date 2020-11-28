@@ -1,5 +1,4 @@
 const mongo = require('mongoose');
-const { model } = require('./order-model');
 
 const productSchema = new mongo.Schema({
     //p_id : {type:String},

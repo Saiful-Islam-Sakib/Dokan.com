@@ -15,7 +15,8 @@ const customerSchema = new mongo.Schema({
     //delivery_add : {type : String, required: true},
     password : {type : String, required:true},
     orders: [{type : mongo.Types.ObjectId, required:true, ref:'Order'}],
-    comments: [{type:mongo.Types.ObjectId , required: true , ref : 'Comment'}]
+    comments: [{type:mongo.Types.ObjectId , required: true , ref : 'Comment'}],
+    rated : [{type: mongo.Types.ObjectId , required :true , ref: 'Rating'}]
 });
 customerSchema.plugin(uniqueVali);
 

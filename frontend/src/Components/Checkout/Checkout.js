@@ -82,13 +82,15 @@ export default function Checkout() {
 
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const handleNext = () => {
+    const handleNext = async event => {
+        event.preventDefault();
         setActiveStep(activeStep + 1);
 
         if (activeStep + 1 == 2) {
             let userId = JSON.parse(localStorage.getItem("user"))._id;
             let quantity = fullStore.quantity;
-            let productName = fullStore.cart.map((p) => p.name);
+            // 'Backend a grab kore nisi jehetu pid ase e..request joto choto toto e valo'     
+            //  let productName = fullStore.cart.map((p) => p.name);
             let productId = fullStore.cart.map((p) => p.id);
             let amount = fullStore.cart
                 .map((p) => p.price)
@@ -101,6 +103,27 @@ export default function Checkout() {
             // dispatch({
             //     type: "CHECKOUT",
             // });
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/order/customer/newOrder",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            p_id: productId,
+                            quantity : quantity,
+                            total_amount : amount,
+                            c_id : userId,
+                            delivery_address : delveryAddress
+                        }),
+                    }
+                );
+                const response = await res.json();
+            } catch (err) {
+                console.log(err);
+            }
+            
+
         }
     };
 
