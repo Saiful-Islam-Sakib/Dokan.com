@@ -52,7 +52,7 @@ const createNewOrder = async (req,res,next) =>{
             const erro = new httpError('Could not find product',500);
             return next(erro);
         }
-        const s_id = productexist.s_id;
+        let s_id = productexist.s_id;
         let sellerexist;
         try{
             sellerexist = await seller.findById(s_id);
@@ -65,7 +65,7 @@ const createNewOrder = async (req,res,next) =>{
             return next(erro);
         }
         const pname = productexist.name;
-        const createdorder = new order ({p_id : p_id[i], p_name : pname,
+        const createdorder = new order ({p_id : p_id[i], p_name : pname[i],
             quantity : quantity[i], total_amount : total_amount[i],
             c_id,
             order_confirmation,order_delivered,
@@ -79,7 +79,7 @@ const createNewOrder = async (req,res,next) =>{
             customerexist.orders.push(createdorder);
             await customerexist.save({session: session});
             sellerexist.orders.push(createdorder);
-            await sellerexist.save({session: session})
+            await sellerexist.save({session: session});
             await session.commitTransaction();
         }catch(err){
             const erro = new httpError('Could not place an order',500);

@@ -23,6 +23,10 @@ const test = async (req,res,next) =>{
     let doe;
     try{
         checkproduct_ordered = await customer.findById(c_id).populate('orders');
+        const fun = async(req,res,next) =>{
+            console.log("Yes bro done");
+            res.json({msg :'yes'});
+        };
     }catch(err){
         const erro = new httpError('You can not rate this product',403);
         return next(erro);
@@ -44,3 +48,4 @@ const test = async (req,res,next) =>{
 
 exports.getprodutComments = getprodutComments;
 exports.test = test;
+//exports.fun = fun;
