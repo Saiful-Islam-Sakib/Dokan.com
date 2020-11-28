@@ -64,17 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Shipping address", "Review your order"];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <Review />;
-        default:
-            throw new Error("Unknown step");
-    }
-}
-
 export default function Checkout() {
     const classes = useStyles();
     const fullStore = useSelector((state) => state.auth);
@@ -82,27 +71,32 @@ export default function Checkout() {
 
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const handleNext = async event => {
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <AddressForm />;
+            case 1:
+                return <Review />;
+            default:
+                throw new Error("Unknown step");
+        }
+    }
+
+    const handleNext = async (event) => {
         event.preventDefault();
-        setActiveStep(activeStep + 1);
+        if (localStorage.getItem("deliveryAddress") != null) {
+            setActiveStep(activeStep + 1);
+        }
 
         if (activeStep + 1 == 2) {
             let userId = JSON.parse(localStorage.getItem("user"))._id;
             let quantity = fullStore.quantity;
-            // 'Backend a grab kore nisi jehetu pid ase e..request joto choto toto e valo'     
-            //  let productName = fullStore.cart.map((p) => p.name);
             let productId = fullStore.cart.map((p) => p.id);
             let amount = fullStore.cart
                 .map((p) => p.price)
                 .map((p, index) => fullStore.quantity[index] * p);
             let delveryAddress = localStorage.getItem("deliveryAddress");
 
-            // ekhane kaj kora lagbe.......kono probelm hoile comment kore rakho.....
-            // just console log kore raikho......
-
-            // dispatch({
-            //     type: "CHECKOUT",
-            // });
             try {
                 const res = await fetch(
                     "http://localhost:5000/dokan.com/order/customer/newOrder",
@@ -111,24 +105,30 @@ export default function Checkout() {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             p_id: productId,
-                            quantity : quantity,
-                            total_amount : amount,
-                            c_id : userId,
-                            delivery_address : delveryAddress
+                            quantity: quantity,
+                            total_amount: amount,
+                            c_id: userId,
+                            delivery_address: delveryAddress,
                         }),
                     }
                 );
-                const response = await res.json();
+
+                if (res.status == 201) {
+                    dispatch({
+                        type: "CHECKOUT",
+                    });
+
+                    localStorage.removeItem("deliveryAddress");
+                }
             } catch (err) {
                 console.log(err);
             }
-            
-
         }
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        localStorage.removeItem("deliveryAddress");
     };
 
     return (
@@ -156,9 +156,8 @@ export default function Checkout() {
                                     Thank you for your order.
                                 </Typography>
                                 <Typography variant="subtitle1">
-                                    Your order number is {"#2001539"}. We will
-                                    send you an update when your order has
-                                    shipped.
+                                    Your orders are placed. We will send you
+                                    updates these orders.
                                 </Typography>
                                 <div style={{ marginBottom: "15%" }}></div>
                             </React.Fragment>
@@ -178,7 +177,6 @@ export default function Checkout() {
                                         variant="contained"
                                         color="primary"
                                         onClick={handleNext}
-                                        //add another on click to place an order like if (true) then handleNext else handlePlaceOrder
                                         className={classes.button}
                                     >
                                         {activeStep === steps.length - 1

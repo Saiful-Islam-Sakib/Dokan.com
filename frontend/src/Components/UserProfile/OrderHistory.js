@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -36,6 +36,14 @@ export default function ControlledAccordions() {
         setExpanded(isExpanded ? panel : false);
     };
 
+    useEffect(() => {
+        async function fetchOrderHistory() {
+            let userId = localStorage.getItem("user")._id;
+            // order history code ...................................................................................
+        }
+        fetchOrderHistory();
+    }, []);
+
     return (
         <div className={classes.root}>
             <Accordion
@@ -48,15 +56,13 @@ export default function ControlledAccordions() {
                     id="panel1bh-header"
                 >
                     <Typography className={classes.heading}>
-                        Order Id: #654321789
-                        {/* order id */}
+                        Order date: 29/01/1996
                     </Typography>
-                    <div style={{ display: "flex", flexGrow: 1 }}></div>
-                    <Typography className={classes.secondaryHeading}>
+                    {/* <div style={{ display: "flex", flexGrow: 1 }}></div> */}
+                    {/* <Typography className={classes.secondaryHeading}>
                         29/01/1996
-                        {/* order date  */}
                     </Typography>
-                    <div style={{ display: "flex", flexGrow: 1 }}></div>
+                    <div style={{ display: "flex", flexGrow: 1 }}></div> */}
                 </AccordionSummary>
                 <AccordionDetails>
                     <List className={classes.root}>

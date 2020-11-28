@@ -104,8 +104,6 @@ export default function ContactUs() {
                         </Button>
                     </div>
                 </form>
-
-                <div style={{ marginBottom: "50vh" }}></div>
             </Container>
         </div>
     );
