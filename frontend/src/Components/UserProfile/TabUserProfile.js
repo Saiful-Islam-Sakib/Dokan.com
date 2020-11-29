@@ -91,6 +91,7 @@ export default function FullWidthTabs({ userinfo }) {
     };
     const handleSaveProfile = () => {
         console.log("database update");
+        // update profile information here ................................................
     };
     const handleCancelProfile = () => {
         setProfileState(true);
