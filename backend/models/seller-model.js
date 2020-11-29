@@ -2,7 +2,6 @@ const mongo  = require('mongoose');
 const uniqueVali = require('mongoose-unique-validator');
 
 const sellerSchema = new mongo.Schema({
-    //s_id : {type:String,required:true},
     v_f_name : {type:String,required:true},
     v_l_name : {type:String,required:true},
     email : {type:String,required:true,unique:true},
