@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 import { Button, Container, Grid, TextField } from "@material-ui/core";
 import OrderHistory from "./OrderHistory";
 import Favorites from "./Favorites";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -76,6 +76,23 @@ export default function FullWidthTabs({ userinfo }) {
     const theme = useTheme();
     const dispatch = useDispatch();
 
+    const [firstName, setFirstName] = React.useState(
+        JSON.parse(localStorage.getItem("user")).f_name
+    );
+    const [lastName, setLastName] = React.useState(
+        JSON.parse(localStorage.getItem("user")).l_name
+    );
+    const [phoneNumber, setPhoneNumber] = React.useState(
+        JSON.parse(localStorage.getItem("user")).phone
+    );
+    const [email, setEmail] = React.useState(
+        JSON.parse(localStorage.getItem("user")).email
+    );
+    const [address, setAddress] = React.useState(
+        JSON.parse(localStorage.getItem("user")).address
+    );
+    const [currentPassword, setCurrentPassword] = React.useState("");
+
     const [value, setValue] = React.useState(0);
     const [profileState, setProfileState] = React.useState(true);
 
@@ -91,6 +108,15 @@ export default function FullWidthTabs({ userinfo }) {
     };
     const handleSaveProfile = () => {
         console.log("database update");
+        // update profile information here ................................................
+        // variables are =======
+
+        // firstName
+        // lastName
+        // phoneNumber
+        // email
+        // address
+        // currentPassword
     };
     const handleCancelProfile = () => {
         setProfileState(true);
@@ -141,6 +167,9 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setFirstName(e.target.value);
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -156,12 +185,16 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setLastName(e.target.value);
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
                                             fullWidth
+                                            readonly
                                             id="birthday"
                                             label="Birthday"
                                             name="birthday"
@@ -188,6 +221,9 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setPhoneNumber(e.target.value);
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -202,6 +238,9 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setAddress(e.target.value);
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -217,6 +256,9 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setEmail(e.target.value);
+                                            }}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -237,6 +279,11 @@ export default function FullWidthTabs({ userinfo }) {
                                             disabled={
                                                 profileState ? true : false
                                             }
+                                            onChange={(e) => {
+                                                setCurrentPassword(
+                                                    e.target.value
+                                                );
+                                            }}
                                         />
                                     </Grid>
                                 </Grid>
