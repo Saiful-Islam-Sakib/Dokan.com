@@ -1,0 +1,91 @@
+
+.seller-AddProduct{
+    width: 30rem;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 1rem 1.5rem;
+    box-shadow: .1rem .1rem .1rem .2rem rgb(139, 156, 204);
+}
+
+.seller-AddProduct h2{
+    color: gray;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-decoration: underline;
+}
+
+.seller-AddProduct-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.seller-AddProduct-form input,
+.seller-AddProduct-form label,
+.seller-AddProduct-form select{
+    display: block;
+    width: 100%;
+    font-size: 1.4rem;
+    color: rgb(59, 59, 59);
+}
+.seller-AddProduct-form label{
+    font-weight: 500;
+    margin-left: .5rem;
+    margin-bottom: .2rem;
+}
+
+#add-successfully-product{
+    color:green;
+    font-size: 1rem;
+}
+
+.seller-AddProduct-form input{
+    width: 95%;
+    font-size: 1.2rem;
+    color: rgb(77, 76, 76);
+    margin-bottom: 1rem;
+    padding: .1rem .3rem;
+
+}
+.seller-AddProduct-form input:focus{
+    outline: none;
+    background-color: rgb(240, 235, 235);
+}
+
+.seller-AddProduct-form select{
+    margin-bottom: 1rem;
+}
+.seller-AddProduct-form select:focus{
+    outline: none;
+}
+.seller-AddProduct-form option{
+    padding: .1rem .3rem;
+    font-size: 1.4rem;
+    background-color: rgb(240, 235, 235);
+}
+.seller-AddProduct-form .add-submit-button{
+    width: 50%;
+   font-size: 1.3rem;
+   padding: .2rem .5rem;
+   color: white;
+   background-color: rgb(2, 160, 2);
+   margin: 1rem 0 2rem 0;
+   border-color: rgb(235, 234, 234);
+}
+.seller-AddProduct-form .add-submit-button:focus{
+    outline: none;
+}
+.seller-AddProduct-form .add-submit-button:hover,
+.seller-AddProduct-form .add-submit-button:active{
+    color: gray;
+   background-color: rgb(9, 230, 9);
+}
+
+@media(max-width: 51.5rem){
+    .seller-AddProduct{
+        width: 80%;
+    }
+}
