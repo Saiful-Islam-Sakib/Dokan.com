@@ -110,7 +110,6 @@ export default function FullWidthTabs({ userinfo }) {
         console.log("database update");
         // update profile information here ................................................
         // variables are =======
-<<<<<<< HEAD
         let response;
         event.preventDefault();
         try {
@@ -147,9 +146,6 @@ export default function FullWidthTabs({ userinfo }) {
             console.log(err);
         }
 
-=======
-        let userId = JSON.parse(localStorage.getItem("user"))._id;
->>>>>>> main
         // firstName
         // lastName
         // phoneNumber

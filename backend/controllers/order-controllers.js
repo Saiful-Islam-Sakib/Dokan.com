@@ -4,7 +4,7 @@ const order = require('../models/order-model');
 const customer = require('../models/customer-model');
 const mongo  = require('mongoose');
 const product = require('../models/product-model');
-const seller = require('../models/seller-model');
+const seller_model = require('../models/seller-model');
 
 let dummy_order = [
     {
@@ -144,13 +144,18 @@ const orderConfirmation = async (req,res,next) => {
 
 const deleteOrder = async (req,res,next) => {
     const order_id = req.params.oid;
-    let orderinfo;
+    let orderinfo,cid,cus,sid,seller;
     try{
-        orderinfo = await order.findById(order_id).populate('c_id'); 
+        orderinfo = await order.findById(order_id);
+        cid = orderinfo.c_id;
+        sid = orderinfo.s_id;
+        cus = await customer.findById(cid);
+        seller = await seller_model.findById(sid); 
     }catch(err){
         const erro = new httpError('Order not found',500);
         return next(erro);
     }
+    console.log(orderinfo);
     if(!orderinfo){
         const erro = new httpError('Order not found',500);
         return next(erro);
@@ -162,16 +167,16 @@ const deleteOrder = async (req,res,next) => {
         const session = await mongo.startSession();
         session.startTransaction();
         await orderinfo.remove({session : session});
-        orderinfo.c_id.orders.pull(orderinfo);
-        await orderinfo.c_id.save({session : session});
-        orderinfo.s_id.orders.pull(orderinfo);
-        await orderinfo.s_id.save({session: session});
+        cus.orders.pull(orderinfo);
+        await cus.save({session : session});
+        seller.orders.pull(orderinfo);
+        await seller.save({session: session});
         await session.commitTransaction();
     }catch(err){
         const erro = new httpError('Something went wrong',500);
         return next(erro);
     }
-    return res.status(201).json({msg : 'Successfully deleted order'});
+    res.status(201).json({data : 'Successfully deleted order'});
 };
 
 const orderDelivered = async (req,res,next) => {
