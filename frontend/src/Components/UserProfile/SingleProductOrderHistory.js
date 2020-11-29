@@ -49,7 +49,7 @@ export default function SingleProductOrderHistory(props) {
             const response = await res.json();
 
             if (res.status === 201) {
-                console.log(response.msg);
+                console.log(response);
                 dispatch({
                     type: "FETCH_ORDER_HISTORY",
                 });
