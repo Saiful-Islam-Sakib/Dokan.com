@@ -1,6 +1,6 @@
 const express = require('express');
 const customerController = require('../controllers/customer-controllers');
-const { check } = require('express-validator');
+const { check,body } = require('express-validator');
 
 const router = express.Router();
 
@@ -12,9 +12,9 @@ router.post('/signup',
     check('address').not().isEmpty(),check('password').isLength({min:6})],
     customerController.customerSignup);
 
-router.patch('/editinfo/:cid',
-    [check('phone').isLength({min :11}),check('phone').isLength({max :11}),check('city').not().isEmpty(),check('area').not().isEmpty(),
-    check('place').not().isEmpty(),check('address').not().isEmpty(),check('delivery_add').not().isEmpty()], 
+router.patch('/editinfo',
+    [check('phone').isLength({min :11}),check('phone').isLength({max :11}),check('f_name').not().isEmpty(),check('l_name').not().isEmpty(),
+    body('email').isEmail(),check('address').not().isEmpty()], 
     customerController.updatecustomer);
 
 router.delete('/delete/:cid', customerController.deletecustomer); // Admin previlege ,so it should be moved to admin-controller 
