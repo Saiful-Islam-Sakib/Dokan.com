@@ -2,6 +2,7 @@ const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const comment = require('../models/comment-model');
 const customer = require('../models/customer-model');
+const product = require('../models/product-model');
 const rating_model = require('../models/rating-model');
 const mongo = require('mongoose');
 
@@ -18,30 +19,31 @@ const getprodutComments = async (req,res,next) =>{
 };
 
 const test = async (req,res,next) =>{
-    const {p_id,c_id,rating} = req.body;
-    let modifyrating;
-    try{
-        //modifyrating = await rating_model.findById('5fc2b58900a0632f487466c0');
-        modifyrating = await rating_model.find({p_id : p_id, c_id : c_id});
-    }catch(err){
-        console.log(err);
+    const {p_id} = req.body;
+    let size = p_id.length;
+    console.log(size);
+    let seller = [];
+    let sid,j=0;
+    for(i = 0; i < size ; i++){
+        let prodinfo;
+        try{
+            prodinfo = await product.findById(p_id[i]);
+            sid = prodinfo.s_id;
+            console.log(sid);
+            if(seller.length === 0){
+                console.log('here me');
+                seller[j] = sid; j++; console.log(j+' sid' + seller[j-1]);
+            }else if(!(seller.find(item => item === sid))){
+                seller[j] = sid;
+            }
+        }catch(err){
+            console.log('i am here bro');
+        }
     }
-    console.log(typeof modifyrating);
-    let elem = modifyrating[0];
-    if(elem){
-        console.log('hi');
-    }
-    console.log(typeof elem);
-    elem.rating = rating;
-    try{
-        await elem.save();
-    }catch(err){
-        console.log(err);
-    }
-    res.status(201).json({msg : 'done'});
+    console.log(seller);    
+    res.status(201).json({msg : seller});
 };
 
 
 exports.getprodutComments = getprodutComments;
 exports.test = test;
-//exports.fun = fun;

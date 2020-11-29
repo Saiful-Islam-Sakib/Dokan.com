@@ -106,17 +106,57 @@ export default function FullWidthTabs({ userinfo }) {
     const handleEditProfile = () => {
         setProfileState(false);
     };
-    const handleSaveProfile = () => {
+    const handleSaveProfile = async event => {
         console.log("database update");
         // update profile information here ................................................
         // variables are =======
+<<<<<<< HEAD
+        let response;
+        event.preventDefault();
+        try {
+            const res = await fetch(
+                "http://localhost:5000/dokan.com/customer/editinfo",
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        c_id : JSON.parse(localStorage.getItem("user"))._id,
+                        f_name : firstName,
+                        l_name : lastName,
+                        email : email,
+                        phone : phoneNumber,
+                        address : address,
+                        password : currentPassword
+                    }),
+                }
+            );
+            response = await res.json();
+
+            // ei response a user er new updated information ase, jdi password right dey
+
+            if (res.status === 201) {
+                setRatingErrorMsg("Your Information have been updated");
+
+                //successful hoise jehetu, tmi age local info new response diye replace koiro
+
+            } else {
+                setRatingError(true);
+                setRatingErrorMsg(response.msg);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+=======
         let userId = JSON.parse(localStorage.getItem("user"))._id;
+>>>>>>> main
         // firstName
         // lastName
         // phoneNumber
         // email
         // address
         // currentPassword
+        //let userId = JSON.parse(localStorage.getItem("user"))._id;
     };
     const handleCancelProfile = () => {
         setProfileState(true);
