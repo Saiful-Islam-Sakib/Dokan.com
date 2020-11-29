@@ -40,12 +40,11 @@ export default function ControlledAccordions() {
 
     useEffect(() => {
         async function fetchOrderHistory() {
-            let c_id = localStorage.getItem("user")._id;
-            // order history code ...................................................................................
-            try{
+            try {
                 const res = await fetch(
-                    "http://localhost:5000/dokan.com/order/customer"+c_id
-                    );
+                    "http://localhost:5000/dokan.com/order/customer" +
+                        JSON.parse(localStorage.getItem("user"))._id
+                );
                 const response = await res.json();
             } catch (err) {
                 console.log(err);
