@@ -4,7 +4,7 @@ const orderControllers = require('../controllers/order-controllers');
 
 const router = express.Router();
 
-router.get('/:cid', orderControllers.getOrderbyid);
+router.get('/:c_id', orderControllers.getOrderbyid);
 
 router.patch('/sell1/orderConf/:oid',check('order_confirmation').not().isEmpty(), orderControllers.orderConfirmation);
 

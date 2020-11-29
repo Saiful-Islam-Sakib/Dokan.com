@@ -92,19 +92,22 @@ const createNewOrder = async (req,res,next) =>{
 };
 
 const getOrderbyid = async (req,res,next) =>{
-    const cus_id = req.params.cid;
-    let orders;
+    const cus_id = req.params.c_id;
+    let cus_orders;
     try{
-        orders = await order.find({c_id : cus_id});
+        //orders = await order.find({c_id : cus_id});
+        cus_orders = await customer.findById(cus_id).populate('orders');
     }catch(err){
         const erro = new httpError('Could not find any order',500);
         return next(erro);
     }
-    if(!orders || orders === 0){
+    if(!cus_orders.orders || cus_orders.orders === 0){
         //console.log(orders);
-        throw new httpError('Order not found',404);
+        const erro = new httpError('Could not find any order',500);
+        return next(erro)
+        //throw new httpError('Order not found',404);
     }
-    res.json({msg: orders.map(orders => orders.toObject({getters :true}))});
+    res.json({data: cus_orders.toObject({getters :true})});
     //res.json({msg : orders});
 };
 

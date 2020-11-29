@@ -144,7 +144,7 @@ export default function FullWidthTabs() {
         // rating functionality here ................................................................................
         try{
             const res = await fetch(
-                "http://localhost:5000/dokan.com/customer/product/comment",
+                "http://localhost:5000/dokan.com/customer/rateProduct",
                 {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
