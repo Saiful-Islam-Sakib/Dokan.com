@@ -40,7 +40,12 @@ export default function SingleProductOrderHistory(props) {
 
     const handleCancelOrder = (event) => {
         event.preventDefault();
-        
+        let orderId = props.product._id;
+        // order cancellation functionality ........................................................................
+
+        dispatch({
+            type: "FETCH_ORDER_HISTORY",
+        });
     };
 
     return (
