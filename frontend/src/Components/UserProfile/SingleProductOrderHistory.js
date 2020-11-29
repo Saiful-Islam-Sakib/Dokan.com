@@ -43,9 +43,9 @@ export default function SingleProductOrderHistory(props) {
         let orderId = props.product._id;
         // order cancellation functionality ........................................................................
 
-        dispatch({
-            type: "FETCH_ORDER_HISTORY",
-        });
+        // dispatch({
+        //     type: "FETCH_ORDER_HISTORY",
+        // });
     };
 
     return (
