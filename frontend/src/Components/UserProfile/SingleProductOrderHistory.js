@@ -40,25 +40,23 @@ export default function SingleProductOrderHistory(props) {
 
     const handleCancelOrder = async (event) => {
         event.preventDefault();
-        let oid = props.product._id;
-        let response;
-        // order cancellation functionality ........................................................................
-        try{
+        console.log(props.product);
+        try {
             const res = await fetch(
-                "http://localhost:5000/dokan.com/order/customer/deleteorder/"+oid);
-                response = await res.json();
-                if (res.status === 201) {
-    
-                    //ei msg ta ashbe   data : 'Successfully deleted order'
-                } 
-        }catch(err){
+                "http://localhost:5000/dokan.com/order/customer/deleteorder/" +
+                    props.product._id
+            );
+            const response = await res.json();
+
+            if (res.status === 201) {
+                console.log(response.msg);
+                dispatch({
+                    type: "FETCH_ORDER_HISTORY",
+                });
+            }
+        } catch (err) {
             console.log(err);
         }
-        
-
-        // dispatch({
-        //     type: "FETCH_ORDER_HISTORY",
-        // });
     };
 
     return (
