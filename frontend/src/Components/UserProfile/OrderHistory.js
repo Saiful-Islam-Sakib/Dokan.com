@@ -5,8 +5,10 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
     Avatar,
+    Button,
     List,
     ListItem,
     ListItemAvatar,
@@ -78,6 +80,9 @@ export default function ControlledAccordions() {
                             <ListItemText primary={"Product Name"} />
                             <ListItemText secondary={"product quantity"} />
                             <ListItemText secondary={"Product Price"} />
+                            <Button>
+                                <DeleteIcon></DeleteIcon>
+                            </Button>
                         </ListItem>
                     </List>
                 </AccordionDetails>
