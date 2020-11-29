@@ -3,16 +3,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
+    AccordionActions,
     Avatar,
     Button,
+    Divider,
     List,
     ListItem,
     ListItemAvatar,
     ListItemText,
+    Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,10 +44,11 @@ export default function ControlledAccordions() {
         async function fetchOrderHistory() {
             try {
                 const res = await fetch(
-                    "http://localhost:5000/dokan.com/order/customer" +
+                    "http://localhost:5000/dokan.com/order/customer/" +
                         JSON.parse(localStorage.getItem("user"))._id
                 );
                 const response = await res.json();
+                console.log(response.data.orders);
             } catch (err) {
                 console.log(err);
             }
@@ -64,9 +67,7 @@ export default function ControlledAccordions() {
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                 >
-                    <Typography className={classes.heading}>
-                        {"Order date: 29/01/1996"}
-                    </Typography>
+                    <Typography>{"Location : "}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <List className={classes.root}>
@@ -87,12 +88,16 @@ export default function ControlledAccordions() {
                             <ListItemText primary={"Product Name"} />
                             <ListItemText secondary={"product quantity"} />
                             <ListItemText secondary={"Product Price"} />
-                            <Button>
-                                <DeleteIcon></DeleteIcon>
-                            </Button>
                         </ListItem>
                     </List>
                 </AccordionDetails>
+                <Divider />
+                <AccordionActions>
+                    <Button size="small" color="secondary" variant="contained">
+                        <DeleteIcon></DeleteIcon>
+                        Cancel Order
+                    </Button>
+                </AccordionActions>
             </Accordion>
         </div>
     );

@@ -37,7 +37,6 @@ export default function Favorites() {
                         ></Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                        //primary={<a href="#">"Rice 1 asdasd asas dasdas dasd asd dasd"</a>}
                         primary={
                             <Link href="#singleProductPage">
                                 {"Rice 1 asdasd asas dasdas dasd asd dasd"}
@@ -50,7 +49,6 @@ export default function Favorites() {
                         <DeleteIcon></DeleteIcon>
                     </Button>
                 </ListItem>
-                {/* increase list item to have multiple products in a single order */}
             </List>
         </div>
     );
