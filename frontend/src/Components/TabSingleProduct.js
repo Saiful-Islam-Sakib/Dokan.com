@@ -9,8 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
 import { Button, OutlinedInput, TextField } from "@material-ui/core";
-
-import avater from "../image/fresh_chinigura.png";
 import { useSelector, useDispatch } from "react-redux";
 import SingleComment from "./SingleComment";
 

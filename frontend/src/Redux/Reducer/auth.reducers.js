@@ -222,6 +222,28 @@ export default (state = initialState, action) => {
             return {
                 ...state,
             };
+        case "FETCH_ORDER_HISTORY":
+            async function fetchOrderHistory() {
+                try {
+                    let res = await fetch(
+                        "http://localhost:5000/dokan.com/order/customer/" +
+                            JSON.parse(localStorage.getItem("user"))._id
+                    );
+                    let response = await res.json();
+
+                    sessionStorage.setItem(
+                        "orderHistory",
+                        JSON.stringify(response.data.orders)
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            fetchOrderHistory();
+
+            return {
+                ...state,
+            };
         default:
             return state;
     }

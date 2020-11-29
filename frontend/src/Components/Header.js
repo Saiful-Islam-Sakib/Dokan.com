@@ -170,13 +170,14 @@ export default function PrimarySearchAppBar() {
 
     const handleSignOut = () => {
         handleMenuClose();
-        if (localStorage.getItem("login") === "true") {
-            localStorage.removeItem("login");
-            localStorage.removeItem("user");
-        } else if (sessionStorage.getItem("login") === "true") {
-            sessionStorage.removeItem("login");
-            sessionStorage.removeItem("user");
-        }
+        // if (localStorage.getItem("login") === "true") {
+        //     localStorage.clear();
+        // } else if (sessionStorage.getItem("login") === "true") {
+        //     localStorage.clear();
+        //     sessionStorage.clear();
+        // }
+        localStorage.clear();
+        sessionStorage.clear();
 
         history.push("/");
 
@@ -519,7 +520,7 @@ export default function PrimarySearchAppBar() {
 
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "consumerFood");
+                                )?.filter((p) => p.category == "consumerFood");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",
@@ -541,7 +542,7 @@ export default function PrimarySearchAppBar() {
 
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "toiletries");
+                                )?.filter((p) => p.category == "toiletries");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",
@@ -563,7 +564,7 @@ export default function PrimarySearchAppBar() {
 
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "healthCare");
+                                )?.filter((p) => p.category == "healthCare");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",

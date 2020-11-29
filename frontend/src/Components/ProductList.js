@@ -76,13 +76,13 @@ export default function ProductList() {
         let e = event.target.value;
         setSort(e);
         if (e === "priceLH") {
-            products.sort(compareValues("price", "asc"));
+            products?.sort(compareValues("price", "asc"));
         } else if (e === "priceHL") {
-            products.sort(compareValues("price", "desc"));
+            products?.sort(compareValues("price", "desc"));
         } else if (e === "ratingLH") {
-            products.sort(compareValues("rating", "asc"));
+            products?.sort(compareValues("rating", "asc"));
         } else if (e === "ratingHL") {
-            products.sort(compareValues("rating", "desc"));
+            products?.sort(compareValues("rating", "desc"));
         }
     };
 
@@ -118,7 +118,8 @@ export default function ProductList() {
                 <div style={{ flexGrow: 1 }}></div>
                 <TablePagination
                     component="div"
-                    count={products.length}
+                    count={products
+                        ?.length}
                     page={page}
                     onChangePage={handleChangePage}
                     rowsPerPage={rowsPerPage}
@@ -128,7 +129,7 @@ export default function ProductList() {
             <div>
                 <Paper>
                     <Card className={classes.root} variant="outlined">
-                        {products.slice(start, end).map((product, index) => (
+                        {products?.slice(start, end).map((product, index) => (
                             <ProductCard
                                 product={product}
                                 key={index}
