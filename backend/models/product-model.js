@@ -12,7 +12,7 @@ const productSchema = new mongo.Schema({
     img : {type:String,required:true},
     offer_price :{type:Number, default:''},
     comments:[{type:mongo.Types.ObjectId, ref: 'Comment'}],
-    rating : {type: Number,default : 0},
+    rating : {type: Number,default : 0.0},
     rating_count : {type: Number , default : 0}
 });
 

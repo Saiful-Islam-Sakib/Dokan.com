@@ -297,26 +297,6 @@ const rateproduct = async(req,res,next) =>{
             const erro = new httpError('Something went wrong',403);
             return next(erro);
         }
-        /*
-        ifRatingExist = prevRateinfo.rating;
-        newtotal = total - parseFloat(ifRatingExist);
-        preRateCount = preRateCount - 1;
-        val = 1;
-        
-        try{
-            const ses = await mongo.startSession();
-            ses.startTransaction();
-            console.log('Not yet')
-            await prevRateinfo.remove({session : ses});
-            console.log('Not yet 1')
-            prevRateinfo.c_id.rated.pull(prevRateinfo);
-            console.log('Not yet 2')
-            await prevRateinfo.c_id.save({session : ses});
-            await ses.commitTransaction();
-        }catch(err){
-            const erro = new httpError('Something went wrong 12',403);
-            return next(erro);
-        } */
     }
     newtotal = total + parseFloat(rating);
     newRateCount = preRateCount + 1;
@@ -334,9 +314,6 @@ const rateproduct = async(req,res,next) =>{
         prod.rating = newRatingofProduct;
         prod.rating_count = newRateCount;
         const addrating = new rating_model({p_id,c_id,rating});
-    /*
-        console.log(prevRating+' '+preRateCount+' '+total+' '+newtotal+
-        ' '+newRateCount+' '+newRatingofProduct); */
     try{
         console.log('here 3');
         const sess = await mongo.startSession();
@@ -358,21 +335,6 @@ const rateproduct = async(req,res,next) =>{
     res.status(201).json({data : 'Product Rated'})
 };
 
-const Search = async(req,res,next) =>{
-    const name = req.params.name;
-    let result;
-    try{
-        //result = await product.find({name : {$regex : name , $options: "si" }});
-        //result = await product.aggregate([{$match : { name : name }}]);
-        //result = await product.aggregate([{$regexMatch: { input: "$name", regex: /shaad/ ,options:"i"}}]);
-        //result = await product.aggregate().match({name : name}).pipeline();
-        console.log('here');
-    }catch(err){
-        const erro = new httpError('Something went wrong',403);
-        return next(erro);
-    }
-    res.status(201).json({msg : result}); 
-};
 
 exports.customerinfo = customerinfo;
 exports.customerSignup = customerSignup;
@@ -381,5 +343,4 @@ exports.deletecustomer = deletecustomer;
 exports.customerLogin = customerLogin;
 exports.changePassword = changePassword;
 exports.commentOnproduct = commentOnproduct;
-exports.Search = Search;
 exports.rateproduct = rateproduct;
