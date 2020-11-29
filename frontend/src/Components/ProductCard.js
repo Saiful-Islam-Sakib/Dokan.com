@@ -65,7 +65,7 @@ export default function ProductCard(props) {
 
                         dispatch({
                             type: "SELECTED_PRODUCT",
-                            product: props.product,
+                            product: data.data,
                             comment: data.data.comments,
                         });
                     } catch (err) {

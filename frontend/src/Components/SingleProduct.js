@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Button,
     Card,
@@ -44,8 +44,27 @@ export default function SingleProduct() {
     const classes = useStyles();
     const fullStore = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-
     const selectedProduct = fullStore.selectedProduct;
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/products/productdetails/" +
+                        selectedProduct.id
+                );
+                const data = await res.json();
+                console.log(data.data);
+                dispatch({
+                    type: "SELECTED_PRODUCT",
+                    product: data.data,
+                    comment: data.data.comments,
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
 
     const [value, setValue] = React.useState(1);
     const [selectedImage, setImage] = React.useState(
@@ -159,7 +178,6 @@ export default function SingleProduct() {
                                     </Link>
                                 </Typography>
                                 <div style={{ display: "flex" }}>
-                                    {/* this is not normal rating rather than average rating */}
                                     <Typography
                                         variant="inherit"
                                         component="h3"
@@ -179,7 +197,6 @@ export default function SingleProduct() {
                                     ></div>
                                     <Rating
                                         name="read-only"
-                                        //value={selectedProduct.rating} // avg of star that rounds automatically
                                         value={
                                             selectedProduct.rating
                                                 ? selectedProduct.rating

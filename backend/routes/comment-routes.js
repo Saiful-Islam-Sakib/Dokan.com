@@ -8,6 +8,6 @@ router.get('/comment',commentController.getprodutComments);
 
 //router.get('/comment/fun',commentController.fun);
 
-router.patch('/test',commentController.test);
+router.post('/test',commentController.test);
 
 module.exports = router;

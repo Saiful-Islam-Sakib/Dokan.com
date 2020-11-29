@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Parisienne&display=swap");
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    font: 1.6rem Helvetica;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "all";
+    grid-template-columns: 1fr;
+    grid-template-rows: 5rem 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    grid-area: header;
+    /* background-color: rgb(51, 51, 99); */
+    background-color: rgb(19, 25, 33);
+    box-shadow: 0.3rem 0 0.3rem gray;
+    vertical-align: middle;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5rem;
+    z-index: 150;
+}
+header h2 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    padding-top: 1rem;
+    margin: 0;
+    color: rgba(250, 250, 250, 1);
+    text-align: center;
+    font-family: "Parisienne", cursive;
+}
+
+.toggle-button {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+    border: 0.1rem solid white;
+}
+
+.toggle-button:focus {
+    outline: none;
+}
+.toggle-button:hover,
+.toggle-button:active {
+    cursor: pointer;
+    font-size: 2.2rem;
+}
+
+.all-divs {
+    grid-area: all;
+    display: flex;
+    flex-direction: row;
+}
+.sidebar {
+    width: 16rem;
+    grid-area: sidebar;
+    /* background-color: rgb(51, 51, 99); */
+    background-color: rgb(19, 25, 33);
+    position: fixed;
+    top: 5rem;
+    bottom: 0;
+    z-index: 100;
+}
+
+.sidebar h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    user-select: none;
+}
+.sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+.sidebar ul li {
+    list-style: none;
+    padding-left: 0.3rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.sidebar ul li:first-child {
+    border-top: 0.2rem solid rgb(211, 208, 208);
+}
+.sidebar ul li:hover,
+.sidebar ul li:active {
+    background-color: rgb(41, 41, 105);
+    padding-left: 0.1rem;
+}
+
+.sidebar i {
+    margin-right: 1rem;
+}
+.sidebar a {
+    display: block;
+    width: 100%;
+    line-height: 4rem;
+    font-size: 1.3rem;
+    color: gray;
+    transition: 0.2s;
+    text-decoration: none;
+}
+.sidebar a:hover,
+.sidebar a:active {
+    color: white;
+    font-size: 1.4rem;
+}
+.main {
+    padding-top: 3rem;
+    width: 100%;
+    height: 100%;
+    padding-left: 16rem;
+}
+@media (max-width: 40rem) {
+    .toggle-button {
+        display: block;
+    }
+    .sidebar {
+        opacity: 0;
+        transform: translateX(-16rem);
+        transition: opacity 0.2s, transform 0.7s;
+    }
+    .main {
+        padding-left: 0;
+    }
+    .backdrop {
+        position: fixed;
+        display: none;
+        top: 5rem;
+        left: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 50;
+    }
+    .add__backdrop {
+        display: block;
+    }
+}
+.add__sidebar {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}

@@ -14,7 +14,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../logo2.png";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-//import flour1 from "../image/consumerFood/flour/teer_flour_maida.png";
 
 const useStyles = makeStyles({
     list: {
@@ -63,6 +62,10 @@ export default function TemporaryDrawer() {
     };
 
     useEffect(() => {
+        dispatch({
+            type: "UPDATE_PRODUCT",
+        });
+        
         if (sessionStorage.getItem("allProduct")) {
             let selectedSubCategoryProducts = JSON.parse(
                 sessionStorage.getItem("allProduct")

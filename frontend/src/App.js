@@ -12,6 +12,8 @@ import UserProfile from "./Components/UserProfile/UserProfile";
 import ProductList from "./Components/ProductList";
 import SignleProduct from "./Components/SingleProduct";
 
+import Seller from "./Components/Seller";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContactUs from "./Components/ContactUs";
 
@@ -28,7 +30,7 @@ function App() {
                     }
                 }
             >
-                <Header />
+                {localStorage.getItem("seller") ? <div></div> : <Header />}
                 <Switch>
                     <Route exact path="/">
                         <Body></Body>
@@ -89,6 +91,9 @@ function App() {
                     <Route exact path="/contactUs">
                         <ContactUs></ContactUs>
                     </Route>
+                    <Router exact path="/seller-panel">
+                        <Seller></Seller>
+                    </Router>
                 </Switch>
                 <Footer></Footer>
             </div>

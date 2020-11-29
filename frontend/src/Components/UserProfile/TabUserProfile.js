@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import { Button, Container, Grid, TextField } from "@material-ui/core";
 import OrderHistory from "./OrderHistory";
 import Favorites from "./Favorites";
+import { useDispatch } from "react-redux";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FullWidthTabs({ userinfo }) {
     const classes = useStyles();
     const theme = useTheme();
+    const dispatch = useDispatch();
 
     const [value, setValue] = React.useState(0);
     const [profileState, setProfileState] = React.useState(true);
@@ -93,6 +95,12 @@ export default function FullWidthTabs({ userinfo }) {
     const handleCancelProfile = () => {
         setProfileState(true);
     };
+
+    useEffect(() => {
+        dispatch({
+            type: "FETCH_ORDER_HISTORY",
+        });
+    }, []);
 
     return (
         <div className={classes.root}>
