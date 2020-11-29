@@ -119,7 +119,14 @@ export default function AlertDialog() {
                 <Divider></Divider>
                 <DialogActions>
                     <Button
-                        disabled={fullStore.cart.length > 0 ? false : true}
+                        disabled={
+                            fullStore.cart?.length > 0 &&
+                            fullStore.quantity?.reduce(function (r, a, i) {
+                                return r + a * fullStore.cart[i]["price"];
+                            }, 0) > 50
+                                ? false
+                                : true
+                        }
                         color="primary"
                         variant="outlined"
                         onClick={() => {
