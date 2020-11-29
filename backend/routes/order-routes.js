@@ -15,6 +15,6 @@ router.post('/newOrder',
     //check('order_confirmation').not().isEmpty(),check('order_delivered').not().isEmpty(),
     orderControllers.createNewOrder);
 
-router.delete('/deleteorder/:oid',check('order_confirmation').not().isEmpty(),orderControllers.deleteOrder);
+router.delete('/deleteorder/:oid',orderControllers.deleteOrder);
 
 module.exports = router;
