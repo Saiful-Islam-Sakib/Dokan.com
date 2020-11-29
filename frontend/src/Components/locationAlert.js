@@ -104,6 +104,7 @@ export default function CustomizedDialogs() {
     };
 
     const handleClose = async (event) => {
+        //event.preventDefault();
         const res = await fetch(
             "http://localhost:5000/dokan.com/products/ploc",
             {
@@ -117,7 +118,7 @@ export default function CustomizedDialogs() {
             }
         );
         const data = await res.json();
-        
+
         if (
             city.length > 0 &&
             area.length > 0 &&
@@ -125,6 +126,7 @@ export default function CustomizedDialogs() {
             res.status === 200
         ) {
             sessionStorage.setItem("allProduct", JSON.stringify(data.product));
+
             setOpen(false);
             seterror(false);
 
@@ -133,8 +135,11 @@ export default function CustomizedDialogs() {
         } else {
             seterror(true);
         }
+    };
 
-        //window.location.reload(false);
+    const handleCross = () => {
+        setOpen(false);
+        seterror(false);
     };
 
     return (
@@ -158,7 +163,7 @@ export default function CustomizedDialogs() {
                 aria-labelledby="customized-dialog-title"
                 open={open}
             >
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                <DialogTitle id="customized-dialog-title" onClose={handleCross}>
                     Please select Your Location
                 </DialogTitle>
                 <DialogContent dividers>

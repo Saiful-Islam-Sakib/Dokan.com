@@ -9,8 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
 import { Button, OutlinedInput, TextField } from "@material-ui/core";
-
-import avater from "../image/fresh_chinigura.png";
 import { useSelector, useDispatch } from "react-redux";
 import SingleComment from "./SingleComment";
 
@@ -67,6 +65,8 @@ export default function FullWidthTabs() {
     const [error, setError] = React.useState(false);
     const [errormsg, setErrorMsg] = React.useState("");
     const [reloadComment, setReloadComment] = React.useState(false);
+    const [ratingError, setRatingError] = React.useState(false);
+    const [ratingErrorMsg, setRatingErrorMsg] = React.useState("");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -87,7 +87,7 @@ export default function FullWidthTabs() {
 
                 dispatch({
                     type: "SELECTED_PRODUCT",
-                    product: fullStore.selectedProduct,
+                    product: data.data,
                     comment: data.data.comments,
                 });
             } catch (error) {
@@ -103,7 +103,7 @@ export default function FullWidthTabs() {
         event.preventDefault();
         if (JSON.parse(localStorage.getItem("user")) != null) {
             if (commentBox.length >= 2) {
-                try{
+                try {
                     const res = await fetch(
                         "http://localhost:5000/dokan.com/customer/product/comment",
                         {
@@ -137,12 +137,7 @@ export default function FullWidthTabs() {
     };
     const handleRateProduct = async (event) => {
         event.preventDefault();
-
-        let numberOfStar = RatingValue;
-        let productId = fullStore.selectedProduct.id;
-        let userId = JSON.parse(localStorage.getItem("user"))._id;
-        // rating functionality here ................................................................................
-        try{
+        try {
             const res = await fetch(
                 "http://localhost:5000/dokan.com/customer/rateProduct",
                 {
@@ -151,11 +146,18 @@ export default function FullWidthTabs() {
                     body: JSON.stringify({
                         p_id: fullStore.selectedProduct.id,
                         c_id: JSON.parse(localStorage.getItem("user"))._id,
-                        rating : numberOfStar
+                        rating: RatingValue,
                     }),
                 }
             );
             const response = await res.json();
+
+            if (res.status === 201) {
+                setRatingErrorMsg("Thank you for your Response");
+            } else {
+                setRatingError(true);
+                setRatingErrorMsg(response.msg);
+            }
         } catch (err) {
             console.log(err);
         }
@@ -238,7 +240,15 @@ export default function FullWidthTabs() {
                                 setRatingValue(newValue);
                             }}
                         />
-                        <div style={{ marginBottom: 8 }}></div>
+                        <div style={{ marginBottom: 8 }}>
+                            {ratingError ? (
+                                <Typography style={{ color: "red" }}>
+                                    {ratingErrorMsg}
+                                </Typography>
+                            ) : (
+                                ratingErrorMsg
+                            )}
+                        </div>
                         <OutlinedInput
                             id="reviewerName"
                             value={

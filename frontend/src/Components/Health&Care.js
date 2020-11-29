@@ -28,6 +28,9 @@ export default function OutlinedCard() {
 
     useEffect(() => {
         dispatch({
+            type: "UPDATE_PRODUCT",
+        });
+        dispatch({
             type: "HEALTH_CARE_CAT",
         });
     }, []);
@@ -52,6 +55,10 @@ export default function OutlinedCard() {
                     <Button
                         size="small"
                         onclick={() => {
+                            dispatch({
+                                type: "UPDATE_PRODUCT",
+                            });
+
                             let selectedCategoryProducts = JSON.parse(
                                 sessionStorage.getItem("allProduct")
                             ).filter((p) => p.category == "healthCare");

@@ -7,12 +7,13 @@ import {
     makeStyles,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import AddressIcon from "@material-ui/icons/LocationOn";
 import PhoneNumberIcon from "@material-ui/icons/Phone";
 import EmailIcon from "@material-ui/icons/Email";
 import NameIcon from "@material-ui/icons/Person";
 import TabUserProfile from "./TabUserProfile";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     cardRoot: {
@@ -31,9 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserProfile() {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     let user = JSON.parse(localStorage.getItem("user"));
     console.log(user);
+
+    useEffect(() => {
+        // dispatch a action which return user information.....................
+        
+    }, []);
 
     return (
         <div>

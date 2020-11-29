@@ -135,14 +135,24 @@ export default function PrimarySearchAppBar() {
 
     const onChangeSearchbar = (event) => {
         dispatch({
+            type: "UPDATE_PRODUCT",
+        });
+
+        dispatch({
             type: "SEARCH",
             searchFor: event.target.value.toLowerCase(),
         });
+
+        history.push("/ProductList");
     };
 
     const onkeydownSearch = (event) => {
         if (event.key == "Enter" && event.target.value.length > 0) {
             console.log("Search : " + event.target.value);
+
+            dispatch({
+                type: "UPDATE_PRODUCT",
+            });
 
             dispatch({
                 type: "SEARCH",
@@ -160,13 +170,14 @@ export default function PrimarySearchAppBar() {
 
     const handleSignOut = () => {
         handleMenuClose();
-        if (localStorage.getItem("login") === "true") {
-            localStorage.removeItem("login");
-            localStorage.removeItem("user");
-        } else if (sessionStorage.getItem("login") === "true") {
-            sessionStorage.removeItem("login");
-            sessionStorage.removeItem("user");
-        }
+        // if (localStorage.getItem("login") === "true") {
+        //     localStorage.clear();
+        // } else if (sessionStorage.getItem("login") === "true") {
+        //     localStorage.clear();
+        //     sessionStorage.clear();
+        // }
+        localStorage.clear();
+        sessionStorage.clear();
 
         history.push("/");
 
@@ -227,7 +238,15 @@ export default function PrimarySearchAppBar() {
                     <Divider></Divider>
                     <MenuItem>
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge
+                                badgeContent={fullStore.quantity?.reduce(
+                                    function (a, b) {
+                                        return a + b;
+                                    },
+                                    0
+                                )}
+                                color="secondary"
+                            >
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
@@ -248,7 +267,15 @@ export default function PrimarySearchAppBar() {
                 >
                     <MenuItem>
                         <IconButton aria-label="cart" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge
+                                badgeContent={fullStore.quantity?.reduce(
+                                    function (a, b) {
+                                        return a + b;
+                                    },
+                                    0
+                                )}
+                                color="secondary"
+                            >
                                 <CartList></CartList>
                             </Badge>
                         </IconButton>
@@ -304,6 +331,9 @@ export default function PrimarySearchAppBar() {
                             className={classes.logoLink}
                             style={{ textDecoration: "none" }}
                             onClick={() => {
+                                dispatch({
+                                    type: "UPDATE_PRODUCT",
+                                });
                                 history.push("/");
                             }}
                         >
@@ -333,7 +363,6 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        {/* sign in kore felle sign in and Seller? option show korbe na */}
                         {localStorage.getItem("login") === "true" ||
                         sessionStorage.getItem("login") === "true" ? (
                             <>
@@ -405,7 +434,7 @@ export default function PrimarySearchAppBar() {
                                         {JSON.parse(
                                             localStorage.getItem("user")
                                         ).f_name +
-                                            " " +
+                                            "_" +
                                             JSON.parse(
                                                 localStorage.getItem("user")
                                             ).l_name}
@@ -449,6 +478,9 @@ export default function PrimarySearchAppBar() {
                                 dispatch({
                                     type: "SAVE_CURRENT_REDUX_STATE",
                                 });
+                                dispatch({
+                                    type: "UPDATE_PRODUCT",
+                                });
                                 history.push("/");
                             }}
                         >
@@ -482,9 +514,13 @@ export default function PrimarySearchAppBar() {
                             color="secondary"
                             href="#consumerFood"
                             onClick={() => {
+                                dispatch({
+                                    type: "UPDATE_PRODUCT",
+                                });
+
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "consumerFood");
+                                )?.filter((p) => p.category == "consumerFood");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",
@@ -500,9 +536,13 @@ export default function PrimarySearchAppBar() {
                             color="secondary"
                             href="#toiletries"
                             onClick={() => {
+                                dispatch({
+                                    type: "UPDATE_PRODUCT",
+                                });
+
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "toiletries");
+                                )?.filter((p) => p.category == "toiletries");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",
@@ -518,9 +558,13 @@ export default function PrimarySearchAppBar() {
                             color="secondary"
                             href="#healthCare"
                             onClick={() => {
+                                dispatch({
+                                    type: "UPDATE_PRODUCT",
+                                });
+
                                 let selectedCategoryProducts = JSON.parse(
                                     sessionStorage.getItem("allProduct")
-                                ).filter((p) => p.category == "healthCare");
+                                )?.filter((p) => p.category == "healthCare");
 
                                 dispatch({
                                     type: "SELECTED_SUB_CAT_PRODUCT",

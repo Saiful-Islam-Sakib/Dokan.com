@@ -107,14 +107,24 @@ export default (state = initialState, action) => {
                 consumerCat: selectedCategoryProducts,
             };
         case "HEALTH_CARE_CAT":
+            let selectedCategoryProducts2 = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            )
+                ?.filter((p) => p.category == "healthCare")
+                .slice(0, 7);
             return {
                 ...state,
-                healthCareCat: action.product,
+                healthCareCat: selectedCategoryProducts2,
             };
         case "TOILETRIES_CAT":
+            let selectedCategoryProducts3 = JSON.parse(
+                sessionStorage.getItem("allProduct")
+            )
+                ?.filter((p) => p.category == "toiletries")
+                .slice(0, 7);
             return {
                 ...state,
-                toiletriesCat: action.product,
+                healthCareCat: selectedCategoryProducts3,
             };
         case "SEARCH_CATEGORY":
             return {
@@ -176,6 +186,63 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: [],
                 quantity: [],
+            };
+        case "UPDATE_PRODUCT":
+            (async () => {
+                let city = sessionStorage.getItem("city");
+                let area = sessionStorage.getItem("area");
+                let place = sessionStorage.getItem("place");
+
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/products/ploc",
+                    {
+                        method: "POST",
+                        headers: { "Content-type": "application/json" },
+                        body: JSON.stringify({
+                            city: city,
+                            area: area,
+                            place: place,
+                        }),
+                    }
+                );
+                const data = await res.json();
+
+                if (
+                    city.length > 0 &&
+                    area.length > 0 &&
+                    place.length > 0 &&
+                    res.status === 200
+                ) {
+                    sessionStorage.setItem(
+                        "allProduct",
+                        JSON.stringify(data.product)
+                    );
+                }
+            })();
+            return {
+                ...state,
+            };
+        case "FETCH_ORDER_HISTORY":
+            async function fetchOrderHistory() {
+                try {
+                    let res = await fetch(
+                        "http://localhost:5000/dokan.com/order/customer/" +
+                            JSON.parse(localStorage.getItem("user"))._id
+                    );
+                    let response = await res.json();
+
+                    sessionStorage.setItem(
+                        "orderHistory",
+                        JSON.stringify(response.data.orders)
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            fetchOrderHistory();
+
+            return {
+                ...state,
             };
         default:
             return state;
