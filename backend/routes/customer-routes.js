@@ -41,4 +41,7 @@ router.post('/rateProduct',[check('p_id').not().isEmpty(),check('s_id').not().is
 
 router.get('/Search/:name',customerController.Search);
 
+router.patch('/rateProduct',[check('p_id').not().isEmpty(), check('c_id').not().isEmpty(),
+    check('rating').isLength({max:1}),check('rating').isLength({min:1})],customerController.rateproduct);
+
 module.exports = router;

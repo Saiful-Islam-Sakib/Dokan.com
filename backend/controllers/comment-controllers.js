@@ -2,6 +2,7 @@ const httpError = require('../models/http-errors');
 const {validationResult} = require('express-validator');
 const comment = require('../models/comment-model');
 const customer = require('../models/customer-model');
+const rating_model = require('../models/rating-model');
 const mongo = require('mongoose');
 
 const getprodutComments = async (req,res,next) =>{
@@ -17,32 +18,27 @@ const getprodutComments = async (req,res,next) =>{
 };
 
 const test = async (req,res,next) =>{
-    const c_id = req.params.cid;
-    const p_id = '5fba5b06a8d478291cad85ab';
-    let checkproduct_ordered;
-    let doe;
+    const {p_id,c_id,rating} = req.body;
+    let modifyrating;
     try{
-        checkproduct_ordered = await customer.findById(c_id).populate('orders');
-        const fun = async(req,res,next) =>{
-            console.log("Yes bro done");
-            res.json({msg :'yes'});
-        };
+        //modifyrating = await rating_model.findById('5fc2b58900a0632f487466c0');
+        modifyrating = await rating_model.find({p_id : p_id, c_id : c_id});
     }catch(err){
-        const erro = new httpError('You can not rate this product',403);
-        return next(erro);
+        console.log(err);
     }
-    doe = checkproduct_ordered.orders;
-    //console.log(doe);
-    const v1 = doe.map(order => order.toObject({getters:true}));
-    const v2 = v1.map(({p_id}) => ({p_id}));
-    const v3 = v2.map(({p_id}) => p_id);
-    console.log(v3);
-
-    const found = v3.find(item => p_id);
-    if(!found){
-        console.log(found);
+    console.log(typeof modifyrating);
+    let elem = modifyrating[0];
+    if(elem){
+        console.log('hi');
     }
-    res.status(200).json({msg: v1});
+    console.log(typeof elem);
+    elem.rating = rating;
+    try{
+        await elem.save();
+    }catch(err){
+        console.log(err);
+    }
+    res.status(201).json({msg : 'done'});
 };
 
 

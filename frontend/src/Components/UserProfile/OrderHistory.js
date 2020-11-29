@@ -40,8 +40,16 @@ export default function ControlledAccordions() {
 
     useEffect(() => {
         async function fetchOrderHistory() {
-            let userId = localStorage.getItem("user")._id;
+            let c_id = localStorage.getItem("user")._id;
             // order history code ...................................................................................
+            try{
+                const res = await fetch(
+                    "http://localhost:5000/dokan.com/order/customer"+c_id
+                    );
+                const response = await res.json();
+            } catch (err) {
+                console.log(err);
+            }
         }
         fetchOrderHistory();
     }, []);
