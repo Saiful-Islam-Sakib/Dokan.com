@@ -83,8 +83,8 @@ const updatecustomer = async (req,res,next) =>{
         console.log(err);
         throw new httpError('Invalid information',422);
     }
-    const {c_id,phone,city,area,place,address,delivery_add} = req.body;
-    const cus_id = req.params.cid;
+    const {c_id,f_name,l_name,email,phone,address,password} = req.body;
+    const cus_id = c_id;
 
     let updateCusInfo;
     try{
@@ -92,26 +92,23 @@ const updatecustomer = async (req,res,next) =>{
     }catch(err){
         const erro = new httpError('Something went wrong',500);
         return next(erro);
-    }   
-    
-    //const updateCusInfo = dummy_customer.find(p => p.id === cus_id);
-    //const customerIndex = dummy_customer.findIndex(p => p.id === cus_id);
-    updateCusInfo.phone = phone;
-    updateCusInfo.city = city;
-    updateCusInfo.area = area;
-    updateCusInfo.place = place;
-    updateCusInfo.address = address;
-    updateCusInfo.delivery_add = delivery_add;
-
-    //dummy_customer[customerIndex] = updateCusInfo;
-    //console.log(updateCusInfo);
-    try{
-        await updateCusInfo.save();
-    }catch(err){
-        const erro = new httpError('Sorry could not update customer info',500);
-        return next(erro);
     }
-    res.status(200).json({customer: updateCusInfo.toObject({getters: true})});
+    if(updateCusInfo.password === password){
+        updateCusInfo.phone = phone;
+        updateCusInfo.f_name = f_name;
+        updateCusInfo.l_name = l_name;
+        updateCusInfo.email = email;
+        updateCusInfo.address = address;
+        try{
+            await updateCusInfo.save();
+        }catch(err){
+            const erro = new httpError('Sorry could not update customer info',500);
+            return next(erro);
+        }
+        res.status(201).json({customer: updateCusInfo.toObject({getters: true})});
+    }else{
+        res.status(500).json({data : 'Your password did not match'});
+    }   
 };
 
 const changePassword = async (req,res,next) =>{

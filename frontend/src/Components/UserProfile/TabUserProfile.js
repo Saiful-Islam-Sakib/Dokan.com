@@ -117,6 +117,7 @@ export default function FullWidthTabs({ userinfo }) {
         // email
         // address
         // currentPassword
+        //let userId = JSON.parse(localStorage.getItem("user"))._id;
     };
     const handleCancelProfile = () => {
         setProfileState(true);
