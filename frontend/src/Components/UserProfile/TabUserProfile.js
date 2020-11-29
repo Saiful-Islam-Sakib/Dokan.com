@@ -96,6 +96,9 @@ export default function FullWidthTabs({ userinfo }) {
     const [value, setValue] = React.useState(0);
     const [profileState, setProfileState] = React.useState(true);
 
+    const [errorStatus, setErrorStatus] = React.useState(false);
+    const [errorMsg, setErrorMsg] = React.useState("");
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -106,11 +109,8 @@ export default function FullWidthTabs({ userinfo }) {
     const handleEditProfile = () => {
         setProfileState(false);
     };
-    const handleSaveProfile = async event => {
-        console.log("database update");
-        // update profile information here ................................................
-        // variables are =======
-        let response;
+    const handleSaveProfile = async (event) => {
+        setCurrentPassword("");
         event.preventDefault();
         try {
             const res = await fetch(
@@ -119,40 +119,30 @@ export default function FullWidthTabs({ userinfo }) {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        c_id : JSON.parse(localStorage.getItem("user"))._id,
-                        f_name : firstName,
-                        l_name : lastName,
-                        email : email,
-                        phone : phoneNumber,
-                        address : address,
-                        password : currentPassword
+                        c_id: JSON.parse(localStorage.getItem("user"))._id,
+                        f_name: firstName,
+                        l_name: lastName,
+                        email: email,
+                        phone: phoneNumber,
+                        address: address,
+                        password: currentPassword,
                     }),
                 }
             );
-            response = await res.json();
-
-            // ei response a user er new updated information ase, jdi password right dey
+            const response = await res.json();
 
             if (res.status === 201) {
-                setRatingErrorMsg("Your Information have been updated");
-
-                //successful hoise jehetu, tmi age local info new response diye replace koiro
-
+                localStorage.setItem("user", JSON.stringify(response.customer));
+                setErrorMsg("Your Information have been updated");
+                setProfileState(true);
+                window.location.reload(false);
             } else {
-                setRatingError(true);
-                setRatingErrorMsg(response.msg);
+                setErrorStatus(true);
+                setErrorMsg(response.msg);
             }
         } catch (err) {
             console.log(err);
         }
-
-        // firstName
-        // lastName
-        // phoneNumber
-        // email
-        // address
-        // currentPassword
-        //let userId = JSON.parse(localStorage.getItem("user"))._id;
     };
     const handleCancelProfile = () => {
         setProfileState(true);
@@ -369,6 +359,13 @@ export default function FullWidthTabs({ userinfo }) {
                                 </Button>
                             ) : (
                                 ""
+                            )}
+                            {errorStatus ? (
+                                <Typography style={{ color: "red" }}>
+                                    {errorMsg}
+                                </Typography>
+                            ) : (
+                                <Typography>{errorMsg}</Typography>
                             )}
                         </div>
                     </Container>

@@ -231,6 +231,10 @@ export default (state = initialState, action) => {
                     );
                     let response = await res.json();
 
+                    response.data.orders.sort(function (a, b) {
+                        return new Date(b.date) - new Date(a.date);
+                    });
+
                     sessionStorage.setItem(
                         "orderHistory",
                         JSON.stringify(response.data.orders)

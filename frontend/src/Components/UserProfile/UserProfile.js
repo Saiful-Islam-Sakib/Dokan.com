@@ -37,11 +37,6 @@ export default function UserProfile() {
     let user = JSON.parse(localStorage.getItem("user"));
     console.log(user);
 
-    useEffect(() => {
-        // dispatch a action which return user information.....................
-        
-    }, []);
-
     return (
         <div>
             <Container maxWidth="lg">
