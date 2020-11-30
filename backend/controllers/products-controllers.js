@@ -116,8 +116,22 @@ const deleteproduct = async(req,res,next) => {
         const erro = new httpError('Requested product is not avaiable',500);
         return next(erro);
     }
+    let sid = prod.s_id;
+    let sellerinfo;
     try{
-        await prod.remove();
+        sellerinfo = await seller.findById(sid);
+    }catch(err){
+        const erro = new httpError('Requested product is not avaiable',500);
+        return next(erro);
+    }
+    try{
+        //await prod.remove();
+        const session = await mongo.startSession();
+        session.startTransaction();
+        await prod.remove({session : session});
+        sellerinfo.products.pull(prod);
+        await sellerinfo.save({session : session});
+        await session.commitTransaction();
     }catch(err){
         const erro = new httpError('Something went wrong',500);
         return next(erro);
