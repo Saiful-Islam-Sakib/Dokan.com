@@ -92,7 +92,12 @@ function App() {
                         <ContactUs></ContactUs>
                     </Route>
                     <Router exact path="/seller-panel">
-                        <Seller></Seller>
+                        {localStorage.getItem("seller") ||
+                        sessionStorage.getItem("seller") ? (
+                            <Seller></Seller>
+                        ) : (
+                            <Body></Body>
+                        )}
                     </Router>
                 </Switch>
                 <Footer></Footer>

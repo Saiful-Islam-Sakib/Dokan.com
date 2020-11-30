@@ -5,6 +5,7 @@ import {
     Redirect,
     Switch,
     Link,
+    useHistory,
 } from "react-router-dom";
 
 import Products from "../yourProducts/Products";
@@ -16,9 +17,18 @@ import Profile from "../profile/Profile";
 import "./Shared.css";
 
 const Shared = (props) => {
+    const history = useHistory();
     const sidebarMenu = () => {
         document.querySelector(".sidebar").classList.toggle("add__sidebar");
         document.querySelector(".backdrop").classList.toggle("add__backdrop");
+    };
+    const handleLogOut = () => {
+        sidebarMenu();
+        localStorage.clear();
+        sessionStorage.clear();
+
+        history.push("/");
+        window.location.reload(false);
     };
 
     return (
@@ -76,7 +86,7 @@ const Shared = (props) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/seller-panel" onClick={sidebarMenu}>
+                                <Link to="/seller-panel" onClick={handleLogOut}>
                                     <i className="fas fa-sign-out-alt"></i>
                                     LOGOUT
                                 </Link>
