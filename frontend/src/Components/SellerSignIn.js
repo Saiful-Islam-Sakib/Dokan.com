@@ -82,7 +82,7 @@ function SignIn() {
                     } else {
                         sessionStorage.setItem("login", true);
                     }
-                    history.push("/");
+                    history.push("/seller-panel");
                 } else {
                     setErrorStatus(true);
                     setPassword("");
@@ -113,7 +113,7 @@ function SignIn() {
                     } else {
                         sessionStorage.setItem("login", true);
                     }
-                    history.push("/");
+                    history.push("/seller-panel");
                 } else {
                     setErrorStatus(true);
                     setPassword("");
@@ -176,6 +176,7 @@ function SignIn() {
                             <Checkbox
                                 value="remember"
                                 color="primary"
+                                checked={true}
                                 onChange={(event) => {
                                     setRememberMe(event.target.checked);
                                 }}
