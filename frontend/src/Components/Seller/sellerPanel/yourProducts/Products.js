@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Data from "./data";
 import "./Products.css";
 
 const Products = (props) => {
     const dispatch = useDispatch();
+    const fullStore = useSelector((state) => state.seller);
 
     const editProductHandler = (p) => {
         const prod = Data.products.find((x) => x._id === p);
@@ -18,7 +19,7 @@ const Products = (props) => {
     useEffect(() => {
         dispatch({
             type: "LOAD_PRODUCTS",
-            //sellerId: JSON.parse(localStorage.getItem("seller"))._id,
+            sellerId: JSON.parse(localStorage.getItem("seller"))._id
         });
     }, []);
     // product load hoa gele sheta show koranor bebostha mane map korte hobe ...

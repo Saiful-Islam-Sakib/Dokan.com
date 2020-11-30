@@ -1,7 +1,6 @@
 const mongo = require('mongoose');
 
 const productSchema = new mongo.Schema({
-    //p_id : {type:String},
     name : {type:String,required:true},
     brand: {type:String,required:true},
     price : {type:Number,required:true},
@@ -9,7 +8,7 @@ const productSchema = new mongo.Schema({
     sub_category: {type:String,required:true},
     tag : [{type:String,required:true}],
     s_id : {type: mongo.Types.ObjectId,required:true, ref : 'Seller'},
-    img : {type:String,required:true},
+    img : {type:String},
     offer_price :{type:Number, default:''},
     comments:[{type:mongo.Types.ObjectId, ref: 'Comment'}],
     rating : {type: Number,default : 0.0},
