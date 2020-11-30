@@ -20,6 +20,13 @@ export default function SingleOrder() {
         });
     };
 
+    const handleOrderDelivered = () => {
+        dispatch({
+            type: "DELIVERED_ORDER",
+            //orderId: ,
+        });
+    };
+
     return (
         <li class="order-item">
             <img
@@ -44,7 +51,13 @@ export default function SingleOrder() {
                         class="cancel-order-button"
                         onClick={handleOrderReject}
                     >
-                        DECLINE
+                        REJECT
+                    </button>
+                    <button
+                        class="delivered-order-button"
+                        onClick={handleOrderDelivered}
+                    >
+                        DELIVERED
                     </button>
                 </div>
             </div>

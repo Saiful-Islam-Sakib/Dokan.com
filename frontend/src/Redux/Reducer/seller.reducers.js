@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
         case "LOAD_SELLER_STATE":
             return {
                 ...state,
-                seller: action.seller,
+                //seller: JSON.parse(localStorage.getItem("seller")),
             };
         case "LOAD_PRODUCTS":
             let sellerId = action.sellerId;
@@ -74,6 +74,19 @@ export default (state = initialState, action) => {
                 ...state,
             };
         case "REJECT_ORDER":
+            //orderId = action.orderId;
+
+            (async () => {
+                try {
+                    // reject orders functionality here .........................................................................................
+                } catch (error) {}
+            })();
+            return {
+                ...state,
+            };
+        case "DELIVERED_ORDER":
+            //orderId = action.orderId;
+
             (async () => {
                 try {
                     // reject orders functionality here .........................................................................................
