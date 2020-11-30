@@ -37,6 +37,7 @@ export default (state = initialState, action) => {
             };
         case "ADD_PRODUCT":
             let name = action.name;
+            let brand = action.brand;
             let price = action.price;
             let category = action.category;
             let subCategory = action.subCategory;
