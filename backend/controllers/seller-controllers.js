@@ -157,6 +157,42 @@ const sellerSignup = async (req,res,next) =>{
     res.status(201).json({msg : newSeller.toObject({getters : true})});
 };
 
+const updateSeller = async (req,res,next) => {
+    const err = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information',422);
+    }
+    const {s_id,v_f_name,v_l_name,email,phone,v_city,v_area,v_address,b_acc,b_acc_no,
+        bank,branch,sh_city,sh_area,sh_place,sh_area_pc,password} = req.body;
+    const sid = s_id;
+
+    let updateSellerInfo;
+    try{
+        updateSellerInfo = await seller.findById(sid);
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
+    if(updateSellerInfo.password === password){
+        updateSellerInfo.phone = phone;
+        updateSellerInfo.v_city = v_city;   updateSellerInfo.v_area = v_area;   updateSellerInfo.b_acc = b_acc;
+        updateSellerInfo.v_f_name = v_f_name;   updateSellerInfo.b_acc_no = b_acc_no;   updateSellerInfo.bank = bank;
+        updateSellerInfo.v_l_name = v_l_name;   updateSellerInfo.branch = branch;   updateSellerInfo.sh_city = sh_city;
+        updateSellerInfo.email = email;     updateSellerInfo.sh_area = sh_area; updateSellerInfo.sh_place = sh_place;      
+        updateSellerInfo.v_address = v_address; updateSellerInfo.sh_area_pc = sh_area_pc;
+        try{
+            await updateSellerInfo.save();
+        }catch(err){
+            const erro = new httpError('Sorry could not update customer info',500);
+            return next(erro);
+        }
+        res.status(201).json({data: updateSellerInfo.toObject({getters: true})});
+    }else{
+        res.status(500).json({data : 'Your password did not match'});
+    }   
+}
+
 
 exports.getsellerinfobyid = getsellerinfobyid;
 exports.sellerLogin = sellerLogin;
