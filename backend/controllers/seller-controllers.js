@@ -164,7 +164,7 @@ const updateSeller = async (req,res,next) => {
         throw new httpError('Invalid information',422);
     }
     const {s_id,v_f_name,v_l_name,email,phone,v_city,v_area,v_address,b_acc,b_acc_no,
-        bank,branch,sh_city,sh_area,sh_place,sh_area_pc,password} = req.body;
+        bank,branch,sh_city,sh_area,sh_place,sh_area_pc,password,sh_name} = req.body;
     const sid = s_id;
 
     let updateSellerInfo;
@@ -180,7 +180,7 @@ const updateSeller = async (req,res,next) => {
         updateSellerInfo.v_f_name = v_f_name;   updateSellerInfo.b_acc_no = b_acc_no;   updateSellerInfo.bank = bank;
         updateSellerInfo.v_l_name = v_l_name;   updateSellerInfo.branch = branch;   updateSellerInfo.sh_city = sh_city;
         updateSellerInfo.email = email;     updateSellerInfo.sh_area = sh_area; updateSellerInfo.sh_place = sh_place;      
-        updateSellerInfo.v_address = v_address; updateSellerInfo.sh_area_pc = sh_area_pc;
+        updateSellerInfo.v_address = v_address; updateSellerInfo.sh_area_pc = sh_area_pc; updateSellerInfo.sh_name = sh_name;
         try{
             await updateSellerInfo.save();
         }catch(err){
@@ -197,3 +197,4 @@ const updateSeller = async (req,res,next) => {
 exports.getsellerinfobyid = getsellerinfobyid;
 exports.sellerLogin = sellerLogin;
 exports.sellerSignup = sellerSignup;
+exports.updateSeller = updateSeller;
