@@ -117,8 +117,8 @@ const orderConfirmation = async (req,res,next) => {
         console.log(err);
         throw new httpError('Not appropiate confirmation was sent',204);
     }
-    const { order_confirmation } = req.body;
-    const order_id = req.params.oid;
+    const { order_confirmation,o_id } = req.body;
+    const order_id = o_id;
     let orderinfo;
     try{
         orderinfo = await order.findById(order_id);
@@ -139,7 +139,7 @@ const orderConfirmation = async (req,res,next) => {
         const erro = new httpError('Something went wrong',500);
         return next(erro);
     }
-    res.status(201).json({msg : 'Your order has been confirmed'});
+    res.status(201).json({data : 'Your order has been confirmed'});
 };
 
 const deleteOrder = async (req,res,next) => {
@@ -184,8 +184,8 @@ const orderDelivered = async (req,res,next) => {
         console.log(err);
         throw new httpError('Not appropiate confirmation was sent',204);
     }
-    const { order_delivered} = req.body;
-    const order_id = req.params.oid;
+    const { o_id,order_delivered} = req.body;
+    const order_id = o_id;
     let orderinfo;
     try{
         orderinfo = await order.findById(order_id);
@@ -193,8 +193,6 @@ const orderDelivered = async (req,res,next) => {
         const erro = new httpError('Could not find any order',500);
         return next(erro);
     }
-    console.log(orderinfo);
-    console.log(order_delivered);
     if(orderinfo.order_delivered === order_delivered){
         return res.json('Delivery already confirmed');
     }
@@ -206,11 +204,47 @@ const orderDelivered = async (req,res,next) => {
         const erro = new httpError('Something went wrong',500);
         return next(erro);
     }
-    res.status(201).json({msg : 'Order delivered'});
+    res.status(201).json({data : 'Order delivered'});
 };
+
+const orderRejected = async (req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Not appropiate confirmation was sent',204);
+    }
+    const { o_id,order_delivered} = req.body;
+    const order_id = o_id;
+    let orderinfo;
+    try{
+        orderinfo = await order.findById(order_id);
+    }catch(err){
+        const erro = new httpError('Could not find any order',500);
+        return next(erro);
+    }
+    let sid = orderinfo.s_id, sellerinfo;
+    if(orderinfo.order_confirmation === false && order_delivered === true){
+        try{
+            sellerinfo = await seller_model.findById(sid);
+        }catch(err){
+            const erro = new httpError('Something went wrong',500);
+            return next(erro);
+        }
+        try{
+            sellerinfo.orders.pull(orderinfo);
+            await sellerinfo.save();
+        }catch(err){
+            const erro = new httpError('Something went wrong',500);
+            return next(erro);
+        }
+        res.status(201).json({data: 'Order rejected'});
+    }
+    res.status(406).json({data : 'Can not reject order'});
+}
 
 exports.getOrderbyid = getOrderbyid;
 exports.orderConfirmation = orderConfirmation;
 exports.createNewOrder = createNewOrder;
 exports.deleteOrder = deleteOrder;
 exports.orderDelivered = orderDelivered;
+exports.orderRejected = orderRejected;
