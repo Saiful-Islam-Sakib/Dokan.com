@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     BrowserRouter as Router,
     Route,
@@ -15,9 +15,12 @@ import Transaction from "../transaction/Transaction";
 import Profile from "../profile/Profile";
 
 import "./Shared.css";
+import { useDispatch } from "react-redux";
 
 const Shared = (props) => {
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const sidebarMenu = () => {
         document.querySelector(".sidebar").classList.toggle("add__sidebar");
         document.querySelector(".backdrop").classList.toggle("add__backdrop");
@@ -30,6 +33,13 @@ const Shared = (props) => {
         history.push("/");
         window.location.reload(false);
     };
+
+    useEffect(() => {
+        dispatch({
+            type: "LOAD_SELLER_STATE",
+            //seller: JSON.parse(localStorage.getItem("seller")),
+        });
+    }, []);
 
     return (
         <Router>

@@ -14,6 +14,7 @@ export default (state = initialState, action) => {
         case "LOAD_SELLER_STATE":
             return {
                 ...state,
+                seller: action.seller,
             };
         case "LOAD_PRODUCTS":
             let sellerId = action.sellerId;
@@ -42,6 +43,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 //errorAddProduct: ,
+                //products: ,
+            };
+        case "LOAD_MY_ORDERS":
+            return {
+                ...state,
             };
         default:
             return state;
