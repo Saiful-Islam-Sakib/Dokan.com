@@ -143,6 +143,7 @@ const productbySubcat  = async (req,res,next) => {
 
 const productbylocation = async(req,res,next) =>{
     const {city,area,place} = req.body;
+    console.log(city+' '+area+' '+place);
     let locseller;
     try{
         locseller = await seller.find({sh_city : city , sh_area : area,sh_place : place});
@@ -151,7 +152,6 @@ const productbylocation = async(req,res,next) =>{
         console.log(subcat);
         return next(erro);
     }
-    //console.log(locseller);
     const locsellerv2 = locseller.map(prod => prod.toObject({getters :true}));
     const seller_id = locsellerv2.map(({id}) => ({id}));
     let seller_id_arr  = seller_id.map(({id}) => id);
@@ -178,7 +178,7 @@ const productbylocation = async(req,res,next) =>{
         }
     }
     res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
-    //res.status(200).json({msg : prodbyloc});
+    //res.status(200).json({product : prodbyloc});
 };
 
 const prodSearchbyCategory = async(req ,res ,next) =>{
