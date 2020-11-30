@@ -17,23 +17,23 @@ export default (state = initialState, action) => {
                 seller: action.seller,
             };
         case "LOAD_PRODUCTS":
-        
-            let sid = action.sellerId;
-            let response;
+            let products;
             (async (event) => {
                 try {
-                    // fetch seller products here ...........................................................................................
-                    const res = await fetch('http://localhost:5000/dokan.com/seller/'+sid);
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/seller/" +
+                            action.sellerId
+                    );
 
-                    response = await res.json();
-                    console.log(response);
+                    const response = await res.json();
+                    products = response.data.products;
                 } catch (error) {
                     console.log(error);
                 }
             })();
             return {
                 ...state,
-                //products: ,
+                products: products,
             };
         case "ADD_PRODUCT":
             let name = action.name;
