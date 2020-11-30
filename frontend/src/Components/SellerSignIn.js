@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Copyright() {
     return (
@@ -53,6 +53,7 @@ function SignIn() {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
+    const sellerStore = useSelector((state) => state.seller);
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -90,7 +91,7 @@ function SignIn() {
 
             localStorage.setItem("seller", JSON.stringify(data.data));
 
-            history.push("/seller-panel");
+            history.push("/seller-panel/");
             window.location.reload(false);
         } else {
             setErrorStatus(true);

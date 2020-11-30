@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 const initialState = {
     seller: {},
-    products: {},
+    products: [],
     orders: {},
     transactions: {},
     errorAddProduct: "",
@@ -17,7 +17,6 @@ export default (state = initialState, action) => {
                 seller: action.seller,
             };
         case "LOAD_PRODUCTS":
-            let products;
             (async (event) => {
                 try {
                     const res = await fetch(
@@ -26,14 +25,17 @@ export default (state = initialState, action) => {
                     );
 
                     const response = await res.json();
-                    products = response.data.products;
+                    sessionStorage.setItem(
+                        "products",
+                        JSON.stringify(response.data.products)
+                    );
                 } catch (error) {
                     console.log(error);
                 }
             })();
             return {
                 ...state,
-                products: products,
+                products: JSON.parse(sessionStorage.getItem("products")),
             };
         case "ADD_PRODUCT":
             let name = action.name;
@@ -79,7 +81,6 @@ export default (state = initialState, action) => {
             };
         case "REJECT_ORDER":
             //orderId = action.orderId;
-
             (async () => {
                 try {
                     // reject orders functionality here .........................................................................................
@@ -90,10 +91,18 @@ export default (state = initialState, action) => {
             };
         case "DELIVERED_ORDER":
             //orderId = action.orderId;
-
             (async () => {
                 try {
                     // reject orders functionality here .........................................................................................
+                } catch (error) {}
+            })();
+            return {
+                ...state,
+            };
+        case "DELETE_PRODUCT":
+            (async () => {
+                try {
+                    // delete orders functionality here .........................................................................................
                 } catch (error) {}
             })();
             return {
