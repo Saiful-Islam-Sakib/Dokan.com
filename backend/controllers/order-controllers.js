@@ -4,7 +4,7 @@ const order = require('../models/order-model');
 const customer = require('../models/customer-model');
 const mongo  = require('mongoose');
 const product = require('../models/product-model');
-const seller_model = require('../models/seller-model');
+const seller_model= require('../models/seller-model');
 
 let dummy_order = [
     {
@@ -32,11 +32,11 @@ const createNewOrder = async (req,res,next) =>{
     try{
         customerexist = await customer.findById(c_id);
     }catch(err){
-        const erro = new httpError('Could not make an order',500);
+        const erro = new httpError('Could not make an order',501);
         return next(erro);
     }
     if(!customerexist){
-        const erro = new httpError('Could not find user',500);
+        const erro = new httpError('Could not find user',502);
         return next(erro);
     }
     let size = p_id.length;
@@ -45,23 +45,23 @@ const createNewOrder = async (req,res,next) =>{
         try{
             productexist = await product.findById(p_id[i]);
         }catch(err){
-            const erro = new httpError('Could not make an order',500);
+            const erro = new httpError('Could not make an order',503);
             return next(erro);
         }
         if(!productexist){
-            const erro = new httpError('Could not find product',500);
+            const erro = new httpError('Could not find product',504);
             return next(erro);
         }
         let s_id = productexist.s_id;
         let sellerexist;
         try{
-            sellerexist = await seller.findById(s_id);
+            sellerexist = await seller_model.findById(s_id);
         }catch(err){
-            const erro = new httpError('Could not make an order',500);
+            const erro = new httpError('Could not make an order',505);
             return next(erro);
         }
         if(!sellerexist){
-            const erro = new httpError('Could not find product',500);
+            const erro = new httpError('Could not find product',506);
             return next(erro);
         }
         let shop_name = sellerexist.sh_name;
@@ -83,7 +83,7 @@ const createNewOrder = async (req,res,next) =>{
             await sellerexist.save({session: session});
             await session.commitTransaction();
         }catch(err){
-            const erro = new httpError('Could not place an order',500);
+            const erro = new httpError('Could not place an order',507);
             return next(erro);
         }
     }
@@ -152,12 +152,11 @@ const deleteOrder = async (req,res,next) => {
         cus = await customer.findById(cid);
         seller = await seller_model.findById(sid); 
     }catch(err){
-        const erro = new httpError('Order not found',500);
+        const erro = new httpError('Order not found',501);
         return next(erro);
     }
-    console.log(orderinfo);
     if(!orderinfo){
-        const erro = new httpError('Order not found',500);
+        const erro = new httpError('Order not found',502);
         return next(erro);
     }
     if(orderinfo.order_confirmation === true){
@@ -173,7 +172,7 @@ const deleteOrder = async (req,res,next) => {
         await seller.save({session: session});
         await session.commitTransaction();
     }catch(err){
-        const erro = new httpError('Something went wrong',500);
+        const erro = new httpError('Something went wrong',503);
         return next(erro);
     }
     res.status(201).json({data : 'Successfully deleted order'});

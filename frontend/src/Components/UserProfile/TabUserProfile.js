@@ -132,6 +132,15 @@ export default function FullWidthTabs({ userinfo }) {
             const response = await res.json();
 
             if (res.status === 201) {
+<<<<<<< HEAD
+                //setRatingErrorMsg("Your Information have been updated");
+
+                //successful hoise jehetu, tmi age local info new response diye replace koiro
+
+            } else {
+                //setRatingError(true);
+                //setRatingErrorMsg(response.msg);
+=======
                 localStorage.setItem("user", JSON.stringify(response.customer));
                 setErrorMsg("Your Information have been updated");
                 setProfileState(true);
@@ -139,6 +148,7 @@ export default function FullWidthTabs({ userinfo }) {
             } else {
                 setErrorStatus(true);
                 setErrorMsg(response.msg);
+>>>>>>> main
             }
         } catch (err) {
             console.log(err);
