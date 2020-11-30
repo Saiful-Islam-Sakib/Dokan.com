@@ -45,7 +45,10 @@ export default function SingleProductOrderHistory(props) {
         // order cancellation functionality ........................................................................
         try{
             const res = await fetch(
-                "http://localhost:5000/dokan.com/order/customer/deleteorder/"+oid);
+                'http://localhost:5000/dokan.com/order/customer/deleteorder/'+oid,
+                {
+                    method: 'DELETE',
+                });
                 response = await res.json();
                 if (res.status === 201) {
     

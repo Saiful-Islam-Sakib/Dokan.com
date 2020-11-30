@@ -134,13 +134,13 @@ export default function FullWidthTabs({ userinfo }) {
             // ei response a user er new updated information ase, jdi password right dey
 
             if (res.status === 201) {
-                setRatingErrorMsg("Your Information have been updated");
+                //setRatingErrorMsg("Your Information have been updated");
 
                 //successful hoise jehetu, tmi age local info new response diye replace koiro
 
             } else {
-                setRatingError(true);
-                setRatingErrorMsg(response.msg);
+                //setRatingError(true);
+                //setRatingErrorMsg(response.msg);
             }
         } catch (err) {
             console.log(err);
