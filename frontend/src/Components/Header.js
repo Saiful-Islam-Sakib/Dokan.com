@@ -170,12 +170,6 @@ export default function PrimarySearchAppBar() {
 
     const handleSignOut = () => {
         handleMenuClose();
-        // if (localStorage.getItem("login") === "true") {
-        //     localStorage.clear();
-        // } else if (sessionStorage.getItem("login") === "true") {
-        //     localStorage.clear();
-        //     sessionStorage.clear();
-        // }
         localStorage.clear();
         sessionStorage.clear();
 
@@ -202,7 +196,7 @@ export default function PrimarySearchAppBar() {
                     <MenuItem onClick={handleMyProfile}>Favorite</MenuItem>
                     <MenuItem onClick={handleMyProfile}>Order history</MenuItem>
                     <Divider />
-                    <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                    <MenuItem onClick={handleSignOut}>log Out</MenuItem>
                 </Menu>
             ) : (
                 <></>
@@ -253,7 +247,7 @@ export default function PrimarySearchAppBar() {
                         <p>Cart</p>
                     </MenuItem>
                     <Divider></Divider>
-                    <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                    <MenuItem onClick={handleSignOut}>log Out</MenuItem>
                 </Menu>
             ) : (
                 <Menu
@@ -373,7 +367,7 @@ export default function PrimarySearchAppBar() {
                                             style={{ textDecoration: "none" }}
                                             onClick={handleSignOut}
                                         >
-                                            Sig Out
+                                            log Out
                                         </Link>
                                     </Typography>
                                 </IconButton>
@@ -387,7 +381,7 @@ export default function PrimarySearchAppBar() {
                                             className={classes.logoLink}
                                             style={{ textDecoration: "none" }}
                                         >
-                                            Sign In
+                                            log In
                                         </Link>
                                     </Typography>
                                 </IconButton>
@@ -431,13 +425,11 @@ export default function PrimarySearchAppBar() {
                                     color="inherit"
                                 >
                                     <Typography variant="body1">
-                                        {JSON.parse(
-                                            localStorage.getItem("user")
-                                        ).f_name +
-                                            "_" +
+                                        {
                                             JSON.parse(
                                                 localStorage.getItem("user")
-                                            ).l_name}
+                                            ).f_name
+                                        }
                                     </Typography>
                                     <AccountCircle />
                                 </IconButton>

@@ -14,7 +14,12 @@ import SignleProduct from "./Components/SingleProduct";
 
 import Seller from "./Components/Seller";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from "react-router-dom";
 import ContactUs from "./Components/ContactUs";
 
 function App() {
@@ -30,7 +35,11 @@ function App() {
                     }
                 }
             >
-                {localStorage.getItem("seller") ? <div></div> : <Header />}
+                {localStorage.getItem("seller") ? (
+                    <Redirect to="/seller-panel/" />
+                ) : (
+                    <Header />
+                )}
                 <Switch>
                     <Route exact path="/">
                         <Body></Body>
@@ -92,7 +101,12 @@ function App() {
                         <ContactUs></ContactUs>
                     </Route>
                     <Router exact path="/seller-panel">
-                        <Seller></Seller>
+                        {localStorage.getItem("seller") ||
+                        sessionStorage.getItem("seller") ? (
+                            <Seller></Seller>
+                        ) : (
+                            <Body></Body>
+                        )}
                     </Router>
                 </Switch>
                 <Footer></Footer>

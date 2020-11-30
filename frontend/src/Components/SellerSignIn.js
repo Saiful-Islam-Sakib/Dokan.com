@@ -58,7 +58,6 @@ function SignIn() {
     const [rememberMe, setRememberMe] = React.useState(false);
 
     const handleSignIn = async (event) => {
-        // you have to store data into redux store****************************************************************************************
         event.preventDefault();
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (email.match(mailformat)) {
@@ -83,7 +82,7 @@ function SignIn() {
                     } else {
                         sessionStorage.setItem("login", true);
                     }
-                    history.push("/");
+                    history.push("/seller-panel");
                 } else {
                     setErrorStatus(true);
                     setPassword("");
@@ -114,7 +113,7 @@ function SignIn() {
                     } else {
                         sessionStorage.setItem("login", true);
                     }
-                    history.push("/");
+                    history.push("/seller-panel");
                 } else {
                     setErrorStatus(true);
                     setPassword("");
@@ -177,6 +176,7 @@ function SignIn() {
                             <Checkbox
                                 value="remember"
                                 color="primary"
+                                checked={true}
                                 onChange={(event) => {
                                     setRememberMe(event.target.checked);
                                 }}

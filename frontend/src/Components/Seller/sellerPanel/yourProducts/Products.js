@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Data from "./data";
 import "./Products.css";
 
 const Products = (props) => {
+    const dispatch = useDispatch();
+
     const editProductHandler = (p) => {
         const prod = Data.products.find((x) => x._id === p);
         console.log(prod);
@@ -12,6 +15,13 @@ const Products = (props) => {
         console.log(prod);
     };
 
+    useEffect(() => {
+        dispatch({
+            type: "LOAD_PRODUCTS",
+            //sellerId: JSON.parse(localStorage.getItem("seller"))._id,
+        });
+    }, []);
+    // product load hoa gele sheta show koranor bebostha mane map korte hobe ...
     return (
         <ul className="all-products">
             {Data.products.map((product) => (

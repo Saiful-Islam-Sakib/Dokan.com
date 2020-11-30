@@ -14,7 +14,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../Redux/Actions/index";
 
 function Copyright() {
     return (
@@ -167,6 +166,7 @@ function SignIn() {
                             <Checkbox
                                 value="remember"
                                 color="primary"
+                                checked={true}
                                 onChange={(event) => {
                                     setRememberMe(event.target.checked);
                                 }}

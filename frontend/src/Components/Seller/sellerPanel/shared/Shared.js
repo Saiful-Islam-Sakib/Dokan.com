@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     BrowserRouter as Router,
     Route,
     Redirect,
     Switch,
     Link,
+    useHistory,
 } from "react-router-dom";
 
 import Products from "../yourProducts/Products";
@@ -14,12 +15,31 @@ import Transaction from "../transaction/Transaction";
 import Profile from "../profile/Profile";
 
 import "./Shared.css";
+import { useDispatch } from "react-redux";
 
 const Shared = (props) => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+
     const sidebarMenu = () => {
         document.querySelector(".sidebar").classList.toggle("add__sidebar");
         document.querySelector(".backdrop").classList.toggle("add__backdrop");
     };
+    const handleLogOut = () => {
+        sidebarMenu();
+        localStorage.clear();
+        sessionStorage.clear();
+
+        history.push("/");
+        window.location.reload(false);
+    };
+
+    useEffect(() => {
+        dispatch({
+            type: "LOAD_SELLER_STATE",
+            //seller: JSON.parse(localStorage.getItem("seller")),
+        });
+    }, []);
 
     return (
         <Router>
@@ -76,7 +96,7 @@ const Shared = (props) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/seller-panel" onClick={sidebarMenu}>
+                                <Link to="/seller-panel" onClick={handleLogOut}>
                                     <i className="fas fa-sign-out-alt"></i>
                                     LOGOUT
                                 </Link>

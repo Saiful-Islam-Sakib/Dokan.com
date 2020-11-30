@@ -1,33 +1,76 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./AddProduct.css";
 
-const Category = {
-    Consumer_Food: [
-        "Flour",
-        "Rice",
-        "Oil",
-        "Milk",
-        "Spices & Pickles",
-        "Salt",
-        "Sugar",
-        "Onion-Garlic-Potato",
-        "Tea",
-        "Chocolate",
-        "Snacks",
-        "Cooking & Backing",
-    ],
-    Toiletries: ["Washroom Toiletries", "Home & Kitchen", "Air Freshener"],
-    Health_Care: [
-        "Toothbrush",
-        "Toothpaste",
-        "Soap",
-        "Shampoo",
-        "Skin-care",
-        "Face Mask",
-    ],
-};
+const Category = [
+    {
+        categoryName: "consumerFood",
+        subCategories: {
+            Flour: "flour",
+            Rice: "rice",
+            Oil: "oil",
+            Milk: "milk",
+            Spices_Pickles: "spicesPickles",
+            Salt: "salt",
+            Sugar: "sugar",
+            Onion_Garlic_Potato: "onionGarlicPotato",
+            Tea: "tea",
+            Chocolate: "chocolate",
+            Snacks: "snacks",
+            Cooking_Backing: "cookingBacking",
+        },
+    },
+    {
+        categoryName: "toiletries",
+        subCategories: {
+            Washroom_Toiletries: "washroomToiletries",
+            Home_Kitchen: "homeKitchen",
+            Air_Freshener: "airFreshener",
+        },
+    },
+    {
+        categoryName: "healthCare",
+        subCategories: {
+            Toothbrush: "toothbrush",
+            Toothpaste: "toothpaste",
+            Soap: "soap",
+            Shampoo: "shampoo",
+            Skin_Care: "skinCare",
+            Face_Mask: "faceMask",
+        },
+    },
+];
 const AddProduct = (props) => {
-    const [selectedCategory, setselectedCategory] = React.useState("Consumer_Food");
+    const dispatch = useDispatch();
+    const fullStore = useSelector((state) => state.seller);
+
+    const [productName, setProductName] = React.useState("");
+    const [productPrice, setProductPrice] = React.useState("");
+    const [selectedCategory, setSelectedCategory] = React.useState(
+        "consumerFood"
+    );
+    const [selectedSubCategory, setSelectedSubCategory] = React.useState(
+        "flour"
+    );
+    const [error, setError] = React.useState(false);
+    const [errorMsg, setErrorMsg] = React.useState("");
+
+    const handleAddProduct = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: "ADD_PRODUCT",
+            name: productName,
+            price: productPrice,
+            category: selectedCategory,
+            subCategory: selectedSubCategory,
+        });
+
+        // if (fullStore.errorAddProduct.length > 0) {
+        //     setError(true);
+        //     setErrorMsg(fullStore.errorAddProduct.length);
+        // }
+    };
+
     return (
         <div class="seller-AddProduct">
             <h2>ADD YOUR NEW PRODUCT</h2>
@@ -35,38 +78,57 @@ const AddProduct = (props) => {
                 <label>Product Name</label>
                 <input type="text" required />
 
-                <label>Brand Name</label>
-                <input type="text" required />
-
                 <label>Price</label>
                 <input type="number" min="0" required />
 
                 <label>Category</label>
                 <select
-                    selected
                     onClick={(e) => {
-                        setselectedCategory(e.target.value);
+                        setSelectedCategory(e.target.value);
+                        console.log(e.target.value);
                     }}
                 >
-                    <option>Consumer_Food</option>
-                    <option>Health_Care</option>
-                    <option>Toiletries</option>
+                    <option value={"consumerFood"}>Consumer_Food</option>
+                    <option value={"healthCare"}>Health_Care</option>
+                    <option value={"toiletries"}>Toiletries</option>
                 </select>
 
                 <label>Sub-Category</label>
                 <select>
-                    {Category[selectedCategory].map((item, index) => (
-                        <option key={index}>{item}</option>
-                    ))}
-                    {/* <option>sub-cat-1</option>
-                    <option>sub-cat-2</option>
-                    <option>sub-cat-3</option> */}
+                    {(function () {
+                        let keys = Object.keys(
+                            Category.filter(
+                                (cat) => cat.categoryName == selectedCategory
+                            )[0].subCategories
+                        );
+                        let values = Object.values(
+                            Category.filter(
+                                (cat) => cat.categoryName == selectedCategory
+                            )[0].subCategories
+                        );
+
+                        return keys.map((i, index) => (
+                            <option
+                                value={values[index]}
+                                onClick={(e) => {
+                                    setSelectedSubCategory(e.target.value);
+                                }}
+                            >
+                                {i}
+                            </option>
+                        ));
+                    })()}
                 </select>
 
                 <label id="add-successfully-product">
-                    Your Product Add Successfully.
+                    {error ? errorMsg : "Your Product Added Successfully."}
                 </label>
-                <button type="submit" class="add-submit-button">
+
+                <button
+                    type="submit"
+                    class="add-submit-button"
+                    onClick={handleAddProduct}
+                >
                     Submit
                 </button>
             </form>

@@ -61,13 +61,13 @@ const locations = [
             { area: "Bashundhara", place: ["Block A", "Block B", "Block C"] },
         ],
     },
-    { city: "Chittagong", area: {}, place: {} },
-    { city: "Rajshahi", area: {}, place: {} },
-    { city: "Sylhet", area: {}, place: {} },
-    { city: "Khulna", area: {}, place: {} },
-    { city: "Barishal", area: {}, place: {} },
-    { city: "Mymensingh", area: {}, place: {} },
-    { city: "Rangpur", area: {}, place: {} },
+    // { city: "Chittagong", area: {}, place: {} },
+    // { city: "Rajshahi", area: {}, place: {} },
+    // { city: "Sylhet", area: {}, place: {} },
+    // { city: "Khulna", area: {}, place: {} },
+    // { city: "Barishal", area: {}, place: {} },
+    // { city: "Mymensingh", area: {}, place: {} },
+    // { city: "Rangpur", area: {}, place: {} },
 ];
 
 const bank = [
@@ -298,76 +298,41 @@ export default function SignUp() {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Autocomplete
-                                        id="sellerlocationCity"
-                                        disableClearable
-                                        options={locations}
-                                        getOptionLabel={(option) => {
-                                            return option.city;
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label="City"
-                                                variant="outlined"
-                                                id="sellerCity"
-                                                name="sellerCity"
-                                                fullWidth
-                                                required
-                                            />
-                                        )}
-                                        onChange={(event, option) => {
-                                            setsellercity(option.city);
-                                            setArea(option.zone);
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="sellerCity"
+                                        label="Seller City"
+                                        name="sellerCity"
+                                        onChange={(event) => {
+                                            setsellercity(event.target.value);
                                         }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Autocomplete
-                                        id="sellerlocationArea"
-                                        disableClearable
-                                        options={areaName}
-                                        getOptionLabel={(option) => {
-                                            return option.area;
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label="Area"
-                                                variant="outlined"
-                                                id="sellerArea"
-                                                name="sellerArea"
-                                                fullWidth
-                                                required
-                                            />
-                                        )}
-                                        onChange={(event, option) => {
-                                            setsellerarea(option.area);
-                                            setPlace(option.place);
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="sellerArea"
+                                        label="Seller Area"
+                                        name="sellerArea"
+                                        onChange={(event) => {
+                                            setsellerarea(event.target.value);
                                         }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Autocomplete
-                                        id="sellerlocationPlace"
-                                        disableClearable
-                                        options={placeName}
-                                        getOptionLabel={(option) => {
-                                            return option;
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label="Place"
-                                                variant="outlined"
-                                                id="sellerPlace"
-                                                name="sellerPlace"
-                                                fullWidth
-                                                required
-                                            />
-                                        )}
-                                        onChange={(event, option) => {
-                                            setsellerplace(option);
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="sellerPlace"
+                                        label="Seller Place"
+                                        name="sellerPlace"
+                                        onChange={(event) => {
+                                            setsellerplace(event.target.value);
                                         }}
                                     />
                                 </Grid>
