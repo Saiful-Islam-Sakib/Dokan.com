@@ -284,7 +284,7 @@ export default function PrimarySearchAppBar() {
                                     className={classes.logoLink}
                                     style={{ textDecoration: "none" }}
                                 >
-                                    Sign In
+                                    Log In
                                 </Link>
                             </Typography>
                         </IconButton>
@@ -298,7 +298,7 @@ export default function PrimarySearchAppBar() {
                                     className={classes.logoLink}
                                     style={{ textDecoration: "none" }}
                                 >
-                                    Seller Sign In
+                                    Seller log In
                                 </Link>
                             </Typography>
                         </IconButton>
