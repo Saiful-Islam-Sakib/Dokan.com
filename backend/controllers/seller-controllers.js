@@ -26,7 +26,7 @@ const dummy_seller = [
     }
 ];
 
-const getsellerinfobyid = async(req,res,next) =>{
+const getsellerproducts = async(req,res,next) =>{
     const seller_id = req.params.sid;
     /*
     const seller_info = dummy_seller.find(a =>{
@@ -34,7 +34,7 @@ const getsellerinfobyid = async(req,res,next) =>{
     }); */
     let sellerinfo;
     try{
-        sellerinfo = await seller.findById(seller_id); 
+        sellerinfo = await seller.findById(seller_id).populate('products'); 
     }catch(err){
         const erro = new httpError('Customer Signup failed',500);
         return next(erro);
@@ -42,8 +42,12 @@ const getsellerinfobyid = async(req,res,next) =>{
     if (!sellerinfo){
         throw new httpError('Could not find Seller.',404);
     }
+    sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
+    sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
+    sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
+    sellerinfo.sh_area_pc = null;
     //res.status(201).json({data : sellerinfo.orders.map(order => order.orderstoObject({getters : true}))});
-    res.status(201).json({data : sellerinfo});
+    res.status(201).json({data : sellerinfo.toObject({getters:true})});
 };
 
 const sellerLogin = async(req,res,next) =>{
@@ -69,6 +73,7 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
+        /*
         const sellerid = existingSeller1._id;
         try{
             sellerinfo = await seller.findById(sellerid).populate('products'); 
@@ -79,11 +84,12 @@ const sellerLogin = async(req,res,next) =>{
         if (!sellerinfo){
             throw new httpError('Could not find Seller.',404);
         }
-        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
-        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
-        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
-        sellerinfo.sh_area_pc = null;
-        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+        */
+        existingSeller1.password = null; existingSeller1.trade_lic_no = null; existingSeller1.birthday = null;
+        existingSeller1.v_address = null; existingSeller1.nid = null; existingSeller1.b_acc = null;
+        existingSeller1.b_acc_no = null; existingSeller1.bank = null; existingSeller1.branch = null;
+        existingSeller1.sh_area_pc = null;
+        res.status(201).json({data : existingSeller1.toObject({getters : true})});
 
         //res.status(201).json({msg : existingSeller1});    
     }
@@ -99,6 +105,7 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
+        /*
         const sellerid = existingSeller2._id;
         try{
             sellerinfo = await seller.findById(sellerid).populate('products'); 
@@ -108,12 +115,12 @@ const sellerLogin = async(req,res,next) =>{
         }
         if (!sellerinfo){
             throw new httpError('Could not find Seller.',404);
-        }
-        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
-        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
-        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
-        sellerinfo.sh_area_pc = null; 
-        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+        }*/
+        existingSeller2.password = null; existingSeller2.trade_lic_no = null; existingSeller2.birthday = null;
+        existingSeller2.v_address = null; existingSeller2.nid = null; existingSeller2.b_acc = null;
+        existingSeller2.b_acc_no = null; existingSeller2.bank = null; existingSeller2.branch = null;
+        existingSeller2.sh_area_pc = null; 
+        res.status(201).json({data : existingSeller2.toObject({getters : true})});
         
         //res.status(201).json({msg : existingSeller2}); 
     }
@@ -194,7 +201,7 @@ const updateSeller = async (req,res,next) => {
 }
 
 
-exports.getsellerinfobyid = getsellerinfobyid;
+exports.getsellerproducts = getsellerproducts;
 exports.sellerLogin = sellerLogin;
 exports.sellerSignup = sellerSignup;
 exports.updateSeller = updateSeller;
