@@ -14,34 +14,51 @@ export default (state = initialState, action) => {
         case "LOAD_SELLER_STATE":
             return {
                 ...state,
-                //seller: JSON.parse(localStorage.getItem("seller")),
+                seller: action.seller,
             };
         case "LOAD_PRODUCTS":
-            let sid = action.sellerId;
-            let response;
+            let products;
             (async (event) => {
                 try {
-                    // fetch seller products here ...........................................................................................
-                    const res = await fetch('http://localhost:5000/dokan.com/seller/'+sid);
-                    response = await res.json();
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/seller/" +
+                            action.sellerId
+                    );
+
+                    const response = await res.json();
+                    products = response.data.products;
                 } catch (error) {
-                    console.log(err);
+                    console.log(error);
                 }
             })();
             return {
                 ...state,
-                //products: ,
+                products: products,
             };
         case "ADD_PRODUCT":
-            let name = action.name;
-            let price = action.price;
-            let category = action.category;
-            let subCategory = action.subCategory;
+            let p_name = action.name;
+            let p_price = action.price;
+            let p_category = action.category;
+            let p_subCategory = action.subCategory;
 
-            (async () => {
+            (async (event) => {
                 try {
                     // add product functionality here .........................................................................................
-                } catch (error) {}
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/products/newProduct",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                name : p_name,   //brand : brand er naam,  
+                                price : p_price,  category : p_category,
+                                sub_category : p_subCategory, //s_id : seller id dio
+                            }),
+                        }
+                    );
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             //errorAddProduct = "There is a problem adding the product";
             return {

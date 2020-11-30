@@ -37,7 +37,7 @@ const Shared = (props) => {
     useEffect(() => {
         dispatch({
             type: "LOAD_SELLER_STATE",
-            //seller: JSON.parse(localStorage.getItem("seller")),
+            seller: JSON.parse(localStorage.getItem("seller")),
         });
     }, []);
 

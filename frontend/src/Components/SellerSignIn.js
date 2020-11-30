@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import StorefrontRoundedIcon from "@material-ui/icons/StorefrontRounded";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Copyright() {
     return (
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -59,69 +61,40 @@ function SignIn() {
 
     const handleSignIn = async (event) => {
         event.preventDefault();
-        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        var res = "";
+        const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (email.match(mailformat)) {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/seller/login",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password,
-                        }),
-                    }
-                );
-                const data = await res.json();
-                console.log(data);
-                if (data.msg.email === email || data.msg.phone === email) {
-                    console.log("Logged in as a seller");
-                    if (rememberMe) {
-                        localStorage.setItem("login", true);
-                    } else {
-                        sessionStorage.setItem("login", true);
-                    }
-                    history.push("/seller-panel");
-                } else {
-                    setErrorStatus(true);
-                    setPassword("");
-                }
-            } catch (err) {
-                console.log(err);
-                setErrorStatus(true);
-            }
+            res = await fetch("http://localhost:5000/dokan.com/seller/login", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
         } else {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/dokan.com/seller/login",
-                    {
-                        method: "POST",
-                        headers: { "Content-type": "application/json" },
-                        body: JSON.stringify({
-                            phone: email,
-                            password: password,
-                        }),
-                    }
-                );
-                const data = await res.json();
-                console.log(data);
-                if (data.msg.email === email || data.msg.phone === email) {
-                    console.log("Logged in as a seller");
-                    if (rememberMe) {
-                        localStorage.setItem("login", true);
-                    } else {
-                        sessionStorage.setItem("login", true);
-                    }
-                    history.push("/seller-panel");
-                } else {
-                    setErrorStatus(true);
-                    setPassword("");
-                }
-            } catch (err) {
-                console.log(err);
-                setErrorStatus(true);
-            }
+            res = await fetch("http://localhost:5000/dokan.com/seller/login", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    phone: email,
+                    password: password,
+                }),
+            });
+        }
+
+        if (res.status === 201) {
+            const data = await res.json();
+            console.log(data);
+
+            localStorage.setItem("seller", JSON.stringify(data.data));
+
+            history.push("/seller-panel");
+            window.location.reload(false);
+        } else {
+            setErrorStatus(true);
+            setPassword("");
         }
     };
 
