@@ -42,7 +42,8 @@ const getsellerinfobyid = async(req,res,next) =>{
     if (!sellerinfo){
         throw new httpError('Could not find Seller.',404);
     }
-    res.status(201).json({msg : sellerinfo.toObject({getters : true})});
+    //res.status(201).json({data : sellerinfo.orders.map(order => order.orderstoObject({getters : true}))});
+    res.status(201).json({data : sellerinfo});
 };
 
 const sellerLogin = async(req,res,next) =>{
@@ -55,6 +56,7 @@ const sellerLogin = async(req,res,next) =>{
 
     let existingSeller1;
     let existingSeller2;
+    let sellerinfo;
     if(email){
         try{
             existingSeller1 = await seller.findOne({email : email});
@@ -67,8 +69,23 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        existingSeller1.password = null;
-        res.status(201).json({msg : existingSeller1});    
+        const sellerid = existingSeller1._id;
+        try{
+            sellerinfo = await seller.findById(sellerid).populate('products'); 
+        }catch(err){
+            const erro = new httpError('Customer Signup failed',500);
+            return next(erro);
+        }
+        if (!sellerinfo){
+            throw new httpError('Could not find Seller.',404);
+        }
+        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
+        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
+        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
+        sellerinfo.sh_area_pc = null;
+        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+
+        //res.status(201).json({msg : existingSeller1});    
     }
     if(phone){
         try{
@@ -82,8 +99,23 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        existingSeller2.password = null;
-        res.status(201).json({msg : existingSeller2}); 
+        const sellerid = existingSeller2._id;
+        try{
+            sellerinfo = await seller.findById(sellerid).populate('products'); 
+        }catch(err){
+            const erro = new httpError('Customer Signup failed',500);
+            return next(erro);
+        }
+        if (!sellerinfo){
+            throw new httpError('Could not find Seller.',404);
+        }
+        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
+        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
+        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
+        sellerinfo.sh_area_pc = null; 
+        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+        
+        //res.status(201).json({msg : existingSeller2}); 
     }
 };
 
@@ -125,7 +157,44 @@ const sellerSignup = async (req,res,next) =>{
     res.status(201).json({msg : newSeller.toObject({getters : true})});
 };
 
+const updateSeller = async (req,res,next) => {
+    const err = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Invalid information',422);
+    }
+    const {s_id,v_f_name,v_l_name,email,phone,v_city,v_area,v_address,b_acc,b_acc_no,
+        bank,branch,sh_city,sh_area,sh_place,sh_area_pc,password,sh_name} = req.body;
+    const sid = s_id;
+
+    let updateSellerInfo;
+    try{
+        updateSellerInfo = await seller.findById(sid);
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
+    if(updateSellerInfo.password === password){
+        updateSellerInfo.phone = phone;
+        updateSellerInfo.v_city = v_city;   updateSellerInfo.v_area = v_area;   updateSellerInfo.b_acc = b_acc;
+        updateSellerInfo.v_f_name = v_f_name;   updateSellerInfo.b_acc_no = b_acc_no;   updateSellerInfo.bank = bank;
+        updateSellerInfo.v_l_name = v_l_name;   updateSellerInfo.branch = branch;   updateSellerInfo.sh_city = sh_city;
+        updateSellerInfo.email = email;     updateSellerInfo.sh_area = sh_area; updateSellerInfo.sh_place = sh_place;      
+        updateSellerInfo.v_address = v_address; updateSellerInfo.sh_area_pc = sh_area_pc; updateSellerInfo.sh_name = sh_name;
+        try{
+            await updateSellerInfo.save();
+        }catch(err){
+            const erro = new httpError('Sorry could not update customer info',500);
+            return next(erro);
+        }
+        res.status(201).json({data: updateSellerInfo.toObject({getters: true})});
+    }else{
+        res.status(500).json({data : 'Your password did not match'});
+    }   
+}
+
 
 exports.getsellerinfobyid = getsellerinfobyid;
 exports.sellerLogin = sellerLogin;
 exports.sellerSignup = sellerSignup;
+exports.updateSeller = updateSeller;

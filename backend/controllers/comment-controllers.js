@@ -19,29 +19,39 @@ const getprodutComments = async (req,res,next) =>{
 };
 
 const test = async (req,res,next) =>{
-    const {p_id} = req.body;
-    let size = p_id.length;
-    console.log(size);
-    let seller = [];
-    let sid,j=0;
-    for(i = 0; i < size ; i++){
-        let prodinfo;
-        try{
-            prodinfo = await product.findById(p_id[i]);
-            sid = prodinfo.s_id;
-            console.log(sid);
-            if(seller.length === 0){
-                console.log('here me');
-                seller[j] = sid; j++; console.log(j+' sid' + seller[j-1]);
-            }else if(!(seller.find(item => item === sid))){
-                seller[j] = sid;
-            }
-        }catch(err){
-            console.log('i am here bro');
+    const junaeid = "Pran Borhani/ Masala* 150g";
+    /*
+    
+    let sep2 = '/';
+    console.log(junaeid.split(sep2));
+    sep2 = '*';
+    console.log(junaeid.split(sep2));
+    const sep = ['/','*',' '];
+    let s = sep.length;
+    let news;
+    sep.forEach((i) => {
+        console.log(i);
+        news=junaeid.split(i);
+    });
+    
+    const sep = ['/','*',' '];
+    let tag = junaeid, modify; 
+    let s = junaeid.length;
+    for(i = 0 ; i < s ; i++ ){
+        if(i > 0){
+            console.log(typeof modify);
+            //modify = modify.split(sep[i]);
+        }else{
+            modify = junaeid.split(sep[i]);
+            console.log(typeof modify);
         }
     }
-    console.log(seller);    
-    res.status(201).json({msg : seller});
+    //let news = junaeid.split(sep);
+    */
+   let ptag = junaeid,sep = ' ';
+   ptag = ptag.replace(/[^a-zA-Z0-9 ]/g, "");
+   let ptag1 = ptag.split(sep);    ptag1.push(ptag);
+    res.status(201).json(ptag1);
 };
 
 
