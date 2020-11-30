@@ -17,12 +17,12 @@ export default (state = initialState, action) => {
                 //seller: JSON.parse(localStorage.getItem("seller")),
             };
         case "LOAD_PRODUCTS":
-            let sellerId = action.sellerId;
+            let sid = action.sellerId;
             let response;
             (async (event) => {
                 try {
                     // fetch seller products here ...........................................................................................
-                    const res = await fetch('http://localhost:5000/dokan.com/seller/'+sellerId);
+                    const res = await fetch('http://localhost:5000/dokan.com/seller/'+sid);
                     response = await res.json();
                 } catch (error) {
                     console.log(err);
