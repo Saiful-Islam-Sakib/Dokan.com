@@ -39,6 +39,10 @@ const Shared = (props) => {
             type: "LOAD_SELLER_STATE",
             seller: JSON.parse(localStorage.getItem("seller")),
         });
+        dispatch({
+            type: "LOAD_PRODUCTS",
+            sellerId: JSON.parse(localStorage.getItem("seller"))._id,
+        });
     }, []);
 
     return (
@@ -53,7 +57,9 @@ const Shared = (props) => {
                 </header>
                 <section className="all-divs">
                     <aside className="sidebar">
-                        <h2>Seller Panel</h2>
+                        <h2>
+                            {JSON.parse(localStorage.getItem("seller")).sh_name}
+                        </h2>
                         <ul>
                             <li>
                                 <Link to="/seller-panel" onClick={sidebarMenu}>
@@ -65,8 +71,8 @@ const Shared = (props) => {
                                     to="/seller-panel/add-product"
                                     onClick={sidebarMenu}
                                 >
-                                    <i className="fas fa-shopping-cart"></i>ADD
-                                    PRODUCTS
+                                    <i className="fas fa-shopping-cart"></i>
+                                    ADD PRODUCTS
                                 </Link>
                             </li>
                             <li>
@@ -120,7 +126,7 @@ const Shared = (props) => {
                             <Route path="/seller-panel/profile" exact>
                                 <Profile />
                             </Route>
-                            <Redirect to="/seller-panel/" />
+                            {/* <Redirect to="/seller-panel/" /> */}
                         </Switch>
                     </section>
                 </section>
