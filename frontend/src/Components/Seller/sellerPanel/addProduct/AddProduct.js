@@ -45,6 +45,7 @@ const AddProduct = (props) => {
     const fullStore = useSelector((state) => state.seller);
 
     const [productName, setProductName] = React.useState("");
+    const [productBrand, setProductBrand] = React.useState("");
     const [productPrice, setProductPrice] = React.useState("");
     const [selectedCategory, setSelectedCategory] = React.useState(
         "consumerFood"
@@ -60,6 +61,7 @@ const AddProduct = (props) => {
         dispatch({
             type: "ADD_PRODUCT",
             name: productName,
+            brand: productBrand,
             price: productPrice,
             category: selectedCategory,
             subCategory: selectedSubCategory,
@@ -76,10 +78,32 @@ const AddProduct = (props) => {
             <h2>ADD YOUR NEW PRODUCT</h2>
             <form class="seller-AddProduct-form">
                 <label>Product Name</label>
-                <input type="text" required />
+                <input
+                    type="text"
+                    required
+                    onChange={(e) => {
+                        setProductName(e.target.value);
+                    }}
+                />
+
+                <label>Brand</label>
+                <input
+                    type="text"
+                    required
+                    onChange={(e) => {
+                        setProductBrand(e.target.value);
+                    }}
+                />
 
                 <label>Price</label>
-                <input type="number" min="0" required />
+                <input
+                    type="number"
+                    min="0"
+                    required
+                    onChange={(e) => {
+                        setProductPrice(e.target.value);
+                    }}
+                />
 
                 <label>Category</label>
                 <select
