@@ -70,6 +70,7 @@ export default function Checkout() {
     const dispatch = useDispatch();
 
     const [activeStep, setActiveStep] = React.useState(0);
+    const [error, setError] = React.useState(false);
 
     function getStepContent(step) {
         switch (step) {
@@ -119,8 +120,11 @@ export default function Checkout() {
                     });
 
                     localStorage.removeItem("deliveryAddress");
+                } else {
+                    setError(true);
                 }
             } catch (err) {
+                setError(true);
                 console.log(err);
             }
         }
@@ -152,13 +156,21 @@ export default function Checkout() {
                     <React.Fragment>
                         {activeStep === steps.length ? (
                             <React.Fragment>
-                                <Typography variant="h5" gutterBottom>
-                                    Thank you for your order.
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    Your orders are placed. We will send you
-                                    updates these orders.
-                                </Typography>
+                                {error ? (
+                                    <Typography variant="h5" gutterBottom>
+                                        Sorry Some Error Happened
+                                    </Typography>
+                                ) : (
+                                    <>
+                                        <Typography variant="h5" gutterBottom>
+                                            Thank you for your order.
+                                        </Typography>
+                                        <Typography variant="subtitle1">
+                                            Your orders are placed. We will send
+                                            you updates these orders.
+                                        </Typography>
+                                    </>
+                                )}
                                 <div style={{ marginBottom: "15%" }}></div>
                             </React.Fragment>
                         ) : (
