@@ -1,123 +1,131 @@
-
-.order-page{
+.order-page {
     display: flex;
     flex-direction: column;
     margin: auto;
     max-width: 35rem;
 }
-.order-page h2{
+.order-page h2 {
     color: rgb(82, 80, 80);
     font-size: 2rem;
     text-align: center;
     margin-bottom: 2rem;
 }
 
-.all-order-items{
+.all-order-items {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
     padding: 0;
-    
 }
 
-.order-item{
+.order-item {
     list-style: none;
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 15rem;
     min-width: 12.5rem;
-    box-shadow: .1rem .1rem .1rem .2rem gray;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.2rem gray;
     margin-bottom: 2rem;
     padding: 1rem;
 }
-.order-item img{
+.order-item img {
     width: 40%;
     min-width: 10rem;
     min-width: 10rem;
     margin-right: 5%;
 }
-.order-details{
+.order-details {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow-wrap: break-word;
 }
-.order-details .order-date{
+.order-details .order-date {
     font-size: 1rem;
     color: blue;
     text-decoration: underline;
 }
-.order-details .order-name{
+.order-details .order-name {
     color: black;
     font-size: 1.5rem;
     font-weight: bold;
 }
-.order-details .order-price{
+.order-details .order-price {
     color: rgb(122, 120, 120);
     font-size: 1.5rem;
-    
 }
-.order-details .order-amount{
+.order-details .order-amount {
     color: rgb(59, 190, 98);
     font-size: 1.8rem;
     font-weight: bold;
 }
-.order-details .order-totalPrice{
+.order-details .order-totalPrice {
     color: rgb(37, 92, 54);
     font-size: 1.5rem;
     font-weight: bold;
 }
 
 .accept-order-button,
-.cancel-order-button{
-    font-size: 1rem;
+.cancel-order-button,
+.delivered-order-button {
     font-weight: bold;
-    padding: .2rem .4rem;
-    margin-right: 1rem;
+    padding: 0.2rem 0.4rem;
+    margin-right: 8px;
 }
 .accept-order-button:focus,
-.cancel-order-button:focus{
+.cancel-order-button:focus,
+.delivered-order-button:focus {
     outline: none;
 }
-.accept-order-button{
+.accept-order-button {
     color: white;
-    background-color:rgb(18, 145, 18);
+    background-color: rgb(18, 145, 18);
     border-color: green;
 }
 .accept-order-button:hover,
-.accept-order-button:active{
-    background-color:rgb(11, 206, 11);
+.accept-order-button:active {
+    background-color: rgb(11, 206, 11);
 }
 
-.cancel-order-button{
+.cancel-order-button {
     color: white;
     background-color: rgb(196, 35, 35);
     border-color: red;
 }
 .cancel-order-button:hover,
-.cancel-order-button:active{
+.cancel-order-button:active {
     background-color: rgb(243, 88, 88);
 }
 
-@media(max-width: 56.5rem){
-    .order-item{
+.delivered-order-button {
+    color: white;
+    background-color: rgb(2, 136, 209);
+    border-color: rgb(16, 148, 219);
+}
+.delivered-order-button:hover,
+.delivered-order-button:active {
+    background-color: rgb(3, 155, 229);
+}
+@media (max-width: 56.5rem) {
+    .order-item {
         width: 50%;
         flex-direction: column;
         padding: 1rem;
         align-items: center;
         height: auto;
     }
-    .order-item img{
+    .order-item img {
         width: 100%;
         height: 50%;
         margin-right: 0;
         margin-bottom: 5%;
     }
     .accept-order-button,
-    .cancel-order-button{
+    .cancel-order-button,
+    .delivered-order-button {
         margin-right: 0;
     }
 }
