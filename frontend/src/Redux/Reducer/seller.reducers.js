@@ -18,11 +18,15 @@ export default (state = initialState, action) => {
             };
         case "LOAD_PRODUCTS":
             let sellerId = action.sellerId;
-
-            (async () => {
+            let response;
+            (async (event) => {
                 try {
                     // fetch seller products here ...........................................................................................
-                } catch (error) {}
+                    const res = await fetch('http://localhost:5000/dokan.com/seller/'+sellerId);
+                    response = await res.json();
+                } catch (error) {
+                    console.log(err);
+                }
             })();
             return {
                 ...state,

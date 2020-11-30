@@ -61,9 +61,13 @@ const addproduct = async(req,res,next) => {
         console.log(err);
         return res.json({msg: 'Invalid information'});
     }
-    const {p_id, name,brand,price,category,sub_category,tag,s_id,img } = req.body;
+    const {name,brand,price,category,sub_category,s_id,img } = req.body;
+    let ptag = name,sep = ' ';
+    ptag = ptag.replace(/[^a-zA-Z0-9 ]/g, "");
+    let ptag1 = ptag.split(sep);    ptag1.push(ptag);
+
     const createdprod = new product({
-        p_id, name,brand,price,category,sub_category,tag,s_id,img
+        name,brand,price,category,sub_category,tag : patag1,s_id,img
     });
     //dummy_product.push(createdprod);
     //console.log(createdprod);
@@ -78,9 +82,7 @@ const addproduct = async(req,res,next) => {
         const erro = new httpError('Seller not exist',401);
         return next(erro);
     }
-    //console.log(sellerexist);
     try{
-        //await createdprod.save();
         const session = await mongo.startSession();
         //console.log('1');
         session.startTransaction();
@@ -97,7 +99,7 @@ const addproduct = async(req,res,next) => {
         const erro = new httpError('Something gone wrong',500);
         return next(erro);
     }
-    res.status(201).json({msg : 'New Product added'});
+    res.status(201).json({data : 'New Product added'});
 };
 
 const deleteproduct = async(req,res,next) => {
@@ -114,8 +116,22 @@ const deleteproduct = async(req,res,next) => {
         const erro = new httpError('Requested product is not avaiable',500);
         return next(erro);
     }
+    let sid = prod.s_id;
+    let sellerinfo;
     try{
-        await prod.remove();
+        sellerinfo = await seller.findById(sid);
+    }catch(err){
+        const erro = new httpError('Requested product is not avaiable',500);
+        return next(erro);
+    }
+    try{
+        //await prod.remove();
+        const session = await mongo.startSession();
+        session.startTransaction();
+        await prod.remove({session : session});
+        sellerinfo.products.pull(prod);
+        await sellerinfo.save({session : session});
+        await session.commitTransaction();
     }catch(err){
         const erro = new httpError('Something went wrong',500);
         return next(erro);
@@ -143,6 +159,7 @@ const productbySubcat  = async (req,res,next) => {
 
 const productbylocation = async(req,res,next) =>{
     const {city,area,place} = req.body;
+    console.log(city+' '+area+' '+place);
     let locseller;
     try{
         locseller = await seller.find({sh_city : city , sh_area : area,sh_place : place});
@@ -151,7 +168,6 @@ const productbylocation = async(req,res,next) =>{
         console.log(subcat);
         return next(erro);
     }
-    //console.log(locseller);
     const locsellerv2 = locseller.map(prod => prod.toObject({getters :true}));
     const seller_id = locsellerv2.map(({id}) => ({id}));
     let seller_id_arr  = seller_id.map(({id}) => id);
@@ -178,7 +194,7 @@ const productbylocation = async(req,res,next) =>{
         }
     }
     res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
-    //res.status(200).json({msg : prodbyloc});
+    //res.status(200).json({product : prodbyloc});
 };
 
 const prodSearchbyCategory = async(req ,res ,next) =>{
