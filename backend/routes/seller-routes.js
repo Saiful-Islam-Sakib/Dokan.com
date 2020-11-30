@@ -4,7 +4,7 @@ const {check} = require('express-validator');
 const router = express.Router();
 
 
-router.get('/:sid', sellerController.getsellerinfobyid);
+router.get('/:sid', sellerController.getsellerproducts);
 
 router.post('/login',sellerController.sellerLogin);
 
