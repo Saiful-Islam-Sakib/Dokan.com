@@ -42,7 +42,8 @@ const getsellerinfobyid = async(req,res,next) =>{
     if (!sellerinfo){
         throw new httpError('Could not find Seller.',404);
     }
-    res.status(201).json({msg : sellerinfo.toObject({getters : true})});
+    //res.status(201).json({data : sellerinfo.orders.map(order => order.orderstoObject({getters : true}))});
+    res.status(201).json({data : sellerinfo});
 };
 
 const sellerLogin = async(req,res,next) =>{
@@ -55,6 +56,7 @@ const sellerLogin = async(req,res,next) =>{
 
     let existingSeller1;
     let existingSeller2;
+    let sellerinfo;
     if(email){
         try{
             existingSeller1 = await seller.findOne({email : email});
@@ -67,8 +69,23 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        existingSeller1.password = null;
-        res.status(201).json({msg : existingSeller1});    
+        const sellerid = existingSeller1._id;
+        try{
+            sellerinfo = await seller.findById(sellerid).populate('products'); 
+        }catch(err){
+            const erro = new httpError('Customer Signup failed',500);
+            return next(erro);
+        }
+        if (!sellerinfo){
+            throw new httpError('Could not find Seller.',404);
+        }
+        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
+        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
+        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
+        sellerinfo.sh_area_pc = null;
+        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+
+        //res.status(201).json({msg : existingSeller1});    
     }
     if(phone){
         try{
@@ -82,8 +99,23 @@ const sellerLogin = async(req,res,next) =>{
             const erro = new httpError('Invalid credentials ,could not log in',401);
             return next(erro);
         }
-        existingSeller2.password = null;
-        res.status(201).json({msg : existingSeller2}); 
+        const sellerid = existingSeller2._id;
+        try{
+            sellerinfo = await seller.findById(sellerid).populate('products'); 
+        }catch(err){
+            const erro = new httpError('Customer Signup failed',500);
+            return next(erro);
+        }
+        if (!sellerinfo){
+            throw new httpError('Could not find Seller.',404);
+        }
+        sellerinfo.password = null; sellerinfo.trade_lic_no = null; sellerinfo.birthday = null;
+        sellerinfo.v_address = null; sellerinfo.nid = null; sellerinfo.b_acc = null;
+        sellerinfo.b_acc_no = null; sellerinfo.bank = null; sellerinfo.branch = null;
+        sellerinfo.sh_area_pc = null; 
+        res.status(201).json({data : sellerinfo.toObject({getters : true})});
+        
+        //res.status(201).json({msg : existingSeller2}); 
     }
 };
 
