@@ -43,7 +43,6 @@ export default function SingleProductOrderHistory(props) {
         console.log(props.product);
         try {
             const res = await fetch(
-<<<<<<< HEAD
                 'http://localhost:5000/dokan.com/order/customer/deleteorder/'+oid,
                 {
                     method: 'DELETE',
@@ -54,20 +53,6 @@ export default function SingleProductOrderHistory(props) {
                     //ei msg ta ashbe   data : 'Successfully deleted order'
                 } 
         }catch(err){
-=======
-                "http://localhost:5000/dokan.com/order/customer/deleteorder/" +
-                    props.product._id
-            );
-            const response = await res.json();
-
-            if (res.status === 201) {
-                console.log(response);
-                dispatch({
-                    type: "FETCH_ORDER_HISTORY",
-                });
-            }
-        } catch (err) {
->>>>>>> main
             console.log(err);
         }
     };
