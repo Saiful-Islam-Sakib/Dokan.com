@@ -18,7 +18,6 @@ const Products = (props) => {
     useEffect(() => {
         dispatch({
             type: "LOAD_PRODUCTS",
-            //sellerId: JSON.parse(localStorage.getItem("seller"))._id,
         });
     }, []);
     // product load hoa gele sheta show koranor bebostha mane map korte hobe ...
