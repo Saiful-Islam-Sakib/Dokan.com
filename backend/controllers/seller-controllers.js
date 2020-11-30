@@ -36,7 +36,7 @@ const getsellerproducts = async(req,res,next) =>{
     try{
         sellerinfo = await seller.findById(seller_id).populate('products'); 
     }catch(err){
-        const erro = new httpError('Customer Signup failed',500);
+        const erro = new httpError('Something gone wrong',500);
         return next(erro);
     }
     if (!sellerinfo){
