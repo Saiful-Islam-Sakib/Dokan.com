@@ -61,9 +61,13 @@ const addproduct = async(req,res,next) => {
         console.log(err);
         return res.json({msg: 'Invalid information'});
     }
-    const {p_id, name,brand,price,category,sub_category,tag,s_id,img } = req.body;
+    const {name,brand,price,category,sub_category,s_id,img } = req.body;
+    let ptag = name,sep = ' ';
+    ptag = ptag.replace(/[^a-zA-Z0-9 ]/g, "");
+    let ptag1 = ptag.split(sep);    ptag1.push(ptag);
+
     const createdprod = new product({
-        p_id, name,brand,price,category,sub_category,tag,s_id,img
+        name,brand,price,category,sub_category,tag : patag1,s_id,img
     });
     //dummy_product.push(createdprod);
     //console.log(createdprod);
@@ -78,9 +82,7 @@ const addproduct = async(req,res,next) => {
         const erro = new httpError('Seller not exist',401);
         return next(erro);
     }
-    //console.log(sellerexist);
     try{
-        //await createdprod.save();
         const session = await mongo.startSession();
         //console.log('1');
         session.startTransaction();
@@ -97,7 +99,7 @@ const addproduct = async(req,res,next) => {
         const erro = new httpError('Something gone wrong',500);
         return next(erro);
     }
-    res.status(201).json({msg : 'New Product added'});
+    res.status(201).json({data : 'New Product added'});
 };
 
 const deleteproduct = async(req,res,next) => {
