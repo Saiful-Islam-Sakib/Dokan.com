@@ -53,6 +53,7 @@ const createNewOrder = async (req,res,next) =>{
             return next(erro);
         }
         let s_id = productexist.s_id;
+        let pimg = productexist.img;
         let sellerexist;
         try{
             sellerexist = await seller_model.findById(s_id);
@@ -68,7 +69,7 @@ const createNewOrder = async (req,res,next) =>{
         let pname = productexist.name;
         const createdorder = new order ({p_id : p_id[i], p_name : pname,
             quantity : quantity[i], total_amount : total_amount[i],
-            c_id,
+            c_id, img : pimg,
             order_confirmation,order_delivered,
             s_id , delivery_address ,shop_name});
         //console.log(customerexist);
