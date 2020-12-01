@@ -140,7 +140,9 @@ export default (state = initialState, action) => {
                         }
                     );
                     const response = await res.json();
-                } catch (error) {}
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             return {
                 ...state,
@@ -163,7 +165,7 @@ export default (state = initialState, action) => {
                     );
                     const response = await res.json();
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             })();
             return {
@@ -171,9 +173,19 @@ export default (state = initialState, action) => {
             };
         case "DELETE_PRODUCT":
             (async () => {
+                let pid = 'eikhance product id dio';
                 try {
                     // delete orders functionality here .........................................................................................
-                } catch (error) {}
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/products/deleteProd/" +pid,
+                        {
+                            method: "DELETE",
+                        }
+                    );
+                    const response = await res.json();
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             return {
                 ...state,
