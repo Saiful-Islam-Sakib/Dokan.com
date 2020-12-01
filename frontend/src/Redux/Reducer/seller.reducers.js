@@ -62,15 +62,21 @@ export default (state = initialState, action) => {
                         }
                     );
                     const response = await res.json();
+                    if (res.status !== 201) {
+                        sessionStorage.setItem(
+                            "err",
+                            "There is a problem adding the product"
+                        );
+                    } else {
+                        sessionStorage.setItem("err", "");
+                    }
                 } catch (error) {
                     console.log(error);
                 }
             })();
-            //errorAddProduct = "There is a problem adding the product";
             return {
                 ...state,
-                //errorAddProduct: ,
-                //products: ,
+                errorAddProduct: sessionStorage.getItem("err"),
             };
         case "LOAD_MY_ORDERS":
             //sellerId = action.sellerId;
