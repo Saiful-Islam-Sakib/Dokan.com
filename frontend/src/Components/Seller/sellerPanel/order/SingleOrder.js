@@ -13,6 +13,7 @@ export default function SingleOrder({ product }) {
             type: "ACCEPT_ORDER",
             orderId: product._id,
         });
+        window.location.reload(false);
     };
 
     const handleOrderReject = () => {
@@ -20,6 +21,7 @@ export default function SingleOrder({ product }) {
             type: "REJECT_ORDER",
             orderId: product._id,
         });
+        window.location.reload(false);
     };
 
     const handleOrderDelivered = () => {
@@ -27,6 +29,7 @@ export default function SingleOrder({ product }) {
             type: "DELIVERED_ORDER",
             orderId: product._id,
         });
+        window.location.reload(false);
     };
 
     return (
