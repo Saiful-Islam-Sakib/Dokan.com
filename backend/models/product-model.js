@@ -8,11 +8,12 @@ const productSchema = new mongo.Schema({
     sub_category: {type:String,required:true},
     tag : [{type:String,required:true}],
     s_id : {type: mongo.Types.ObjectId,required:true, ref : 'Seller'},
-    img : {type:String},
+    img : {type:String,default:null},
     offer_price :{type:Number, default:''},
     comments:[{type:mongo.Types.ObjectId, ref: 'Comment'}],
     rating : {type: Number,default : 0.0},
-    rating_count : {type: Number , default : 0}
+    rating_count : {type: Number , default : 0},
+    shop_name : {type : String, required: true}
 });
 
 module.exports = mongo.model('Product',productSchema);
