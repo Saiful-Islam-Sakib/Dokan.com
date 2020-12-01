@@ -16,8 +16,8 @@ const Products = (props) => {
 
     return (
         <ul className="all-products">
-            {fullStore.products?.map((product) => (
-                <SingleProduct product={product}></SingleProduct>
+            {fullStore.products?.map((product, index) => (
+                <SingleProduct key={index} product={product}></SingleProduct>
             ))}
         </ul>
     );

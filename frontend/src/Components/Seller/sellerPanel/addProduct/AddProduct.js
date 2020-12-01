@@ -42,7 +42,7 @@ const Category = [
 ];
 const AddProduct = (props) => {
     const dispatch = useDispatch();
-    const fullStore = useSelector((state) => state.seller);
+    const sellerStore = useSelector((state) => state.seller);
 
     const [productName, setProductName] = React.useState("");
     const [productBrand, setProductBrand] = React.useState("");
@@ -67,7 +67,7 @@ const AddProduct = (props) => {
             subCategory: selectedSubCategory,
         });
 
-        // if (fullStore.errorAddProduct.length > 0) {
+        // if (sellerStore.errorAddProduct.length > 0) {
         //     setError(true);
         //     setErrorMsg(fullStore.errorAddProduct.length);
         // }
@@ -133,6 +133,7 @@ const AddProduct = (props) => {
 
                         return keys.map((i, index) => (
                             <option
+                                key={index}
                                 value={values[index]}
                                 onClick={(e) => {
                                     setSelectedSubCategory(e.target.value);
