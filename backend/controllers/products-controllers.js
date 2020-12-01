@@ -3,6 +3,7 @@ const {validationResult} = require('express-validator');
 const product = require('../models/product-model');
 const mongo = require('mongoose');
 const seller = require('../models/seller-model');
+const e = require('express');
 
 let dummy_product = [
     {
@@ -161,7 +162,7 @@ const productbySubcat  = async (req,res,next) => {
 
 const productbylocation = async(req,res,next) =>{
     const {city,area,place} = req.body;
-    console.log(city+' '+area+' '+place);
+    //console.log(city+' '+area+' '+place);
     let locseller;
     try{
         locseller = await seller.find({sh_city : city , sh_area : area,sh_place : place});
@@ -195,8 +196,14 @@ const productbylocation = async(req,res,next) =>{
             return next(erro);
         }
     }
-    res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
+    //console.log(prodbyloc);
+    if(prodbyloc){
+        res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
+    }else{
+        res.status(200).json({product : []});  
+    }
     //res.status(200).json({product : prodbyloc});
+    
 };
 
 const prodSearchbyCategory = async(req ,res ,next) =>{
