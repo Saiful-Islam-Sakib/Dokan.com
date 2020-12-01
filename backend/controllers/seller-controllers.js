@@ -204,15 +204,19 @@ const sellerOrder = async(req,res,next) =>{
     const sid = req.params.sid;
     let sellerinfo;
     try{
-        sellerinfo = await seller.findById(sid).populate('orders'); 
+        //sellerinfo = await seller.findById(sid).populate('orders'); 
+        sellerinfo = await seller.findById(sid).populate('orders');
     }catch(err){
         const erro = new httpError('Something gone wrong',500);
         return next(erro);
     }
-    if (!sellerinfo){
+    let sellerinfo2  = sellerinfo.orders.map(order => order.toObject({getters : true}));
+    sellerinfo2 = sellerinfo2.filter(p => p.order_delivered !== true);
+    if (!sellerinfo2){
         throw new httpError('Could not find Seller.',404);
     }
-    res.status(201).json({data : sellerinfo.orders.map(order => order.toObject({getters : true}))});
+    //res.status(201).json({data : sellerinfo.orders.map(order => order.toObject({getters : true}))});
+    res.status(201).json({data : sellerinfo2});
 }; 
 
 

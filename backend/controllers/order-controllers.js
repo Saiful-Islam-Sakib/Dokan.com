@@ -230,9 +230,14 @@ const orderRejected = async (req,res,next) =>{
             const erro = new httpError('Something went wrong',500);
             return next(erro);
         }
+        orderinfo.order_delivered = order_delivered; 
         try{
+            const sess = await mongo.startSession();
+            sess.startTransaction();
+            await orderinfo.save({session : sess});
             sellerinfo.orders.pull(orderinfo);
-            await sellerinfo.save();
+            await sellerinfo.save({session : sess});
+            await sess.commitTransaction();
         }catch(err){
             const erro = new httpError('Something went wrong',500);
             return next(erro);
