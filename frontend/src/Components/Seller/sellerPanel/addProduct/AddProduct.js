@@ -42,7 +42,7 @@ const Category = [
 ];
 const AddProduct = (props) => {
     const dispatch = useDispatch();
-    const fullStore = useSelector((state) => state.seller);
+    const sellerStore = useSelector((state) => state.seller);
 
     const [productName, setProductName] = React.useState("");
     const [productBrand, setProductBrand] = React.useState("");
@@ -58,19 +58,31 @@ const AddProduct = (props) => {
 
     const handleAddProduct = (e) => {
         e.preventDefault();
-        dispatch({
-            type: "ADD_PRODUCT",
-            name: productName,
-            brand: productBrand,
-            price: productPrice,
-            category: selectedCategory,
-            subCategory: selectedSubCategory,
-        });
+        if (
+            productName.length > 0 &&
+            productBrand.length > 0 &&
+            productPrice.length > 0
+        ) {
+            dispatch({
+                type: "ADD_PRODUCT",
+                name: productName,
+                brand: productBrand,
+                price: productPrice,
+                category: selectedCategory,
+                subCategory: selectedSubCategory,
+            });
+        } else {
+            setError(true);
+            setErrorMsg("Please fill up all the fields.");
+        }
 
-        // if (fullStore.errorAddProduct.length > 0) {
-        //     setError(true);
-        //     setErrorMsg(fullStore.errorAddProduct.length);
-        // }
+        if (sellerStore.errorAddProduct.length > 0) {
+            setError(true);
+            setErrorMsg(sellerStore.errorAddProduct.length);
+        } else {
+            setError(false);
+            setErrorMsg("Your Product Added Successfully.");
+        }
     };
 
     return (
@@ -133,6 +145,7 @@ const AddProduct = (props) => {
 
                         return keys.map((i, index) => (
                             <option
+                                key={index}
                                 value={values[index]}
                                 onClick={(e) => {
                                     setSelectedSubCategory(e.target.value);
@@ -144,9 +157,11 @@ const AddProduct = (props) => {
                     })()}
                 </select>
 
-                <label id="add-successfully-product">
-                    {error ? errorMsg : "Your Product Added Successfully."}
-                </label>
+                {error ? (
+                    <label id="#add-unsuccessfully-product">{errorMsg}</label>
+                ) : (
+                    <label id="add-successfully-product">{errorMsg}</label>
+                )}
 
                 <button
                     type="submit"

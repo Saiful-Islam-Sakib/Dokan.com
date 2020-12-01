@@ -1,13 +1,12 @@
-
-.seller-AddProduct{
+.seller-AddProduct {
     width: 30rem;
     margin: auto;
     margin-top: 2rem;
     padding: 1rem 1.5rem;
-    box-shadow: .1rem .1rem .1rem .2rem rgb(139, 156, 204);
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.2rem rgb(139, 156, 204);
 }
 
-.seller-AddProduct h2{
+.seller-AddProduct h2 {
     color: gray;
     font-size: 1.5rem;
     text-align: center;
@@ -15,7 +14,7 @@
     text-decoration: underline;
 }
 
-.seller-AddProduct-form{
+.seller-AddProduct-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,67 +24,71 @@
 
 .seller-AddProduct-form input,
 .seller-AddProduct-form label,
-.seller-AddProduct-form select{
+.seller-AddProduct-form select {
     display: block;
     width: 100%;
     font-size: 1.4rem;
     color: rgb(59, 59, 59);
 }
-.seller-AddProduct-form label{
+.seller-AddProduct-form label {
     font-weight: 500;
-    margin-left: .5rem;
-    margin-bottom: .2rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.2rem;
 }
 
-#add-successfully-product{
-    color:green;
+#add-successfully-product {
+    color: green;
     font-size: 1rem;
 }
 
-.seller-AddProduct-form input{
+#add-unsuccessfully-product {
+    color: red;
+    font-size: 1rem;
+}
+
+.seller-AddProduct-form input {
     width: 95%;
     font-size: 1.2rem;
     color: rgb(77, 76, 76);
     margin-bottom: 1rem;
-    padding: .1rem .3rem;
-
+    padding: 0.1rem 0.3rem;
 }
-.seller-AddProduct-form input:focus{
+.seller-AddProduct-form input:focus {
     outline: none;
     background-color: rgb(240, 235, 235);
 }
 
-.seller-AddProduct-form select{
+.seller-AddProduct-form select {
     margin-bottom: 1rem;
 }
-.seller-AddProduct-form select:focus{
+.seller-AddProduct-form select:focus {
     outline: none;
 }
-.seller-AddProduct-form option{
-    padding: .1rem .3rem;
+.seller-AddProduct-form option {
+    padding: 0.1rem 0.3rem;
     font-size: 1.4rem;
     background-color: rgb(240, 235, 235);
 }
-.seller-AddProduct-form .add-submit-button{
+.seller-AddProduct-form .add-submit-button {
     width: 50%;
-   font-size: 1.3rem;
-   padding: .2rem .5rem;
-   color: white;
-   background-color: rgb(2, 160, 2);
-   margin: 1rem 0 2rem 0;
-   border-color: rgb(235, 234, 234);
+    font-size: 1.3rem;
+    padding: 0.2rem 0.5rem;
+    color: white;
+    background-color: rgb(2, 160, 2);
+    margin: 1rem 0 2rem 0;
+    border-color: rgb(235, 234, 234);
 }
-.seller-AddProduct-form .add-submit-button:focus{
+.seller-AddProduct-form .add-submit-button:focus {
     outline: none;
 }
 .seller-AddProduct-form .add-submit-button:hover,
-.seller-AddProduct-form .add-submit-button:active{
+.seller-AddProduct-form .add-submit-button:active {
     color: gray;
-   background-color: rgb(9, 230, 9);
+    background-color: rgb(9, 230, 9);
 }
 
-@media(max-width: 51.5rem){
-    .seller-AddProduct{
+@media (max-width: 51.5rem) {
+    .seller-AddProduct {
         width: 80%;
     }
 }

@@ -78,7 +78,10 @@ export default function ProductCard(props) {
                 <CardMedia
                     component="img"
                     className={classes2.media}
-                    image={props.product.img.slice(2, props.product.img.length)}
+                    image={props.product.img?.slice(
+                        2,
+                        props.product.img.length
+                    )}
                     title={props.product.name}
                 />
                 <CardContent>
