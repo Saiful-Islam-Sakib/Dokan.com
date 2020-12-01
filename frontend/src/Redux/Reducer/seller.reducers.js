@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
                     );
 
                     let response = await res.json();
+                    console.log(response);
                     sessionStorage.setItem(
                         "products",
                         JSON.stringify(response.data.products)
@@ -62,6 +63,7 @@ export default (state = initialState, action) => {
                         }
                     );
                     let response = await res.json();
+                    console.log(response);
                     if (res.status !== 201) {
                         sessionStorage.setItem(
                             "err",
@@ -86,6 +88,7 @@ export default (state = initialState, action) => {
                             action.sellerId
                     );
                     let response = await res.json();
+                    console.log(response);
                     sessionStorage.setItem(
                         "orders",
                         JSON.stringify(response.data)
@@ -114,6 +117,7 @@ export default (state = initialState, action) => {
                         }
                     );
                     let response = await res.json();
+                    console.log(response);
                 } catch (error) {
                     console.log(error);
                 }
@@ -122,10 +126,24 @@ export default (state = initialState, action) => {
                 ...state,
             };
         case "REJECT_ORDER":
-            (async () => {
+            (async (event) => {
                 try {
-                    // reject orders functionality here .........................................................................................
-                } catch (error) {}
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/order/seller/orderRejected",
+                        {
+                            method: "PATCH",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                o_id: action.orderId,
+                                order_rejected: true,
+                            }),
+                        }
+                    );
+                    const response = await res.json();
+                    console.log(response);
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             return {
                 ...state,
@@ -145,6 +163,7 @@ export default (state = initialState, action) => {
                         }
                     );
                     const response = await res.json();
+                    console.log(response);
                 } catch (error) {
                     console.log(error);
                 }
@@ -155,8 +174,18 @@ export default (state = initialState, action) => {
         case "DELETE_PRODUCT":
             (async () => {
                 try {
-                    // delete product functionality here .........................................................................................
-                } catch (error) {}
+                    let res = await fetch(
+                        "http://localhost:5000/dokan.com/products/deleteProd/" +
+                            action.productId,
+                        {
+                            method: "DELETE",
+                        }
+                    );
+                    let response = await res.json();
+                    console.log(response);
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             return {
                 ...state,

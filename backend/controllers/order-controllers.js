@@ -53,6 +53,7 @@ const createNewOrder = async (req,res,next) =>{
             return next(erro);
         }
         let s_id = productexist.s_id;
+        let pimg = productexist.img;
         let sellerexist;
         try{
             sellerexist = await seller_model.findById(s_id);
@@ -68,7 +69,7 @@ const createNewOrder = async (req,res,next) =>{
         let pname = productexist.name;
         const createdorder = new order ({p_id : p_id[i], p_name : pname,
             quantity : quantity[i], total_amount : total_amount[i],
-            c_id,
+            c_id, img : pimg,
             order_confirmation,order_delivered,
             s_id , delivery_address ,shop_name});
         //console.log(customerexist);
@@ -213,7 +214,7 @@ const orderRejected = async (req,res,next) =>{
         console.log(err);
         throw new httpError('Not appropiate confirmation was sent',204);
     }
-    const { o_id,order_delivered} = req.body;
+    const { o_id,order_rejected} = req.body;
     const order_id = o_id;
     let orderinfo;
     try{
@@ -222,25 +223,22 @@ const orderRejected = async (req,res,next) =>{
         const erro = new httpError('Could not find any order',500);
         return next(erro);
     }
-    let sid = orderinfo.s_id, sellerinfo;
-    if(orderinfo.order_confirmation === false && order_delivered === true){
+    console.log(orderinfo.order_confirmation+'    '+orderinfo.order_delivered+ '   '+orderinfo.order_rejected);
+    if(orderinfo.order_rejected === true){
+        return res.status(406).json({data : 'Already rejected order'});
+    }
+    else if(orderinfo.order_confirmation === false && orderinfo.order_delivered === false){
+        orderinfo.order_rejected = order_rejected; 
         try{
-            sellerinfo = await seller_model.findById(sid);
+            await orderinfo.save();
         }catch(err){
-            const erro = new httpError('Something went wrong',500);
+            const erro = new httpError('Something went wrong',501);
             return next(erro);
         }
-        try{
-            sellerinfo.orders.pull(orderinfo);
-            await sellerinfo.save();
-        }catch(err){
-            const erro = new httpError('Something went wrong',500);
-            return next(erro);
-        }
-        res.status(201).json({data: 'Order rejected'});
+        return res.status(201).json({data: 'Order rejected'});
     }
     res.status(406).json({data : 'Can not reject order'});
-}
+};
 
 exports.getOrderbyid = getOrderbyid;
 exports.orderConfirmation = orderConfirmation;

@@ -18,4 +18,7 @@ router.post('/newOrder',
 
 router.delete('/deleteorder/:oid',orderControllers.deleteOrder);
 
+router.patch('/orderRejected',[check('order_rejected').not().isEmpty(),
+        check('o_id').not().isEmpty()],orderControllers.orderRejected);
+
 module.exports = router;
