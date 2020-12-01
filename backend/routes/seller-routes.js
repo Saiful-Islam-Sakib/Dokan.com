@@ -25,5 +25,9 @@ router.patch('/updateSellerInfo',
     check('b_acc_no').isLength({min:13}),check('b_acc').not().isEmpty(),
     check('bank').not().isEmpty(),check('branch').not().isEmpty(),check('sh_name').not().isEmpty(),
     check('sh_city').not().isEmpty(),check('sh_area').not().isEmpty(),check('sh_place').not().isEmpty(),
-    check('sh_area_pc').isLength({min:4})],sellerController.updateSeller);    
+    check('sh_area_pc').isLength({min:4})],sellerController.updateSeller);
+    
+    
+router.get('/orders/:sid',check('sid').not().isEmpty(),sellerController.sellerOrder);
+
 module.exports = router;

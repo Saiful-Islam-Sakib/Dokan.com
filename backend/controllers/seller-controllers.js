@@ -198,10 +198,26 @@ const updateSeller = async (req,res,next) => {
     }else{
         res.status(500).json({data : 'Your password did not match'});
     }   
-}
+};
+
+const sellerOrder = async(req,res,next) =>{
+    const sid = req.params.sid;
+    let sellerinfo;
+    try{
+        sellerinfo = await seller.findById(sid).populate('orders'); 
+    }catch(err){
+        const erro = new httpError('Something gone wrong',500);
+        return next(erro);
+    }
+    if (!sellerinfo){
+        throw new httpError('Could not find Seller.',404);
+    }
+    res.status(201).json({data : sellerinfo.orders.map(order => order.toObject({getters : true}))});
+}; 
 
 
 exports.getsellerproducts = getsellerproducts;
 exports.sellerLogin = sellerLogin;
 exports.sellerSignup = sellerSignup;
 exports.updateSeller = updateSeller;
+exports.sellerOrder = sellerOrder;

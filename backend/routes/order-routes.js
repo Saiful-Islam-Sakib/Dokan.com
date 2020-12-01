@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.get('/:c_id', orderControllers.getOrderbyid);
 
-router.patch('/orderConf/:oid',[check('o_id').not().isEmpty(),check('order_confirmation').not().isEmpty()], orderControllers.orderConfirmation);
+router.patch('/orderConf',[check('o_id').not().isEmpty(),check('order_confirmation').not().isEmpty()], orderControllers.orderConfirmation);
 
-router.patch('/sell1/orderDeli/:oid',[check('order_delivered').not().isEmpty(),
+router.patch('/orderDeli',[check('order_delivered').not().isEmpty(),
     check('o_id').not().isEmpty()], orderControllers.orderDelivered);
 
 router.post('/newOrder',
