@@ -64,10 +64,11 @@ const addproduct = async(req,res,next) => {
     const {name,brand,price,category,sub_category,s_id,img } = req.body;
     let ptag = name,sep = ' ';
     ptag = ptag.replace(/[^a-zA-Z0-9 ]/g, "");
-    let ptag1 = ptag.split(sep);    ptag1.push(ptag);
+    let ptag1 = ptag.split(sep);
+    ptag1.push(ptag);
 
     const createdprod = new product({
-        name,brand,price,category,sub_category,tag : patag1,s_id,img
+        name,brand,price,category,sub_category,tag : ptag1,s_id,img
     });
     //dummy_product.push(createdprod);
     //console.log(createdprod);
