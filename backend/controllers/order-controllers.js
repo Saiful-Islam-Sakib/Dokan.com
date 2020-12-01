@@ -213,7 +213,7 @@ const orderRejected = async (req,res,next) =>{
         console.log(err);
         throw new httpError('Not appropiate confirmation was sent',204);
     }
-    const { o_id,order_delivered} = req.body;
+    const { o_id,order_rejected} = req.body;
     const order_id = o_id;
     let orderinfo;
     try{
@@ -223,23 +223,18 @@ const orderRejected = async (req,res,next) =>{
         return next(erro);
     }
     let sid = orderinfo.s_id, sellerinfo;
-    if(orderinfo.order_confirmation === false && order_delivered === true){
+    if(orderinfo.order_confirmation === false && order_delivered === false){
         try{
             sellerinfo = await seller_model.findById(sid);
         }catch(err){
             const erro = new httpError('Something went wrong',500);
             return next(erro);
         }
-        orderinfo.order_delivered = order_delivered; 
+        orderinfo.order_rejected = order_rejected; 
         try{
-            const sess = await mongo.startSession();
-            sess.startTransaction();
-            await orderinfo.save({session : sess});
-            sellerinfo.orders.pull(orderinfo);
-            await sellerinfo.save({session : sess});
-            await sess.commitTransaction();
+            await orderinfo.save();
         }catch(err){
-            const erro = new httpError('Something went wrong',500);
+            const erro = new httpError('Something went wrong',501);
             return next(erro);
         }
         res.status(201).json({data: 'Order rejected'});
