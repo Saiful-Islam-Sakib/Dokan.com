@@ -67,10 +67,13 @@ const AddProduct = (props) => {
             subCategory: selectedSubCategory,
         });
 
-        // if (sellerStore.errorAddProduct.length > 0) {
-        //     setError(true);
-        //     setErrorMsg(fullStore.errorAddProduct.length);
-        // }
+        if (sellerStore.errorAddProduct.length > 0) {
+            setError(true);
+            setErrorMsg(sellerStore.errorAddProduct.length);
+        } else {
+            setError(false);
+            setErrorMsg("Your Product Added Successfully.");
+        }
     };
 
     return (
@@ -145,9 +148,11 @@ const AddProduct = (props) => {
                     })()}
                 </select>
 
-                <label id="add-successfully-product">
-                    {error ? errorMsg : "Your Product Added Successfully."}
-                </label>
+                {error ? (
+                    <label id="#add-unsuccessfully-product">{errorMsg}</label>
+                ) : (
+                    <label id="add-successfully-product">{errorMsg}</label>
+                )}
 
                 <button
                     type="submit"
