@@ -38,26 +38,30 @@ export default (state = initialState, action) => {
                 products: JSON.parse(sessionStorage.getItem("products")),
             };
         case "ADD_PRODUCT":
-            let p_name = action.name;
-            let p_price = action.price;
-            let p_category = action.category;
-            let p_subCategory = action.subCategory;
-
-            (async (event) => {
+            (async () => {
+                let sellerId = state.seller._id;
+                let name = action.name;
+                let brand = action.brand;
+                let price = action.price;
+                let category = action.category;
+                let subCategory = action.subCategory;
                 try {
-                    // add product functionality here .........................................................................................
                     const res = await fetch(
                         "http://localhost:5000/dokan.com/products/newProduct",
                         {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                name : p_name,   //brand : brand er naam,  
-                                price : p_price,  category : p_category,
-                                sub_category : p_subCategory, //s_id : seller id dio
+                                s_id: sellerId,
+                                name: name,
+                                brand: brand,
+                                price: price,
+                                category: category,
+                                sub_category: subCategory,
                             }),
                         }
                     );
+                    const response = await res.json();
                 } catch (error) {
                     console.log(error);
                 }
