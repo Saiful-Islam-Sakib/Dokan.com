@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Data from "./data";
@@ -6,6 +6,7 @@ import Data from "./data";
 export default function SingleProduct({ product }) {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [clickState, setClickState] = React.useState(false);
 
     const editProductHandler = (productId) => {
         console.log(productId);
@@ -17,9 +18,16 @@ export default function SingleProduct({ product }) {
             type: "DELETE_PRODUCT",
             productId: productId,
         });
-
-        //history.push("/seller-panel/");
+        setClickState(true);
     };
+
+    useEffect(() => {
+        dispatch({
+            type: "LOAD_MY_ORDERS",
+            sellerId: JSON.parse(localStorage.getItem("seller"))._id,
+        });
+        setClickState(false);
+    }, [clickState]);
 
     return (
         <li className="product-details" key={product._id}>

@@ -2,7 +2,7 @@
 const initialState = {
     seller: {},
     products: [],
-    orders: {},
+    orders: [],
     transactions: {},
     errorAddProduct: "",
 };
@@ -19,12 +19,12 @@ export default (state = initialState, action) => {
         case "LOAD_PRODUCTS":
             (async (event) => {
                 try {
-                    const res = await fetch(
+                    let res = await fetch(
                         "http://localhost:5000/dokan.com/seller/" +
                             action.sellerId
                     );
 
-                    const response = await res.json();
+                    let response = await res.json();
                     sessionStorage.setItem(
                         "products",
                         JSON.stringify(response.data.products)
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
                 let category = action.category;
                 let subCategory = action.subCategory;
                 try {
-                    const res = await fetch(
+                    let res = await fetch(
                         "http://localhost:5000/dokan.com/products/newProduct",
                         {
                             method: "POST",
@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
                             }),
                         }
                     );
-                    const response = await res.json();
+                    let response = await res.json();
                     if (res.status !== 201) {
                         sessionStorage.setItem(
                             "err",
@@ -79,16 +79,17 @@ export default (state = initialState, action) => {
                 errorAddProduct: sessionStorage.getItem("err"),
             };
         case "LOAD_MY_ORDERS":
-            //sellerId = action.sellerId;
-
             (async (event) => {
                 try {
-                    const res = await fetch(
+                    let res = await fetch(
                         "http://localhost:5000/dokan.com/seller/orders/" +
                             action.sellerId
                     );
-                    const response = await res.json();
-                    // load orders functionality here .........................................................................................
+                    let response = await res.json();
+                    sessionStorage.setItem(
+                        "orders",
+                        JSON.stringify(response.data)
+                    );
                 } catch (error) {
                     console.log(error);
                 }
@@ -96,26 +97,23 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
-                //orders: ,
+                orders: JSON.parse(sessionStorage.getItem("orders")),
             };
         case "ACCEPT_ORDER":
-            //let orderId = action.orderId;
-
             (async (event) => {
                 try {
-                    // accept orders functionality here .........................................................................................
-                    const res = await fetch(
+                    let res = await fetch(
                         "http://localhost:5000/dokan.com/order/seller/orderConf",
                         {
                             method: "PATCH",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                oid : 'eikhane order id ta dio', // order id
-                                order_confirmation : 'true'
+                                o_id: action.orderId,
+                                order_confirmation: true,
                             }),
                         }
                     );
-                    const response = await res.json();
+                    let response = await res.json();
                 } catch (error) {
                     console.log(error);
                 }
@@ -124,7 +122,6 @@ export default (state = initialState, action) => {
                 ...state,
             };
         case "REJECT_ORDER":
-            //orderId = action.orderId;
             (async () => {
                 try {
                     // reject orders functionality here .........................................................................................
@@ -134,24 +131,22 @@ export default (state = initialState, action) => {
                 ...state,
             };
         case "DELIVERED_ORDER":
-            //orderId = action.orderId;
             (async () => {
                 try {
-                    // reject orders functionality here .........................................................................................
                     const res = await fetch(
                         "http://localhost:5000/dokan.com/order/seller/orderDeli",
                         {
                             method: "PATCH",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                oid : 'eikhane order id ta dio', // order id
-                                order_delivered : 'true'
+                                o_id: action.orderId,
+                                order_delivered: true,
                             }),
                         }
                     );
                     const response = await res.json();
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             })();
             return {
@@ -160,7 +155,7 @@ export default (state = initialState, action) => {
         case "DELETE_PRODUCT":
             (async () => {
                 try {
-                    // delete orders functionality here .........................................................................................
+                    // delete product functionality here .........................................................................................
                 } catch (error) {}
             })();
             return {
