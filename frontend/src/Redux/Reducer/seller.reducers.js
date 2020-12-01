@@ -81,10 +81,17 @@ export default (state = initialState, action) => {
         case "LOAD_MY_ORDERS":
             //sellerId = action.sellerId;
 
-            (async () => {
+            (async (event) => {
                 try {
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/seller/orders/" +
+                            action.sellerId
+                    );
+                    const response = await res.json();
                     // load orders functionality here .........................................................................................
-                } catch (error) {}
+                } catch (error) {
+                    console.log(error);
+                }
             })();
 
             return {
@@ -94,10 +101,24 @@ export default (state = initialState, action) => {
         case "ACCEPT_ORDER":
             //let orderId = action.orderId;
 
-            (async () => {
+            (async (event) => {
                 try {
                     // accept orders functionality here .........................................................................................
-                } catch (error) {}
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/order/seller/orderConf",
+                        {
+                            method: "PATCH",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                oid : 'eikhane order id ta dio', // order id
+                                order_confirmation : 'true'
+                            }),
+                        }
+                    );
+                    const response = await res.json();
+                } catch (error) {
+                    console.log(error);
+                }
             })();
             return {
                 ...state,
@@ -117,7 +138,21 @@ export default (state = initialState, action) => {
             (async () => {
                 try {
                     // reject orders functionality here .........................................................................................
-                } catch (error) {}
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/order/seller/orderDeli",
+                        {
+                            method: "PATCH",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                oid : 'eikhane order id ta dio', // order id
+                                order_delivered : 'true'
+                            }),
+                        }
+                    );
+                    const response = await res.json();
+                } catch (error) {
+                    console.log(error)
+                }
             })();
             return {
                 ...state,
