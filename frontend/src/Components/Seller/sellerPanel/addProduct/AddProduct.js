@@ -58,14 +58,23 @@ const AddProduct = (props) => {
 
     const handleAddProduct = (e) => {
         e.preventDefault();
-        dispatch({
-            type: "ADD_PRODUCT",
-            name: productName,
-            brand: productBrand,
-            price: productPrice,
-            category: selectedCategory,
-            subCategory: selectedSubCategory,
-        });
+        if (
+            productName.length > 0 &&
+            productBrand.length > 0 &&
+            productPrice.length > 0
+        ) {
+            dispatch({
+                type: "ADD_PRODUCT",
+                name: productName,
+                brand: productBrand,
+                price: productPrice,
+                category: selectedCategory,
+                subCategory: selectedSubCategory,
+            });
+        } else {
+            setError(true);
+            setErrorMsg("Please fill up all the fields.");
+        }
 
         if (sellerStore.errorAddProduct.length > 0) {
             setError(true);
