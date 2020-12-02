@@ -199,10 +199,10 @@ const productbylocation = async(req,res,next) =>{
     }
     //console.log(prodbyloc);
     if(prodbyloc){
-        console.log("here bro");
+        //console.log("here bro");
         return res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
     }else{
-        console.log("there bro");
+        //console.log("there bro");
         return res.status(200).json({product : []});  
     }
     //res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
