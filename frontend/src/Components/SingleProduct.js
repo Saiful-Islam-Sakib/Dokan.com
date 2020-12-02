@@ -289,7 +289,7 @@ export default function SingleProduct() {
                                 <Button
                                     disabled={
                                         JSON.parse(
-                                            localStorage.getItem("user")
+                                            localStorage.getItem("user")?.length
                                         ) > 0
                                             ? false
                                             : true
