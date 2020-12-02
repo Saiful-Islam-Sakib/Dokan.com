@@ -21,7 +21,22 @@ export default function ContactUs() {
         let email = contactUsEmail;
         let message = contactUsMessage;
         // send contactUs message ...........................................
-
+        try{
+            let res = await fetch(
+                "http://localhost:5000/dokan.com/report",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: email,
+                        body: message,
+                    }),
+                }
+            );
+            let response = await res.json();
+        }catch(err){
+            console.log(err);
+        }
         setmail("");
         setmessage("");
         setError("");
