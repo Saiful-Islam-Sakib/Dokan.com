@@ -37,19 +37,17 @@ const Transaction = (props) => {
                     <tr>
                         <th>Date</th>
                         <th>Name</th>
-                        <th>Category</th>
                         <th>amount</th>
                         <th>price</th>
                     </tr>
-                    {/* {sellerStore.transactions?.map((product, index) => (
+                    {sellerStore.transactions?.map((product, index) => (
                         <tr key={index}>
-                            <td>{product.date}</td>
-                            <td>{product.name}</td>
-                            <td>{product.catagory}</td>
-                            <td>{product.amount}</td>
-                            <td>{product.price}</td>
+                            <td>{new Date(product.date).toGMTString()}</td>
+                            <td>{product.p_name}</td>
+                            <td>{product.quantity}</td>
+                            <td>{product.total_amount / product.quantity}</td>
                         </tr>
-                    ))} */}
+                    ))}
                 </table>
             </div>
         </div>

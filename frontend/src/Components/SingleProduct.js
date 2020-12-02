@@ -11,11 +11,11 @@ import {
     InputBase,
     Link,
     makeStyles,
-    OutlinedInput,
     Typography,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import TabSingleProduct from "./TabSingleProduct";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -227,13 +227,15 @@ export default function SingleProduct() {
                                 }}
                             >
                                 <Button
-                                    id="add"
+                                    id="sub"
                                     variant="outlined"
                                     onClick={() => {
-                                        setValue(value + 1);
+                                        if (value > 1) {
+                                            setValue(value - 1);
+                                        }
                                     }}
                                 >
-                                    +
+                                    -
                                 </Button>
                                 <div
                                     style={{
@@ -254,16 +256,15 @@ export default function SingleProduct() {
                                         }}
                                     />
                                 </div>
+
                                 <Button
-                                    id="sub"
+                                    id="add"
                                     variant="outlined"
                                     onClick={() => {
-                                        if (value > 1) {
-                                            setValue(value - 1);
-                                        }
+                                        setValue(value + 1);
                                     }}
                                 >
-                                    -
+                                    +
                                 </Button>
                             </CardContent>
                             <CardContent>
@@ -282,6 +283,22 @@ export default function SingleProduct() {
                                     }}
                                 >
                                     Add to Cart
+                                </Button>
+                            </CardContent>
+                            <CardContent>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    type="submit"
+                                    color="secondary"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: "ADD_TO_FAVORITES",
+                                            productId: selectedProduct.id,
+                                        });
+                                    }}
+                                >
+                                    <FavoriteIcon></FavoriteIcon>
                                 </Button>
                             </CardContent>
                         </Card>

@@ -100,7 +100,10 @@ export default function SingleProductOrderHistory(props) {
                                 <Avatar
                                     variant="rounded"
                                     alt="productImage"
-                                    src="#image"
+                                    src={props.product.img.slice(
+                                        2,
+                                        props.product.img.length
+                                    )}
                                 ></Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={props.product.p_name} />
