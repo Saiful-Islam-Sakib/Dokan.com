@@ -45,4 +45,6 @@ router.patch('/rateProduct',[check('p_id').not().isEmpty(), check('c_id').not().
 
 router.post('/addtowishlist',[check('p_id').not().isEmpty(), check('c_id').not().isEmpty()],customerController.addtowishlist);
 
+router.get('/getwishlist/:cid',customerController.showFavorites);
+
 module.exports = router;

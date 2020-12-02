@@ -360,6 +360,7 @@ const addtowishlist = async(req,res,next) =>{
         const erro = new httpError('Could not find product',500);
         return next(erro);
     }
+    /*
     let wishexist;
     try{
         wishexist = await customer.findById(cid).populate('wishlist');
@@ -375,17 +376,32 @@ const addtowishlist = async(req,res,next) =>{
         const v3 = v2.map(({p_id}) => p_id);
         found = v3.find(item => item === p_id);
     }
-    if(!found){
+    if(!found){*/
         try{
             customerexist.wishlist.push(p_id);
             await customerexist.save();
         }catch(err){
-            const erro = new httpError('Something gone wrong',500);
+            const erro = new httpError('Something gone wrong last',500);
             return next(erro);
         }
         return res.status(201).json({data : 'Product added to wishlist'});
-    }else{
+    /*}else{
         return res.status(501).json({data : 'Can not add product to wishlist'});
+    }*/
+};
+const showFavorites = async(req,res,next) =>{
+    const cid = req.params.cid;
+    let wishexist;
+    try{
+        wishexist = await customer.findById(cid).populate('wishlist');
+    }catch(err){
+        const erro = new httpError('Something gone wrong',500);
+        return next(erro);
+    }
+    if(!wishexist){
+        return res.status(403).json({data : 'No product added in wishlist'});
+    }else{
+        return res.status(403).json({data : wishexist});
     }
 };
 
@@ -399,3 +415,4 @@ exports.changePassword = changePassword;
 exports.commentOnproduct = commentOnproduct;
 exports.rateproduct = rateproduct;
 exports.addtowishlist = addtowishlist;
+exports.showFavorites = showFavorites;
