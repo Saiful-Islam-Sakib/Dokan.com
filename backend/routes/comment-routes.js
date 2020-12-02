@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/comment',commentController.getprodutComments);
 
-router.post('/report',commentController.report);
+router.post('/report',[check('email').not().isEmpty(),check('body').not().isEmpty()],commentController.report);
 
 //router.get('/comment/fun',commentController.fun);
 
