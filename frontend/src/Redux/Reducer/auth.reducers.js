@@ -22,6 +22,7 @@ const initialState = {
     toiletriesCat: [],
     searchCategory: "",
     comment: [],
+    favorites: [],
 };
 
 export default (state = initialState, action) => {
@@ -247,6 +248,37 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
+            };
+        case "ADD_TO_FAVORITES":
+            (async (event) => {
+                try {
+                    let userId = JSON.parse(localStorage.getItem("user"))._id;
+                    let productId = action.productId;
+                    // add to favorites functionality .........................................
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+            return {
+                ...state,
+            };
+        case "FETCH_FAVORITES":
+            (async (event) => {
+                try {
+                    //fetch favorites ........................................................................
+                    let userId = JSON.parse(localStorage.getItem("user"))._id;
+
+                    // sessionStorage.setItem(
+                    //     "favorites",
+                    //     JSON.stringify(response.data)
+                    // );
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+            return {
+                ...state,
+                favorites: JSON.parse(sessionStorage.getItem("favorites")),
             };
         default:
             return state;
