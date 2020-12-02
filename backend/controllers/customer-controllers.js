@@ -259,7 +259,6 @@ const rateproduct = async(req,res,next) =>{
         const v1 = allorder.map(order => order.toObject({getters:true}));
         const v2 = v1.map(({p_id}) => ({p_id}));
         const v3 = v2.map(({p_id}) => p_id);
-        console.log(v3 +'    '+ typeof v3);
         found = v3.find(item => item === p_id);
     }
     if(!found){
@@ -332,6 +331,63 @@ const rateproduct = async(req,res,next) =>{
     }
     res.status(201).json({data : 'Product Rated'})
 };
+const addtowishlist = async(req,res,next) =>{
+    const err  = validationResult(req);
+    if(!err.isEmpty()){
+        console.log(err);
+        throw new httpError('Something went wrong',422);
+    }
+    const {c_id,p_id} = req.body;
+    let customerexist;
+    try{
+        customerexist = await customer.findById(c_id);
+    }catch(err){
+        const erro = new httpError('Could not make an order',500);
+        return next(erro);
+    }
+    if(!customerexist){
+        const erro = new httpError('Could not find user',500);
+        return next(erro);
+    }
+    let productexist;
+    try{
+        productexist = await product.findById(p_id);
+    }catch(err){
+        const erro = new httpError('Could not make an order',500);
+        return next(erro);
+    }
+    if(!productexist){
+        const erro = new httpError('Could not find product',500);
+        return next(erro);
+    }
+    let wishexist;
+    try{
+        wishexist = await customer.findById(cid).populate('wishlist');
+    }catch(err){
+        const erro = new httpError('Something gone wrong',500);
+        return next(erro);
+    }
+    let wished = wishexist.wishlist;
+    let found;
+    if(wished.length > 0){
+        const v1 = wished.map(order => order.toObject({getters:true}));
+        const v2 = v1.map(({p_id}) => ({p_id}));
+        const v3 = v2.map(({p_id}) => p_id);
+        found = v3.find(item => item === p_id);
+    }
+    if(!found){
+        try{
+            customerexist.wishlist.push(p_id);
+            await customerexist.save();
+        }catch(err){
+            const erro = new httpError('Something gone wrong',500);
+            return next(erro);
+        }
+        return res.status(201).json({data : 'Product added to wishlist'});
+    }else{
+        return res.status(501).json({data : 'Can not add product to wishlist'});
+    }
+};
 
 
 exports.customerinfo = customerinfo;
@@ -342,3 +398,4 @@ exports.customerLogin = customerLogin;
 exports.changePassword = changePassword;
 exports.commentOnproduct = commentOnproduct;
 exports.rateproduct = rateproduct;
+exports.addtowishlist = addtowishlist;

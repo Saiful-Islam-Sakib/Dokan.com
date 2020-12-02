@@ -232,7 +232,7 @@ const sellerTransactionHistory = async(req,res,next) =>{
         throw new httpError('Could not find Seller.',404);
     }
     res.status(201).json({data : sellerinfov2});
-} 
+};
 
 
 exports.getsellerproducts = getsellerproducts;

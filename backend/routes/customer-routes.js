@@ -43,4 +43,6 @@ router.post('/rateProduct',[check('p_id').not().isEmpty(),check('s_id').not().is
 router.patch('/rateProduct',[check('p_id').not().isEmpty(), check('c_id').not().isEmpty(),
     check('rating').isLength({max:1}),check('rating').isLength({min:1})],customerController.rateproduct);
 
+router.post('/addtowishlist',[check('p_id').not().isEmpty(), check('c_id').not().isEmpty()],customerController.addtowishlist);
+
 module.exports = router;
