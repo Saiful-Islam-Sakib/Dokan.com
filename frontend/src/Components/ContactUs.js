@@ -15,7 +15,7 @@ export default function ContactUs() {
     const [contactUsEmail, setmail] = React.useState("");
     const [contactUsMessage, setmessage] = React.useState("");
 
-    const handleContactUs = (event) => {
+    const handleContactUs = async (event) => {
         event.preventDefault();
         let email = contactUsEmail;
         let message = contactUsMessage;
