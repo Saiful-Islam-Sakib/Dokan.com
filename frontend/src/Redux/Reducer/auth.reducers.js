@@ -255,6 +255,18 @@ export default (state = initialState, action) => {
                     let userId = JSON.parse(localStorage.getItem("user"))._id;
                     let productId = action.productId;
                     // add to favorites functionality .........................................
+                    const res = await fetch(
+                        "http://localhost:5000/dokan.com/customer/addtowishlist",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                c_id: userId,
+                                p_id: productId,
+                            }),
+                        }
+                    );
+                    const response = await res.json();
                 } catch (error) {
                     console.log(error);
                 }
@@ -267,7 +279,12 @@ export default (state = initialState, action) => {
                 try {
                     //fetch favorites ........................................................................
                     let userId = JSON.parse(localStorage.getItem("user"))._id;
+                    let res = await fetch(
+                        "http://localhost:5000/dokan.com/customer/getwishlist/" +
+                            userId
+                    );
 
+                    let response = await res.json();
                     // sessionStorage.setItem(
                     //     "favorites",
                     //     JSON.stringify(response.data)
