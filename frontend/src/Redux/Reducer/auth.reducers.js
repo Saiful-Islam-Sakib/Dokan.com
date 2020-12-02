@@ -120,11 +120,11 @@ export default (state = initialState, action) => {
             let selectedCategoryProducts3 = JSON.parse(
                 sessionStorage.getItem("allProduct")
             )
-                ?.filter((p) => p.category == "toiletries")
+                ?.filter((p) => p.category == "Toiletries")
                 .slice(0, 7);
             return {
                 ...state,
-                healthCareCat: selectedCategoryProducts3,
+                toiletriesCat: selectedCategoryProducts3,
             };
         case "SEARCH_CATEGORY":
             return {
@@ -161,11 +161,11 @@ export default (state = initialState, action) => {
                         (p) => p.category == "consumerFood"
                     ),
                 };
-            } else if (state.searchCategory == "toiletries") {
+            } else if (state.searchCategory == "Toiletries") {
                 return {
                     ...state,
                     selectedSubCatProduct: finalResult.filter(
-                        (p) => p.category == "toiletries"
+                        (p) => p.category == "Toiletries"
                     ),
                 };
             } else if (state.searchCategory == "healthCare") {
@@ -208,9 +208,9 @@ export default (state = initialState, action) => {
                 const data = await res.json();
 
                 if (
-                    city.length > 0 &&
-                    area.length > 0 &&
-                    place.length > 0 &&
+                    city?.length > 0 &&
+                    area?.length > 0 &&
+                    place?.length > 0 &&
                     res.status === 200
                 ) {
                     sessionStorage.setItem(
