@@ -276,7 +276,6 @@ export default (state = initialState, action) => {
         case "FETCH_FAVORITES":
             (async (event) => {
                 try {
-                    //fetch favorites ........................................................................
                     let userId = JSON.parse(localStorage.getItem("user"))._id;
                     let res = await fetch(
                         "http://localhost:5000/dokan.com/customer/getwishlist/" +
@@ -284,10 +283,10 @@ export default (state = initialState, action) => {
                     );
 
                     let response = await res.json();
-                    // sessionStorage.setItem(
-                    //     "favorites",
-                    //     JSON.stringify(response.data)
-                    // );
+                    sessionStorage.setItem(
+                        "favorites",
+                        JSON.stringify(response.data)
+                    );
                 } catch (error) {
                     console.log(error);
                 }
