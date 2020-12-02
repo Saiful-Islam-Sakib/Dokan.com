@@ -44,8 +44,6 @@ export default function ContactUs() {
         } catch (err) {
             console.log(err);
         }
-        setmail("");
-        setmessage("");
     };
     return (
         <div>
