@@ -32,13 +32,14 @@ export default function ContactUs() {
                 }),
             });
             let response = await res.json();
+
             if (res.status == 201) {
                 setStatus(false);
                 setCorrectStatus(true);
             } else {
                 setStatus(true);
                 setCorrectStatus(false);
-                setError(response.data);
+                setError(response.msg);
             }
         } catch (err) {
             console.log(err);
