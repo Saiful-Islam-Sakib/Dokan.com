@@ -254,8 +254,7 @@ export default (state = initialState, action) => {
                 try {
                     let userId = JSON.parse(localStorage.getItem("user"))._id;
                     let productId = action.productId;
-                    // add to favorites functionality .........................................
-                    const res = await fetch(
+                    let res = await fetch(
                         "http://localhost:5000/dokan.com/customer/addtowishlist",
                         {
                             method: "POST",
@@ -266,7 +265,7 @@ export default (state = initialState, action) => {
                             }),
                         }
                     );
-                    const response = await res.json();
+                    let response = await res.json();
                 } catch (error) {
                     console.log(error);
                 }
