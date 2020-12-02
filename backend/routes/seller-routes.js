@@ -30,4 +30,7 @@ router.patch('/updateSellerInfo',
     
 router.get('/orders/:sid',check('sid').not().isEmpty(),sellerController.sellerOrder);
 
+
+router.get('/transaction/:sid',check('sid').not().isEmpty(),sellerController.sellerTransactionHistory);
+
 module.exports = router;

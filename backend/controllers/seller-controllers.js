@@ -216,7 +216,23 @@ const sellerOrder = async(req,res,next) =>{
     }
     //res.status(201).json({data : sellerinfo.orders.map(order => order.toObject({getters : true}))});
     res.status(201).json({data : sellerinfo2});
-}; 
+};
+const sellerTransactionHistory = async(req,res,next) =>{
+    const sid = req.params.sid;
+    let sellerinfo;
+    try{
+        sellerinfo = await seller.findById(sid).populate('orders');
+    }catch(err){
+        const erro = new httpError('Something gone wrong',500);
+        return next(erro);
+    }
+    let sellerinfov2  = sellerinfo.orders.map(order => order.toObject({getters : true}));
+    sellerinfov2 = sellerinfov2.filter(p => ((p.order_rejected !== true)&& (p.order_confirmation === true)));
+    if (!sellerinfov2){
+        throw new httpError('Could not find Seller.',404);
+    }
+    res.status(201).json({data : sellerinfov2});
+} 
 
 
 exports.getsellerproducts = getsellerproducts;
@@ -224,3 +240,4 @@ exports.sellerLogin = sellerLogin;
 exports.sellerSignup = sellerSignup;
 exports.updateSeller = updateSeller;
 exports.sellerOrder = sellerOrder;
+exports.sellerTransactionHistory = sellerTransactionHistory;
