@@ -38,6 +38,8 @@ export default function Review() {
             return a + b;
         }, 0);
 
+    let deleveryCost = [...new Set(products.map((p) => p.s_id))].length * 10;
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -67,7 +69,10 @@ export default function Review() {
                 <ListItem className={classes.listItem}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" className={classes.total}>
-                        {totalAmmount}
+                        {"(delevery Cost) " +
+                            deleveryCost +
+                            " + " +
+                            totalAmmount}
                     </Typography>
                 </ListItem>
             </List>

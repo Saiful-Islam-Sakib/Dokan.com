@@ -96,7 +96,9 @@ export default function Checkout() {
             let amount = fullStore.cart
                 .map((p) => p.price)
                 .map((p, index) => fullStore.quantity[index] * p);
-            let delveryAddress = localStorage.getItem("deliveryAddress");
+            let deliveryAddress = localStorage.getItem("deliveryAddress");
+            let deliveryCost =
+                [...new Set(fullStore.cart.map((p) => p.s_id))].length * 10;
 
             try {
                 const res = await fetch(
@@ -109,7 +111,8 @@ export default function Checkout() {
                             quantity: quantity,
                             total_amount: amount,
                             c_id: userId,
-                            delivery_address: delveryAddress,
+                            delivery_address: deliveryAddress,
+                            delivery_charge: deliveryCost,
                         }),
                     }
                 );
