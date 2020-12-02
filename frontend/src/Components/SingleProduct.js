@@ -287,6 +287,13 @@ export default function SingleProduct() {
                             </CardContent>
                             <CardContent>
                                 <Button
+                                    disabled={
+                                        JSON.parse(
+                                            localStorage.getItem("user")
+                                        ) > 0
+                                            ? false
+                                            : true
+                                    }
                                     variant="contained"
                                     fullWidth
                                     type="submit"
