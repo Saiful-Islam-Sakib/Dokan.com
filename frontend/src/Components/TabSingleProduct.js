@@ -253,9 +253,9 @@ export default function FullWidthTabs() {
                             id="reviewerName"
                             value={
                                 JSON.parse(localStorage.getItem("user"))
-                                    .f_name +
+                                    ?.f_name +
                                 " " +
-                                JSON.parse(localStorage.getItem("user")).l_name
+                                JSON.parse(localStorage.getItem("user"))?.l_name
                             }
                             readOnly
                             fullWidth
