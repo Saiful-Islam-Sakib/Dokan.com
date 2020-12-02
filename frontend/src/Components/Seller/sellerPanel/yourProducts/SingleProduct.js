@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Data from "./data";
 
 export default function SingleProduct({ product }) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const [clickState, setClickState] = React.useState(false);
 
     const editProductHandler = (productId) => {
-        console.log(productId);
+        console.log("Edit product " + productId);
     };
 
     const deleteProductHandler = (productId) => {
@@ -17,8 +17,7 @@ export default function SingleProduct({ product }) {
             type: "DELETE_PRODUCT",
             productId: productId,
         });
-
-        //history.push("/seller-panel/");
+        window.location.reload(false);
     };
 
     return (

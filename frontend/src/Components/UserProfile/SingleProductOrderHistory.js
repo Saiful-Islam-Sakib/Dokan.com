@@ -32,7 +32,6 @@ export default function SingleProductOrderHistory(props) {
     const dispatch = useDispatch();
 
     const [expanded, setExpanded] = React.useState(false);
-    const [cancelOrder, setCancelOrder] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -121,16 +120,24 @@ export default function SingleProductOrderHistory(props) {
                 </AccordionDetails>
                 <Divider />
                 <AccordionActions>
-                    <Button
-                        size="small"
-                        color="secondary"
-                        variant="contained"
-                        disabled={props.product.order_confirmation}
-                        onClick={handleCancelOrder}
-                    >
-                        <DeleteIcon></DeleteIcon>
-                        Cancel Order
-                    </Button>
+                    {(props.product.order_confirmation === false &&
+                        props.product.order_delivered === true) ||
+                    props.product.order_rejected === true ? (
+                        <Typography style={{ color: "red" }}>
+                            Seller is unable to give the product
+                        </Typography>
+                    ) : (
+                        <Button
+                            size="small"
+                            color="secondary"
+                            variant="contained"
+                            disabled={props.product.order_confirmation}
+                            onClick={handleCancelOrder}
+                        >
+                            <DeleteIcon></DeleteIcon>
+                            Cancel Order
+                        </Button>
+                    )}
                 </AccordionActions>
             </Accordion>
             <div style={{ marginBottom: "1vh" }}></div>

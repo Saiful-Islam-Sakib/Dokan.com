@@ -57,6 +57,10 @@
     color: rgb(122, 120, 120);
     font-size: 1.5rem;
 }
+.order-details .order-address {
+    color: rgb(122, 120, 120);
+    font-size: 1.5rem;
+}
 .order-details .order-amount {
     color: rgb(59, 190, 98);
     font-size: 1.8rem;

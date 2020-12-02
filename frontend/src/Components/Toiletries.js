@@ -61,7 +61,7 @@ export default function OutlinedCard() {
 
                             let selectedCategoryProducts = JSON.parse(
                                 sessionStorage.getItem("allProduct")
-                            ).filter((p) => p.category == "toiletries");
+                            ).filter((p) => p.category == "Toiletries");
 
                             dispatch({
                                 type: "SELECTED_SUB_CAT_PRODUCT",

@@ -54,7 +54,7 @@ export default function OutlinedCard() {
                 >
                     <Button
                         size="small"
-                        onclick={() => {
+                        onClick={() => {
                             dispatch({
                                 type: "UPDATE_PRODUCT",
                             });
