@@ -14,7 +14,8 @@ const orderSchema = new mongo.Schema({
     date : {type: Date , default : Date.now()},
     shop_name :{type :String, required:true},
     delivery_address : {type:String, required : true},
-    img : {type:String,default:null}
+    img : {type:String,default:null},
+    delivery_charge:{type:Number,required:true} 
 });
 
 module.exports = mongo.model('Order',orderSchema);

@@ -259,6 +259,7 @@ const rateproduct = async(req,res,next) =>{
         const v1 = allorder.map(order => order.toObject({getters:true}));
         const v2 = v1.map(({p_id}) => ({p_id}));
         const v3 = v2.map(({p_id}) => p_id);
+        console.log(v3 +'    '+ typeof v3);
         found = v3.find(item => item === p_id);
     }
     if(!found){
