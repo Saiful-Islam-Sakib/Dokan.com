@@ -401,7 +401,8 @@ const showFavorites = async(req,res,next) =>{
     if(!wishexist){
         return res.status(403).json({data : 'No product added in wishlist'});
     }else{
-        return res.status(403).json({data : wishexist});
+        let wished = wishexist.wishlist;
+        return res.status(403).json({data : wished});
     }
 };
 
