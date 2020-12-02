@@ -5,6 +5,7 @@ const customer = require('../models/customer-model');
 const product = require('../models/product-model');
 const rating_model = require('../models/rating-model');
 const mongo = require('mongoose');
+const report_model = require('../models/report-model');
 
 const getprodutComments = async (req,res,next) =>{
     const p_id = req.params.pid;
@@ -113,12 +114,30 @@ const test = async (req,res,next) =>{
     let len = parseInt(seller.length);
     let deliCharge = len * 20;
     res.status(201).json({data : deliCharge});
+};
 
-
-
-
+const report = async(req,res,next) =>{
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+        console.log(err);
+        const erro = new httpError(
+            "Wrong report",
+            422
+        );
+        return next(erro);
+    }
+    const {email,body} = req.body;
+    const rep = new report_model({email,body});
+    try{
+        await rep.save();
+    }catch(err){
+        const erro = new httpError('Something went wrong',500);
+        return next(erro);
+    }
+    res.status(201).json({data : 'Your message is taken, we will contact you.'});
 };
 
 
 exports.getprodutComments = getprodutComments;
+exports.report = report;
 exports.test = test;

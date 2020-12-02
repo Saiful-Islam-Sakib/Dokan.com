@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/comment',commentController.getprodutComments);
 
+router.post('/report',commentController.report);
+
 //router.get('/comment/fun',commentController.fun);
 
 router.post('/test',commentController.test);
