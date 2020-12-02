@@ -3,7 +3,7 @@ const initialState = {
     seller: {},
     products: [],
     orders: [],
-    transactions: {},
+    transactions: [],
     errorAddProduct: "",
 };
 
@@ -189,6 +189,26 @@ export default (state = initialState, action) => {
             })();
             return {
                 ...state,
+            };
+        case "LOAD_TRANSACTION":
+            (async () => {
+                try {
+                    let sellerId = action.sellerId;
+                    // transaction loader functionality .....................................................................
+
+                    // sessionStorage.setItem(
+                    //     "transactions",
+                    //     JSON.stringify(response.data)
+                    // );
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+            return {
+                ...state,
+                // transactions: JSON.parse(
+                //     sessionStorage.getItem("transactions")
+                // ),
             };
         default:
             return state;
