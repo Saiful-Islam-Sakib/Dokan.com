@@ -14,13 +14,17 @@ import EmailIcon from "@material-ui/icons/Email";
 export default function ContactUs() {
     const [contactUsEmail, setmail] = React.useState("");
     const [contactUsMessage, setmessage] = React.useState("");
+    const [error, setError] = React.useState("");
 
     const handleContactUs = async (event) => {
         event.preventDefault();
         let email = contactUsEmail;
         let message = contactUsMessage;
         // send contactUs message ...........................................
-        console.log("hello message");
+
+        setmail("");
+        setmessage("");
+        setError("");
     };
     return (
         <div>
@@ -104,6 +108,15 @@ export default function ContactUs() {
                         </Button>
                     </div>
                 </form>
+                {error.length > 0 ? (
+                    <Typography style={{ color: "red" }}>
+                        Unable To Report
+                    </Typography>
+                ) : (
+                    <Typography style={{ color: "green" }}>
+                        Reported Successfully
+                    </Typography>
+                )}
             </Container>
         </div>
     );
