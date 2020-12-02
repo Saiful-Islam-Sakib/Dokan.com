@@ -64,7 +64,7 @@ const addproduct = async(req,res,next) => {
     }
     const {name,brand,price,category,sub_category,s_id,img } = req.body;
     let ptag = name,sep = ' ';
-    ptag = ptag.replace(/[^a-zA-Z0-9 ]/g, "");
+    ptag = ptag.replace(/[^a-zA-Z0-9& ]/g, "");
     let ptag1 = ptag.split(sep);
     ptag1.push(ptag);
     //dummy_product.push(createdprod);
@@ -83,21 +83,22 @@ const addproduct = async(req,res,next) => {
     let shop = sellerexist.sh_name;
     console.log(shop);
     const createdprod = new product({
-        name,brand,price,category,sub_category,tag : ptag1,s_id,shop_name : shop
+        name,brand,price,category,sub_category,tag : ptag1,s_id,shop_name : shop,img:img
     });
+    console.log(createdprod);
     try{
         const session = await mongo.startSession();
-        //console.log('1');
+        console.log('1');
         session.startTransaction();
-        //console.log('2');
+        console.log('2');
         await createdprod.save({session : session});
-        //console.log('3');
+        console.log('3');
         sellerexist.products.push(createdprod);
-        //console.log('4');
+        console.log('4');
         await sellerexist.save({seller: session});
-        //console.log('5');
+        console.log('5');
         await session.commitTransaction();
-        //console.log('6');
+        console.log('6');
     }catch(err){
         const erro = new httpError('Something gone wrong 1',500);
         return next(erro);
@@ -198,10 +199,13 @@ const productbylocation = async(req,res,next) =>{
     }
     //console.log(prodbyloc);
     if(prodbyloc){
-        res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
+        //console.log("here bro");
+        return res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
     }else{
-        res.status(200).json({product : []});  
+        //console.log("there bro");
+        return res.status(200).json({product : []});  
     }
+    //res.status(200).json({product : prodbyloc.map(prod => prod.toObject({getters :true}))});
     //res.status(200).json({product : prodbyloc});
     
 };

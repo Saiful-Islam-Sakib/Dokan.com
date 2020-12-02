@@ -259,7 +259,8 @@ const rateproduct = async(req,res,next) =>{
         const v1 = allorder.map(order => order.toObject({getters:true}));
         const v2 = v1.map(({p_id}) => ({p_id}));
         const v3 = v2.map(({p_id}) => p_id);
-        found = v3.find(item => p_id);
+        console.log(v3 +'    '+ typeof v3);
+        found = v3.find(item => item === p_id);
     }
     if(!found){
         const erro = new httpError('You have not ordered this product',500);
@@ -312,17 +313,17 @@ const rateproduct = async(req,res,next) =>{
         prod.rating_count = newRateCount;
         const addrating = new rating_model({p_id,c_id,rating});
     try{
-        console.log('here 3');
+        //console.log('here 3');
         const sess = await mongo.startSession();
         sess.startTransaction();
-        console.log('here 4');
+        //console.log('here 4');
         await addrating.save({session : sess});
-        console.log('here 5');
+        //console.log('here 5');
         cus.rated.push(addrating);
         await cus.save({session :sess});
-        console.log('here');
+        //console.log('here');
         await prod.save({session :sess});
-        console.log('here 2');
+        //console.log('here 2');
         await sess.commitTransaction();
     }catch(err){
         const erro = new httpError('Something went wrong 2',403);

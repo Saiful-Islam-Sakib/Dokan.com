@@ -25,8 +25,8 @@ const createNewOrder = async (req,res,next) =>{
         throw new httpError('Something wrong in Order',422);
     }
     //const cus_id = req.body.cid;
-    const {p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,delivery_address} = req.body;
-
+    const {p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,delivery_address,delivery_charge} = req.body;
+    
     // const createdorder = new order ({p_id,quantity,total_amount,c_id,order_confirmation,order_delivered,order_date});
     let customerexist;
     try{
@@ -71,7 +71,7 @@ const createNewOrder = async (req,res,next) =>{
             quantity : quantity[i], total_amount : total_amount[i],
             c_id, img : pimg,
             order_confirmation,order_delivered,
-            s_id , delivery_address ,shop_name});
+            s_id , delivery_address ,shop_name,delivery_charge});
         //console.log(customerexist);
         try{
             //await createdorder.save();
@@ -240,9 +240,36 @@ const orderRejected = async (req,res,next) =>{
     res.status(406).json({data : 'Can not reject order'});
 };
 
+const deliveryCharge = async(req,res,next) =>{
+    const {p_id} = req.body;
+    let size = p_id.length;
+    //console.log(size);
+    let seller = [];
+    let sid,j=0;
+    for(i = 0; i < size ; i++){
+        let prodinfo;
+        try{
+            prodinfo = await product.findById(p_id[i]);
+            sid = prodinfo.s_id;
+            if(seller.length === 0){
+                seller[j] = sid; j++;
+            }else if(!(seller.find(item => String(item) === String(sid)))){
+                seller[j] = sid;    j++;
+            }
+        }catch(err){
+            const erro = new httpError('Something went wrong',501);
+            return next(erro);
+        }
+    }
+    let len = parseInt(seller.length);
+    let deliCharge = len * 10;
+    res.status(201).json({data : deliCharge});
+};
+
 exports.getOrderbyid = getOrderbyid;
 exports.orderConfirmation = orderConfirmation;
 exports.createNewOrder = createNewOrder;
 exports.deleteOrder = deleteOrder;
 exports.orderDelivered = orderDelivered;
 exports.orderRejected = orderRejected;
+exports.deliveryCharge = deliveryCharge;
