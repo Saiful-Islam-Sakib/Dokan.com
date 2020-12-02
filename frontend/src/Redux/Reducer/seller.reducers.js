@@ -191,9 +191,14 @@ export default (state = initialState, action) => {
                 ...state,
             };
         case "LOAD_TRANSACTION":
-            (async () => {
+            (async (event) => {
                 try {
                     let sellerId = action.sellerId;
+                    let res = await fetch(
+                        "http://localhost:5000/dokan.com/seller/transaction/" +sellerId);
+                    
+                    let response = await res.json();
+
                     // transaction loader functionality .....................................................................
 
                     // sessionStorage.setItem(
