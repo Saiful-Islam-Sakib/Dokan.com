@@ -18,16 +18,22 @@ const Transaction = (props) => {
                 <h1>Your Transactions</h1>
                 <div className="income-info__details">
                     <div className="income-info__details-money">
-                        <h2>10000 tk</h2>
-                        <p>today</p>
+                        <h2>
+                            {sellerStore.transactions
+                                ?.map((p) => p.total_amount)
+                                .reduce((a, b) => a + b)}{" "}
+                            tk
+                        </h2>
+                        <p>Total Sell</p>
                     </div>
                     <div className="income-info__details-money">
-                        <h2>10000 tk</h2>
-                        <p>last week</p>
-                    </div>
-                    <div className="income-info__details-money">
-                        <h2>10000 tk</h2>
-                        <p>last month</p>
+                        <h2>
+                            {sellerStore.transactions
+                                ?.map((p) => p.total_amount)
+                                .reduce((a, b) => a + b) * 0.05}{" "}
+                            tk
+                        </h2>
+                        <p>(5%) Commotion of DOKAN.com</p>
                     </div>
                 </div>
             </div>
