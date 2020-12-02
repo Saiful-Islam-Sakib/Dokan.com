@@ -15,31 +15,36 @@ export default function ContactUs() {
     const [contactUsEmail, setmail] = React.useState("");
     const [contactUsMessage, setmessage] = React.useState("");
     const [error, setError] = React.useState("");
+    const [errStatus, setStatus] = React.useState(false);
+    const [correctStatus, setCorrectStatus] = React.useState(false);
 
     const handleContactUs = async (event) => {
         event.preventDefault();
         let email = contactUsEmail;
         let message = contactUsMessage;
-        // send contactUs message ...........................................
-        try{
-            let res = await fetch(
-                "http://localhost:5000/dokan.com/report",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        email: email,
-                        body: message,
-                    }),
-                }
-            );
+        try {
+            let res = await fetch("http://localhost:5000/dokan.com/report", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    body: message,
+                }),
+            });
             let response = await res.json();
-        }catch(err){
+            if (res.status == 201) {
+                setStatus(false);
+                setCorrectStatus(true);
+            } else {
+                setStatus(true);
+                setCorrectStatus(false);
+                setError(response.data);
+            }
+        } catch (err) {
             console.log(err);
         }
         setmail("");
         setmessage("");
-        setError("");
     };
     return (
         <div>
@@ -123,14 +128,15 @@ export default function ContactUs() {
                         </Button>
                     </div>
                 </form>
-                {error.length > 0 ? (
-                    <Typography style={{ color: "red" }}>
-                        Unable To Report
-                    </Typography>
+                {errStatus ? (
+                    <Typography style={{ color: "red" }}>{error}</Typography>
                 ) : (
-                    <Typography style={{ color: "green" }}>
-                        Reported Successfully
-                    </Typography>
+                    <></>
+                )}
+                {correctStatus ? (
+                    <Typography style={{ color: "green" }}>{error}</Typography>
+                ) : (
+                    <></>
                 )}
             </Container>
         </div>
