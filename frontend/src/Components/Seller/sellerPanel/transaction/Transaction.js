@@ -37,7 +37,7 @@ const Transaction = (props) => {
                                 : 0}{" "}
                             tk
                         </h2>
-                        <p>(5%) Commotion of DOKAN.com</p>
+                        <p>(5%) Commission of DOKAN.com</p>
                     </div>
                 </div>
             </div>
