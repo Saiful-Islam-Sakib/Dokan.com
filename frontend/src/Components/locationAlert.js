@@ -64,8 +64,8 @@ const locations = [
         zone: [
             { area: "Uttara", place: ["Sector 4", "Sector 8", "Sector 10"] },
             {
-                area: "Mirpur",
-                place: ["Sector 5", "Sector 8", "Sector 9"],
+                area: "Mirpur DOHS",
+                place: ["Block 5", "Block 8"],
             },
             { area: "Bashundhara", place: ["Block A", "Block B", "Block C"] },
         ],
